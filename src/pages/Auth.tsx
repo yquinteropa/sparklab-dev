@@ -46,11 +46,10 @@ export default function Auth() {
   };
 
   const handleSocialLogin = async (provider: 'google') => {
-    const { error } = await supabase.auth.signInWithOAuth({
-      provider,
-      options: { redirectTo: `${window.location.origin}/dashboard` },
+    const result = await lovable.auth.signInWithOAuth(provider, {
+      redirect_uri: `${window.location.origin}/dashboard`,
     });
-    if (error) toast.error(error.message);
+    if (result?.error) toast.error(String(result.error));
   };
 
   return (
