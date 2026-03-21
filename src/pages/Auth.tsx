@@ -111,6 +111,14 @@ export default function Auth() {
               />
             </div>
 
+            {isLogin && (
+              <div className="flex justify-end">
+                <Link to="/auth/forgot-password" className="text-xs text-muted-foreground hover:text-primary transition-colors">
+                  ¿Olvidaste tu contraseña?
+                </Link>
+              </div>
+            )}
+
             <Button type="submit" className="w-full glow-primary" disabled={loading}>
               {loading ? 'Procesando...' : isLogin ? 'Entrar' : 'Registrarse'}
             </Button>
