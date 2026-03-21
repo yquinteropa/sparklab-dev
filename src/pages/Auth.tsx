@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Zap, Mail, Lock, User } from 'lucide-react';
 import { toast } from 'sonner';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 
 export default function Auth() {
@@ -110,6 +110,14 @@ export default function Auth() {
                 minLength={6}
               />
             </div>
+
+            {isLogin && (
+              <div className="flex justify-end">
+                <Link to="/auth/forgot-password" className="text-xs text-muted-foreground hover:text-primary transition-colors">
+                  ¿Olvidaste tu contraseña?
+                </Link>
+              </div>
+            )}
 
             <Button type="submit" className="w-full glow-primary" disabled={loading}>
               {loading ? 'Procesando...' : isLogin ? 'Entrar' : 'Registrarse'}
