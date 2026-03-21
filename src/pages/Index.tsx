@@ -1,53 +1,16 @@
 import { Link } from "react-router-dom";
-import { Zap, Cpu, Database, Shield, FlaskConical, Trophy, ChevronRight, Sparkles, Monitor, BookOpen, Users } from "lucide-react";
+import { Zap, FlaskConical, Trophy, ChevronRight, BookOpen, Users } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { useEffect, useRef, useState } from "react";
+import { Logos3 } from "@/components/ui/logos3";
 
-const techs = [
-{ name: "React", icon: Monitor, desc: "Interfaz interactiva y componentes reutilizables" },
-{ name: "Tailwind CSS", icon: Sparkles, desc: "Diseño utilitario con estética Cyber-Tech" },
-{ name: "Supabase", icon: Database, desc: "Base de datos, autenticación y tiempo real" },
-{ name: "React Flow", icon: Cpu, desc: "Lienzo interactivo para simulación de circuitos" },
-{ name: "TypeScript", icon: Shield, desc: "Tipado estático para código robusto" },
-{ name: "Vite", icon: Zap, desc: "Build ultrarrápido para desarrollo ágil" }];
-
-
-function TechCarousel() {
-  const [current, setCurrent] = useState(0);
-  const interval = useRef<ReturnType<typeof setInterval>>();
-
-  useEffect(() => {
-    interval.current = setInterval(() => setCurrent((p) => (p + 1) % techs.length), 3000);
-    return () => clearInterval(interval.current);
-  }, []);
-
-  return (
-    <div className="w-full max-w-4xl mx-auto">
-      <div className="relative overflow-hidden rounded-2xl border border-border bg-card/60 backdrop-blur-md p-8">
-        <div className="flex transition-transform duration-500 ease-in-out" style={{ transform: `translateX(-${current * 100}%)` }}>
-          {techs.map((t) =>
-          <div key={t.name} className="min-w-full flex flex-col items-center gap-4 px-4">
-              <div className="w-20 h-20 rounded-xl bg-primary/10 border border-primary/30 flex items-center justify-center glow-primary">
-                <t.icon className="w-10 h-10 text-primary" />
-              </div>
-              <h3 className="text-2xl font-bold text-foreground" style={{ fontFamily: "var(--font-display)" }}>{t.name}</h3>
-              <p className="text-muted-foreground text-center max-w-md">{t.desc}</p>
-            </div>
-          )}
-        </div>
-        <div className="flex justify-center gap-2 mt-6">
-          {techs.map((_, i) =>
-          <button
-            key={i}
-            onClick={() => setCurrent(i)}
-            className={`w-2.5 h-2.5 rounded-full transition-all ${i === current ? "bg-primary w-8 glow-primary" : "bg-muted-foreground/30 hover:bg-muted-foreground/50"}`} />
-
-          )}
-        </div>
-      </div>
-    </div>);
-
-}
+const techLogos = [
+  { id: "logo-react", description: "React", image: "https://www.shadcnblocks.com/images/block/logos/react.png", className: "h-7 w-auto" },
+  { id: "logo-tailwind", description: "Tailwind CSS", image: "https://www.shadcnblocks.com/images/block/logos/tailwind.svg", className: "h-4 w-auto" },
+  { id: "logo-supabase", description: "Supabase", image: "https://www.shadcnblocks.com/images/block/logos/supabase.svg", className: "h-7 w-auto" },
+  { id: "logo-typescript", description: "TypeScript", image: "https://upload.wikimedia.org/wikipedia/commons/4/4c/Typescript_logo_2020.svg", className: "h-8 w-auto" },
+  { id: "logo-vite", description: "Vite", image: "https://vitejs.dev/logo.svg", className: "h-8 w-auto" },
+  { id: "logo-vercel", description: "Vercel", image: "https://www.shadcnblocks.com/images/block/logos/vercel.svg", className: "h-7 w-auto" },
+];
 
 const features = [
 { icon: FlaskConical, title: "Laboratorio Virtual", desc: "Construye circuitos arrastrando componentes en un lienzo interactivo." },
