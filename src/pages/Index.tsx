@@ -82,12 +82,8 @@ export default function Index() {
         </div>
       </section>
 
-      {/* Tech Carousel */}
       <section id="tech" className="py-20 px-6 bg-muted/30">
-        <div className="max-w-6xl mx-auto">
-          <h2 className="text-3xl font-bold text-center text-foreground mb-12" style={{ fontFamily: "var(--font-display)" }}>Tecnologías</h2>
-          <TechCarousel />
-        </div>
+        <Logos3 heading="Tecnologías que impulsan SparkLab" logos={techLogos} />
       </section>
 
       {/* CTA */}
