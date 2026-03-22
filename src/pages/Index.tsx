@@ -1,8 +1,7 @@
 import { Link } from "react-router-dom";
 import { useEffect, useRef } from "react";
-import { Zap, FlaskConical, Trophy, ChevronRight, BookOpen, Users } from "lucide-react";
+import { Zap, FlaskConical, Trophy, ChevronRight, BookOpen, Users, Atom, Wind, Database, FileCode, Flame, Triangle } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Logos3 } from "@/components/ui/logos3";
 
 function useScrollReveal() {
   const ref = useRef<HTMLDivElement>(null);
@@ -30,13 +29,13 @@ function useScrollReveal() {
   return ref;
 }
 
-const techLogos = [
-  { id: "logo-react", description: "React", image: "https://www.shadcnblocks.com/images/block/logos/react.png", className: "h-7 w-auto" },
-  { id: "logo-tailwind", description: "Tailwind CSS", image: "https://www.shadcnblocks.com/images/block/logos/tailwind.svg", className: "h-4 w-auto" },
-  { id: "logo-supabase", description: "Supabase", image: "https://www.shadcnblocks.com/images/block/logos/supabase.svg", className: "h-7 w-auto" },
-  { id: "logo-typescript", description: "TypeScript", image: "https://upload.wikimedia.org/wikipedia/commons/4/4c/Typescript_logo_2020.svg", className: "h-8 w-auto" },
-  { id: "logo-vite", description: "Vite", image: "https://vitejs.dev/logo.svg", className: "h-8 w-auto" },
-  { id: "logo-vercel", description: "Vercel", image: "https://www.shadcnblocks.com/images/block/logos/vercel.svg", className: "h-7 w-auto" },
+const techStack = [
+  { icon: Atom, name: "React", color: "text-sky-400" },
+  { icon: Wind, name: "Tailwind CSS", color: "text-cyan-400" },
+  { icon: Database, name: "Supabase", color: "text-emerald-400" },
+  { icon: FileCode, name: "TypeScript", color: "text-blue-400" },
+  { icon: Flame, name: "Vite", color: "text-amber-400" },
+  { icon: Triangle, name: "Vercel", color: "text-foreground" },
 ];
 
 const features = [
@@ -112,7 +111,22 @@ export default function Index() {
       </section>
 
       <section id="tech" className="py-20 px-6 bg-muted/30" ref={techRef}>
-        <Logos3 heading="Tecnologías que impulsan SparkLab" logos={techLogos} />
+        <div className="max-w-4xl mx-auto">
+          <h2 className="text-3xl font-bold text-center text-foreground mb-14" style={{ fontFamily: "var(--font-display)" }}>
+            Tecnologías que impulsan SparkLab
+          </h2>
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-6">
+            {techStack.map((tech) => (
+              <div
+                key={tech.name}
+                className="group flex flex-col items-center gap-3 rounded-xl border border-border bg-card/60 backdrop-blur-sm p-6 hover:border-primary/50 hover:shadow-[0_0_20px_hsl(var(--primary)/0.15)] transition-all duration-300"
+              >
+                <tech.icon className={`w-10 h-10 ${tech.color} group-hover:scale-110 transition-transform duration-300`} strokeWidth={1.5} />
+                <span className="text-xs font-medium text-muted-foreground group-hover:text-foreground transition-colors">{tech.name}</span>
+              </div>
+            ))}
+          </div>
+        </div>
       </section>
 
       {/* CTA */}
