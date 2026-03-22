@@ -109,7 +109,7 @@ export default function Index() {
         </div>
       </section>
 
-      <section id="tech" className="py-20 px-6 bg-muted/30">
+      <section id="tech" className="py-20 px-6 bg-muted/30" ref={techRef}>
         <Logos3 heading="Tecnologías que impulsan SparkLab" logos={techLogos} />
       </section>
 
