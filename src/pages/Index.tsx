@@ -17,7 +17,9 @@ function useScrollReveal() {
         if (entry.isIntersecting) {
           el.style.opacity = "1";
           el.style.transform = "translateY(0)";
-          observer.unobserve(el);
+        } else {
+          el.style.opacity = "0";
+          el.style.transform = "translateY(40px)";
         }
       },
       { threshold: 0.15 }
