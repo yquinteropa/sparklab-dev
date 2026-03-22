@@ -1,8 +1,7 @@
 import { Link } from "react-router-dom";
 import { useEffect, useRef } from "react";
-import { Zap, FlaskConical, Trophy, ChevronRight, BookOpen, Users } from "lucide-react";
+import { Zap, FlaskConical, Trophy, ChevronRight, BookOpen, Users, Atom, Wind, Database, FileCode, Flame, Triangle } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Logos3 } from "@/components/ui/logos3";
 
 function useScrollReveal() {
   const ref = useRef<HTMLDivElement>(null);
