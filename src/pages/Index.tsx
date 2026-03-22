@@ -93,7 +93,7 @@ export default function Index() {
       </section>
 
       {/* Features */}
-      <section id="features" className="py-20 px-6" ref={featuresRef}>
+      <section id="features" className="py-20 px-6 scroll-mt-20" ref={featuresRef}>
         <div className="max-w-6xl mx-auto">
           <h2 className="text-3xl font-bold text-center text-foreground mb-12" style={{ fontFamily: "var(--font-display)" }}>Características</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -110,7 +110,7 @@ export default function Index() {
         </div>
       </section>
 
-      <section id="tech" className="py-20 px-6 bg-muted/30" ref={techRef}>
+      <section id="tech" className="py-20 px-6 bg-muted/30 scroll-mt-20" ref={techRef}>
         <div className="max-w-4xl mx-auto">
           <h2 className="text-3xl font-bold text-center text-foreground mb-14" style={{ fontFamily: "var(--font-display)" }}>
             Tecnologías que impulsan SparkLab
