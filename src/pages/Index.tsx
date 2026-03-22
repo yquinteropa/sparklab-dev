@@ -1,7 +1,32 @@
 import { Link } from "react-router-dom";
+import { useEffect, useRef } from "react";
 import { Zap, FlaskConical, Trophy, ChevronRight, BookOpen, Users } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Logos3 } from "@/components/ui/logos3";
+
+function useScrollReveal() {
+  const ref = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    el.style.opacity = "0";
+    el.style.transform = "translateY(40px)";
+    el.style.transition = "opacity 0.7s ease-out, transform 0.7s ease-out";
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          el.style.opacity = "1";
+          el.style.transform = "translateY(0)";
+          observer.unobserve(el);
+        }
+      },
+      { threshold: 0.15 }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+  return ref;
+}
 
 const techLogos = [
   { id: "logo-react", description: "React", image: "https://www.shadcnblocks.com/images/block/logos/react.png", className: "h-7 w-auto" },
