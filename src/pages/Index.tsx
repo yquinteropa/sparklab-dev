@@ -111,7 +111,22 @@ export default function Index() {
       </section>
 
       <section id="tech" className="py-20 px-6 bg-muted/30" ref={techRef}>
-        <Logos3 heading="Tecnologías que impulsan SparkLab" logos={techLogos} />
+        <div className="max-w-4xl mx-auto">
+          <h2 className="text-3xl font-bold text-center text-foreground mb-14" style={{ fontFamily: "var(--font-display)" }}>
+            Tecnologías que impulsan SparkLab
+          </h2>
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-6">
+            {techStack.map((tech) => (
+              <div
+                key={tech.name}
+                className="group flex flex-col items-center gap-3 rounded-xl border border-border bg-card/60 backdrop-blur-sm p-6 hover:border-primary/50 hover:shadow-[0_0_20px_hsl(var(--primary)/0.15)] transition-all duration-300"
+              >
+                <tech.icon className={`w-10 h-10 ${tech.color} group-hover:scale-110 transition-transform duration-300`} strokeWidth={1.5} />
+                <span className="text-xs font-medium text-muted-foreground group-hover:text-foreground transition-colors">{tech.name}</span>
+              </div>
+            ))}
+          </div>
+        </div>
       </section>
 
       {/* CTA */}
