@@ -45,6 +45,8 @@ const features = [
 
 
 export default function Index() {
+  const featuresRef = useScrollReveal();
+  const techRef = useScrollReveal();
   return (
     <div className="min-h-screen bg-background">
       {/* Navbar */}
