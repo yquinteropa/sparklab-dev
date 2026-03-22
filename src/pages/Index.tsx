@@ -1,7 +1,32 @@
 import { Link } from "react-router-dom";
+import { useEffect, useRef } from "react";
 import { Zap, FlaskConical, Trophy, ChevronRight, BookOpen, Users } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Logos3 } from "@/components/ui/logos3";
+
+function useScrollReveal() {
+  const ref = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    el.style.opacity = "0";
+    el.style.transform = "translateY(40px)";
+    el.style.transition = "opacity 0.7s ease-out, transform 0.7s ease-out";
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          el.style.opacity = "1";
+          el.style.transform = "translateY(0)";
+          observer.unobserve(el);
+        }
+      },
+      { threshold: 0.15 }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+  return ref;
+}
 
 const techLogos = [
   { id: "logo-react", description: "React", image: "https://www.shadcnblocks.com/images/block/logos/react.png", className: "h-7 w-auto" },
@@ -20,6 +45,8 @@ const features = [
 
 
 export default function Index() {
+  const featuresRef = useScrollReveal();
+  const techRef = useScrollReveal();
   return (
     <div className="min-h-screen bg-background">
       {/* Navbar */}
@@ -65,7 +92,7 @@ export default function Index() {
       </section>
 
       {/* Features */}
-      <section id="features" className="py-20 px-6">
+      <section id="features" className="py-20 px-6" ref={featuresRef}>
         <div className="max-w-6xl mx-auto">
           <h2 className="text-3xl font-bold text-center text-foreground mb-12" style={{ fontFamily: "var(--font-display)" }}>Características</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -82,7 +109,7 @@ export default function Index() {
         </div>
       </section>
 
-      <section id="tech" className="py-20 px-6 bg-muted/30">
+      <section id="tech" className="py-20 px-6 bg-muted/30" ref={techRef}>
         <Logos3 heading="Tecnologías que impulsan SparkLab" logos={techLogos} />
       </section>
 
