@@ -29,13 +29,13 @@ function useScrollReveal() {
   return ref;
 }
 
-const techLogos = [
-  { id: "logo-react", description: "React", image: "https://www.shadcnblocks.com/images/block/logos/react.png", className: "h-7 w-auto" },
-  { id: "logo-tailwind", description: "Tailwind CSS", image: "https://www.shadcnblocks.com/images/block/logos/tailwind.svg", className: "h-4 w-auto" },
-  { id: "logo-supabase", description: "Supabase", image: "https://www.shadcnblocks.com/images/block/logos/supabase.svg", className: "h-7 w-auto" },
-  { id: "logo-typescript", description: "TypeScript", image: "https://upload.wikimedia.org/wikipedia/commons/4/4c/Typescript_logo_2020.svg", className: "h-8 w-auto" },
-  { id: "logo-vite", description: "Vite", image: "https://vitejs.dev/logo.svg", className: "h-8 w-auto" },
-  { id: "logo-vercel", description: "Vercel", image: "https://www.shadcnblocks.com/images/block/logos/vercel.svg", className: "h-7 w-auto" },
+const techStack = [
+  { icon: Atom, name: "React", color: "text-sky-400" },
+  { icon: Wind, name: "Tailwind CSS", color: "text-cyan-400" },
+  { icon: Database, name: "Supabase", color: "text-emerald-400" },
+  { icon: FileCode, name: "TypeScript", color: "text-blue-400" },
+  { icon: Flame, name: "Vite", color: "text-amber-400" },
+  { icon: Triangle, name: "Vercel", color: "text-foreground" },
 ];
 
 const features = [
