@@ -110,7 +110,7 @@ export default function Index() {
         </div>
       </section>
 
-      <section id="tech" className="py-20 px-6 bg-muted/30" ref={techRef}>
+      <section id="tech" className="py-20 px-6 bg-muted/30 scroll-mt-20" ref={techRef}>
         <div className="max-w-4xl mx-auto">
           <h2 className="text-3xl font-bold text-center text-foreground mb-14" style={{ fontFamily: "var(--font-display)" }}>
             Tecnologías que impulsan SparkLab
