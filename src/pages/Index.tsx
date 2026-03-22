@@ -46,8 +46,11 @@ const features = [
 
 
 export default function Index() {
+  const heroRef = useScrollReveal();
   const featuresRef = useScrollReveal();
   const techRef = useScrollReveal();
+  const ctaRef = useScrollReveal();
+  const footerRef = useScrollReveal();
   return (
     <div className="min-h-screen bg-background">
       {/* Navbar */}
@@ -60,7 +63,6 @@ export default function Index() {
           <div className="hidden md:flex items-center gap-8">
             <a href="#features" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Características</a>
             <a href="#tech" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Tecnologías</a>
-            
           </div>
           <Link to="/auth">
             <Button size="sm" className="glow-primary gap-1.5">
@@ -71,7 +73,7 @@ export default function Index() {
       </nav>
 
       {/* Hero */}
-      <section className="relative py-24 md:py-36 px-6 text-center overflow-hidden">
+      <section className="relative py-24 md:py-36 px-6 text-center overflow-hidden" ref={heroRef}>
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,hsl(var(--primary)/0.12)_0%,transparent_70%)]" />
         <div className="relative max-w-3xl mx-auto flex flex-col items-center gap-6">
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-primary/30 bg-primary/5 text-primary text-sm font-medium">
@@ -130,7 +132,7 @@ export default function Index() {
       </section>
 
       {/* CTA */}
-      <section id="cta" className="py-24 px-6 text-center">
+      <section id="cta" className="py-24 px-6 text-center" ref={ctaRef}>
         <div className="max-w-2xl mx-auto flex flex-col items-center gap-6">
           <h2 className="text-3xl md:text-4xl font-bold text-foreground" style={{ fontFamily: "var(--font-display)" }}>
             ¿Listo para <span className="text-primary text-glow">encender</span> tu aprendizaje?
@@ -145,7 +147,7 @@ export default function Index() {
       </section>
 
       {/* Footer */}
-      <footer className="border-t border-border py-8 px-6 text-center text-sm text-muted-foreground">
+      <footer className="border-t border-border py-8 px-6 text-center text-sm text-muted-foreground" ref={footerRef}>
         © {new Date().getFullYear()} SparkLab. Todos los derechos reservados.
       </footer>
     </div>);
