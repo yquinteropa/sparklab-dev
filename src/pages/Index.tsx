@@ -77,7 +77,7 @@ export default function Index() {
       <section className="relative min-h-[calc(100vh-4rem)] flex items-center justify-center px-6 text-center overflow-hidden" ref={heroRef}>
         <div className="absolute inset-0">
           <img src={heroBg} alt="" className="w-full h-full object-cover" />
-          <div className="absolute inset-0 bg-background/70 backdrop-blur-[2px]" />
+          <div className="absolute inset-0 bg-background/50" />
         </div>
         <div className="relative max-w-3xl mx-auto flex flex-col items-center gap-6">
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-primary/30 bg-primary/5 text-primary text-sm font-medium">
