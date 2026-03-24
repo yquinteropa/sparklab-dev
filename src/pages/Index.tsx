@@ -47,11 +47,18 @@ const features = [
 
 
 export default function Index() {
+  const [scrollY, setScrollY] = useState(0);
   const heroRef = useScrollReveal();
   const featuresRef = useScrollReveal();
   const techRef = useScrollReveal();
   const ctaRef = useScrollReveal();
   const footerRef = useScrollReveal();
+
+  useEffect(() => {
+    const handleScroll = () => setScrollY(window.scrollY);
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
   return (
     <div className="min-h-screen bg-background">
       {/* Navbar */}
