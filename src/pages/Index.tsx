@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState, useCallback } from "react";
 import { Zap, FlaskConical, Trophy, ChevronRight, BookOpen, Users, Atom, Wind, Database, FileCode, Flame, Triangle } from "lucide-react";
 import heroBg from "@/assets/hero-bg.webp";
 import { Button } from "@/components/ui/button";
@@ -75,8 +75,8 @@ export default function Index() {
 
       {/* Hero */}
       <section className="relative min-h-[calc(100vh-4rem)] flex items-center justify-center px-6 text-center overflow-hidden" ref={heroRef}>
-        <div className="absolute inset-0">
-          <img src={heroBg} alt="" className="w-full h-full object-cover" />
+        <div className="absolute inset-0" style={{ transform: `translateY(${scrollY * 0.4}px)` }}>
+          <img src={heroBg} alt="" className="w-full h-full object-cover scale-125" />
           <div className="absolute inset-0 bg-background/50" />
         </div>
         <div className="relative max-w-3xl mx-auto flex flex-col items-center gap-6">
