@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { useEffect, useRef } from "react";
 import { Zap, FlaskConical, Trophy, ChevronRight, BookOpen, Users, Atom, Wind, Database, FileCode, Flame, Triangle } from "lucide-react";
+import heroBg from "@/assets/hero-bg.webp";
 import { Button } from "@/components/ui/button";
 
 function useScrollReveal() {
@@ -73,8 +74,11 @@ export default function Index() {
       </nav>
 
       {/* Hero */}
-      <section className="relative py-24 md:py-36 px-6 text-center overflow-hidden" ref={heroRef}>
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,hsl(var(--primary)/0.12)_0%,transparent_70%)]" />
+      <section className="relative min-h-[calc(100vh-4rem)] flex items-center justify-center px-6 text-center overflow-hidden" ref={heroRef}>
+        <div className="absolute inset-0">
+          <img src={heroBg} alt="" className="w-full h-full object-cover" />
+          <div className="absolute inset-0 bg-background/70 backdrop-blur-[2px]" />
+        </div>
         <div className="relative max-w-3xl mx-auto flex flex-col items-center gap-6">
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-primary/30 bg-primary/5 text-primary text-sm font-medium">
             <Zap className="w-4 h-4" /> Plataforma Educativa Gamificada
