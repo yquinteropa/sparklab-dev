@@ -95,7 +95,7 @@ export default function Index() {
             <span className="text-primary text-glow">Eléctricos Jugando</span>
           </h1>
           <p className="text-lg text-muted-foreground max-w-xl">
-            SparkLab transforma conceptos complejos de electrónica en experiencias interactivas con simulaciones, misiones y competencias.
+            SparkLab transforma conceptos complejos de electrónica en experiencias interactivas con misiones y competencias.
           </p>
           <Link to="/auth">
             <Button size="lg" className="glow-primary text-base gap-2 mt-2">
