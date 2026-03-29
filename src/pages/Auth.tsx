@@ -3,16 +3,44 @@ import { supabase } from '@/integrations/supabase/client';
 import { lovable } from '@/integrations/lovable';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Zap, Mail, Lock, User, Eye, EyeOff, Check, X } from 'lucide-react';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Zap, Mail, Lock, User, Eye, EyeOff, Check, X, Globe, UserCircle } from 'lucide-react';
 import { toast } from 'sonner';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
+
+const LANGUAGES = [
+  { value: 'es', label: 'Español' },
+  { value: 'en', label: 'English' },
+  { value: 'pt', label: 'Português' },
+  { value: 'fr', label: 'Français' },
+  { value: 'de', label: 'Deutsch' },
+];
+
+const GENDERS = [
+  { value: 'male', label: 'Masculino' },
+  { value: 'female', label: 'Femenino' },
+  { value: 'non_binary', label: 'No binario' },
+  { value: 'prefer_not_say', label: 'Prefiero no decir' },
+];
+
+const COUNTRIES = [
+  'Argentina', 'Bolivia', 'Brasil', 'Chile', 'Colombia', 'Costa Rica', 'Cuba',
+  'Ecuador', 'El Salvador', 'España', 'Estados Unidos', 'Guatemala', 'Honduras',
+  'México', 'Nicaragua', 'Panamá', 'Paraguay', 'Perú', 'Puerto Rico',
+  'República Dominicana', 'Uruguay', 'Venezuela',
+];
 
 export default function Auth() {
   const [isLogin, setIsLogin] = useState(true);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [name, setName] = useState('');
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [username, setUsername] = useState('');
+  const [language, setLanguage] = useState('es');
+  const [gender, setGender] = useState('');
+  const [country, setCountry] = useState('');
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
@@ -44,7 +72,18 @@ export default function Auth() {
         const { error } = await supabase.auth.signUp({
           email,
           password,
-          options: { data: { full_name: name }, emailRedirectTo: window.location.origin },
+          options: {
+            data: {
+              full_name: `${firstName} ${lastName}`,
+              first_name: firstName,
+              last_name: lastName,
+              username,
+              language,
+              gender,
+              country,
+            },
+            emailRedirectTo: window.location.origin,
+          },
         });
         if (error) throw error;
         toast.success('Cuenta creada. Revisa tu email para confirmar.');
@@ -65,7 +104,7 @@ export default function Auth() {
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-secondary p-4">
-      <div className="w-full max-w-md space-y-8">
+      <div className={`w-full ${isLogin ? 'max-w-md' : 'max-w-lg'} space-y-8 transition-all duration-300`}>
         {/* Logo */}
         <div className="text-center">
           <Link to="/" className="inline-block">
@@ -89,16 +128,82 @@ export default function Auth() {
 
           <form onSubmit={handleSubmit} className="space-y-4">
             {!isLogin && (
-              <div className="relative">
-                <User className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-                <Input
-                  placeholder="Nombre completo"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  className="pl-10"
-                  required
-                />
-              </div>
+              <>
+                {/* Nombre y Apellido */}
+                <div className="grid grid-cols-2 gap-3">
+                  <div className="relative">
+                    <User className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+                    <Input
+                      placeholder="Nombre"
+                      value={firstName}
+                      onChange={(e) => setFirstName(e.target.value)}
+                      className="pl-10"
+                      required
+                    />
+                  </div>
+                  <div className="relative">
+                    <User className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+                    <Input
+                      placeholder="Apellido"
+                      value={lastName}
+                      onChange={(e) => setLastName(e.target.value)}
+                      className="pl-10"
+                      required
+                    />
+                  </div>
+                </div>
+
+                {/* Username */}
+                <div className="relative">
+                  <UserCircle className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+                  <Input
+                    placeholder="Nombre de usuario (nickname)"
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
+                    className="pl-10"
+                    required
+                  />
+                </div>
+
+                {/* Idioma y Género */}
+                <div className="grid grid-cols-2 gap-3">
+                  <Select value={language} onValueChange={setLanguage}>
+                    <SelectTrigger>
+                      <Globe className="mr-2 h-4 w-4 text-muted-foreground" />
+                      <SelectValue placeholder="Idioma" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {LANGUAGES.map((l) => (
+                        <SelectItem key={l.value} value={l.value}>{l.label}</SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+
+                  <Select value={gender} onValueChange={setGender}>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Género" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {GENDERS.map((g) => (
+                        <SelectItem key={g.value} value={g.value}>{g.label}</SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                {/* País */}
+                <Select value={country} onValueChange={setCountry}>
+                  <SelectTrigger>
+                    <Globe className="mr-2 h-4 w-4 text-muted-foreground" />
+                    <SelectValue placeholder="País" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {COUNTRIES.map((c) => (
+                      <SelectItem key={c} value={c}>{c}</SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </>
             )}
             <div className="relative">
               <Mail className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
@@ -157,7 +262,7 @@ export default function Auth() {
               </div>
             )}
 
-            <Button type="submit" className="w-full glow-primary" disabled={loading || (!isLogin && !allRulesPass)}>
+            <Button type="submit" className="w-full glow-primary" disabled={loading || (!isLogin && (!allRulesPass || !firstName || !lastName || !username || !gender || !country))}>
               {loading ? 'Procesando...' : isLogin ? 'Entrar' : 'Registrarse'}
             </Button>
           </form>
