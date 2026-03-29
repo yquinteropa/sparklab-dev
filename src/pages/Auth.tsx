@@ -262,7 +262,7 @@ export default function Auth() {
               </div>
             )}
 
-            <Button type="submit" className="w-full glow-primary" disabled={loading || (!isLogin && !allRulesPass)}>
+            <Button type="submit" className="w-full glow-primary" disabled={loading || (!isLogin && (!allRulesPass || !firstName || !lastName || !username || !gender || !country))}>
               {loading ? 'Procesando...' : isLogin ? 'Entrar' : 'Registrarse'}
             </Button>
           </form>
