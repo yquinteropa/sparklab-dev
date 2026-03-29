@@ -14,6 +14,17 @@ export default function Auth() {
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+
+  const passwordRules = [
+    { label: 'Mínimo 8 caracteres', test: (p: string) => p.length >= 8 },
+    { label: 'Una letra mayúscula', test: (p: string) => /[A-Z]/.test(p) },
+    { label: 'Una letra minúscula', test: (p: string) => /[a-z]/.test(p) },
+    { label: 'Un número', test: (p: string) => /\d/.test(p) },
+    { label: 'Un carácter especial (!@#$...)', test: (p: string) => /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(p) },
+  ];
+
+  const allRulesPass = passwordRules.every((r) => r.test(password));
   const navigate = useNavigate();
   const { session } = useAuth();
 
