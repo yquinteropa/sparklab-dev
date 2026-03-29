@@ -3,7 +3,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { lovable } from '@/integrations/lovable';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Zap, Mail, Lock, User } from 'lucide-react';
+import { Zap, Mail, Lock, User, Eye, EyeOff, Check, X } from 'lucide-react';
 import { toast } from 'sonner';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
@@ -14,6 +14,17 @@ export default function Auth() {
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+
+  const passwordRules = [
+    { label: 'Mínimo 8 caracteres', test: (p: string) => p.length >= 8 },
+    { label: 'Una letra mayúscula', test: (p: string) => /[A-Z]/.test(p) },
+    { label: 'Una letra minúscula', test: (p: string) => /[a-z]/.test(p) },
+    { label: 'Un número', test: (p: string) => /\d/.test(p) },
+    { label: 'Un carácter especial (!@#$...)', test: (p: string) => /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(p) },
+  ];
+
+  const allRulesPass = passwordRules.every((r) => r.test(password));
   const navigate = useNavigate();
   const { session } = useAuth();
 
@@ -103,15 +114,40 @@ export default function Auth() {
             <div className="relative">
               <Lock className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
               <Input
-                type="password"
+                type={showPassword ? 'text' : 'password'}
                 placeholder="Contraseña"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="pl-10"
+                className="pl-10 pr-10"
                 required
-                minLength={6}
+                minLength={isLogin ? 6 : 8}
               />
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute right-3 top-3 text-muted-foreground hover:text-foreground transition-colors"
+                tabIndex={-1}
+              >
+                {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+              </button>
             </div>
+
+            {!isLogin && password.length > 0 && (
+              <div className="space-y-1.5 rounded-lg border border-border bg-secondary/50 p-3">
+                {passwordRules.map((rule, i) => (
+                  <div key={i} className="flex items-center gap-2 text-xs">
+                    {rule.test(password) ? (
+                      <Check className="h-3.5 w-3.5 text-green-500" />
+                    ) : (
+                      <X className="h-3.5 w-3.5 text-muted-foreground" />
+                    )}
+                    <span className={rule.test(password) ? 'text-green-500' : 'text-muted-foreground'}>
+                      {rule.label}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            )}
 
             {isLogin && (
               <div className="flex justify-end">
@@ -121,7 +157,7 @@ export default function Auth() {
               </div>
             )}
 
-            <Button type="submit" className="w-full glow-primary" disabled={loading}>
+            <Button type="submit" className="w-full glow-primary" disabled={loading || (!isLogin && !allRulesPass)}>
               {loading ? 'Procesando...' : isLogin ? 'Entrar' : 'Registrarse'}
             </Button>
           </form>
