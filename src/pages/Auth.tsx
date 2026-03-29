@@ -7,6 +7,7 @@ import { Zap, Mail, Lock, User } from 'lucide-react';
 import { toast } from 'sonner';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
+import { useAuth } from '@/contexts/AuthContext';
 
 export default function Auth() {
   const [isLogin, setIsLogin] = useState(true);
@@ -57,12 +58,14 @@ export default function Auth() {
       <div className="w-full max-w-md space-y-8">
         {/* Logo */}
         <div className="text-center">
-          <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-primary glow-primary">
-            <Zap className="h-8 w-8 text-primary-foreground" />
-          </div>
-          <h1 className="font-display text-3xl font-bold text-secondary-foreground text-glow">
-            SparkLab
-          </h1>
+          <Link to="/" className="inline-block">
+            <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-primary glow-primary">
+              <Zap className="h-8 w-8 text-primary-foreground" />
+            </div>
+            <h1 className="font-display text-3xl font-bold text-secondary-foreground text-glow">
+              SparkLab
+            </h1>
+          </Link>
           <p className="mt-2 text-sm text-muted-foreground">
             Aprende circuitos eléctricos jugando
           </p>
