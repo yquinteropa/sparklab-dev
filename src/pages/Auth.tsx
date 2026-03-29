@@ -104,7 +104,7 @@ export default function Auth() {
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-secondary p-4">
-      <div className="w-full max-w-md space-y-8">
+      <div className={`w-full ${isLogin ? 'max-w-md' : 'max-w-lg'} space-y-8 transition-all duration-300`}>
         {/* Logo */}
         <div className="text-center">
           <Link to="/" className="inline-block">
