@@ -114,15 +114,40 @@ export default function Auth() {
             <div className="relative">
               <Lock className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
               <Input
-                type="password"
+                type={showPassword ? 'text' : 'password'}
                 placeholder="Contraseña"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="pl-10"
+                className="pl-10 pr-10"
                 required
-                minLength={6}
+                minLength={isLogin ? 6 : 8}
               />
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute right-3 top-3 text-muted-foreground hover:text-foreground transition-colors"
+                tabIndex={-1}
+              >
+                {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+              </button>
             </div>
+
+            {!isLogin && password.length > 0 && (
+              <div className="space-y-1.5 rounded-lg border border-border bg-secondary/50 p-3">
+                {passwordRules.map((rule, i) => (
+                  <div key={i} className="flex items-center gap-2 text-xs">
+                    {rule.test(password) ? (
+                      <Check className="h-3.5 w-3.5 text-green-500" />
+                    ) : (
+                      <X className="h-3.5 w-3.5 text-muted-foreground" />
+                    )}
+                    <span className={rule.test(password) ? 'text-green-500' : 'text-muted-foreground'}>
+                      {rule.label}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            )}
 
             {isLogin && (
               <div className="flex justify-end">
