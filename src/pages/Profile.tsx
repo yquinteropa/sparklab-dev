@@ -33,6 +33,7 @@ const COUNTRIES = [
 
 export default function Profile() {
   const { user } = useAuth();
+  const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [firstName, setFirstName] = useState('');
