@@ -68,7 +68,7 @@ export function DashboardNav() {
                 onClick={() => setMenuOpen(false)}
                 className="flex items-center gap-2 px-4 py-2 text-sm text-card-foreground hover:bg-muted"
               >
-                <User className="h-4 w-4" /> Ver mi perfil
+                <User className="h-4 w-4" /> Actualizar perfil
               </Link>
               <button
                 onClick={() => { setMenuOpen(false); signOut(); }}
