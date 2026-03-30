@@ -49,10 +49,16 @@ export default function Profile() {
         .select('first_name, last_name, username, language, gender, country')
         .eq('user_id', user.id)
         .single();
+      // Use profile data, falling back to auth metadata for Google/OAuth users
+      const meta = user.user_metadata || {};
+      const fullNameParts = (meta.full_name || meta.name || '').split(' ');
+      const metaFirstName = fullNameParts[0] || '';
+      const metaLastName = fullNameParts.slice(1).join(' ') || '';
+
       if (data) {
-        setFirstName(data.first_name || '');
-        setLastName(data.last_name || '');
-        setUsername(data.username || '');
+        setFirstName(data.first_name || metaFirstName);
+        setLastName(data.last_name || metaLastName);
+        setUsername(data.username || meta.email?.split('@')[0] || '');
         setLanguage(data.language || 'es');
         setGender(data.gender || '');
         setCountry(data.country || '');
