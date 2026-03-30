@@ -96,6 +96,7 @@ export default function Profile() {
       }
     } else {
       toast.success('¡Perfil actualizado correctamente!');
+      setTimeout(() => navigate('/dashboard'), 1500);
     }
   };
 
