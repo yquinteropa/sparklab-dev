@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { DashboardNav } from '@/components/DashboardNav';
 import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from '@/integrations/supabase/client';
@@ -32,6 +33,7 @@ const COUNTRIES = [
 
 export default function Profile() {
   const { user } = useAuth();
+  const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [firstName, setFirstName] = useState('');
@@ -94,6 +96,7 @@ export default function Profile() {
       }
     } else {
       toast.success('¡Perfil actualizado correctamente!');
+      setTimeout(() => navigate('/dashboard'), 1500);
     }
   };
 
