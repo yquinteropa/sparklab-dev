@@ -107,7 +107,7 @@ export function DashboardNav() {
           <AlertDialogFooter>
             <AlertDialogCancel>Cancelar</AlertDialogCancel>
             <AlertDialogAction
-              onClick={() => signOut()}
+              onClick={async () => { await signOut(); navigate('/'); }}
               className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
             >
               Cerrar sesión
