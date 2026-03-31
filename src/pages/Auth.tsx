@@ -92,7 +92,7 @@ export default function Auth() {
               gender,
               country,
             },
-            emailRedirectTo: window.location.origin,
+            emailRedirectTo: window.location.origin + '/account-activated',
           },
         });
         if (error) throw error;
