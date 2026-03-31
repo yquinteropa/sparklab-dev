@@ -44,6 +44,7 @@ export default function Auth() {
   const [country, setCountry] = useState('');
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [verificationSent, setVerificationSent] = useState(false);
 
   const passwordRules = [
     { label: 'Mínimo 8 caracteres', test: (p: string) => p.length >= 8 },
