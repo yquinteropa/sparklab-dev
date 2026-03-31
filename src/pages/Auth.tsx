@@ -309,6 +309,8 @@ export default function Auth() {
               {isLogin ? 'Regístrate' : 'Inicia sesión'}
             </button>
           </p>
+          </>
+          )}
         </div>
       </div>
     </div>
