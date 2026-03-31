@@ -149,7 +149,7 @@ export default function Index() {
             ¿Listo para <span className="text-primary text-glow">encender</span> tu aprendizaje?
           </h2>
           <p className="text-muted-foreground">Crea tu cuenta gratis y comienza a construir circuitos hoy.</p>
-          <Link to="/auth">
+          <Link to="/auth?mode=signup">
             <Button size="lg" className="glow-primary gap-2">
               Crear Cuenta <Zap className="w-5 h-5" />
             </Button>
