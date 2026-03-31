@@ -8,6 +8,7 @@ import { Zap, Mail, Lock, User, Eye, EyeOff, Check, X, Globe, UserCircle } from 
 import { toast } from 'sonner';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
+import VerificationSent from '@/components/VerificationSent';
 
 const LANGUAGES = [
   { value: 'es', label: 'Español' },
