@@ -96,7 +96,7 @@ export default function Auth() {
           },
         });
         if (error) throw error;
-        toast.success('Cuenta creada. Revisa tu email para confirmar.');
+        setVerificationSent(true);
       }
     } catch (err: any) {
       toast.error(err.message);
