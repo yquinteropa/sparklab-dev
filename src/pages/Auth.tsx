@@ -8,6 +8,7 @@ import { Zap, Mail, Lock, User, Eye, EyeOff, Check, X, Globe, UserCircle } from 
 import { toast } from 'sonner';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
+import VerificationSent from '@/components/VerificationSent';
 
 const LANGUAGES = [
   { value: 'es', label: 'Español' },
@@ -44,6 +45,7 @@ export default function Auth() {
   const [country, setCountry] = useState('');
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [verificationSent, setVerificationSent] = useState(false);
 
   const passwordRules = [
     { label: 'Mínimo 8 caracteres', test: (p: string) => p.length >= 8 },
@@ -66,8 +68,15 @@ export default function Auth() {
     setLoading(true);
     try {
       if (isLogin) {
-        const { error } = await supabase.auth.signInWithPassword({ email, password });
+        const { data, error } = await supabase.auth.signInWithPassword({ email, password });
         if (error) throw error;
+        // Check if email is confirmed
+        if (data.user && !data.user.email_confirmed_at) {
+          await supabase.auth.signOut();
+          toast.error('Por favor, verifica tu correo electrónico antes de iniciar sesión.');
+          setLoading(false);
+          return;
+        }
         toast.success('¡Bienvenido de vuelta!');
       } else {
         const { error } = await supabase.auth.signUp({
@@ -83,11 +92,11 @@ export default function Auth() {
               gender,
               country,
             },
-            emailRedirectTo: window.location.origin,
+            emailRedirectTo: window.location.origin + '/account-activated',
           },
         });
         if (error) throw error;
-        toast.success('Cuenta creada. Revisa tu email para confirmar.');
+        setVerificationSent(true);
       }
     } catch (err: any) {
       toast.error(err.message);
@@ -121,8 +130,11 @@ export default function Auth() {
           </p>
         </div>
 
-        {/* Form Card */}
         <div className="rounded-xl border border-border bg-card p-8 shadow-2xl">
+          {verificationSent ? (
+            <VerificationSent email={email} />
+          ) : (
+          <>
           <h2 className="mb-6 text-center font-display text-lg font-semibold text-card-foreground">
             {isLogin ? 'Iniciar Sesión' : 'Crear Cuenta'}
           </h2>
@@ -297,6 +309,8 @@ export default function Auth() {
               {isLogin ? 'Regístrate' : 'Inicia sesión'}
             </button>
           </p>
+          </>
+          )}
         </div>
       </div>
     </div>

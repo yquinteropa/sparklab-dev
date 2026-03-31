@@ -8,6 +8,7 @@ import { AccessibilityProvider } from "@/contexts/AccessibilityContext";
 import { AccessibilityMenu } from "@/components/AccessibilityMenu";
 import Index from "./pages/Index";
 import Auth from "./pages/Auth";
+import AccountActivated from "./pages/AccountActivated";
 import Dashboard from "./pages/Dashboard";
 import Simulator from "./pages/Simulator";
 import Leaderboard from "./pages/Leaderboard";
@@ -38,6 +39,7 @@ const App = () => (
               <Route path="/auth" element={<Auth />} />
               <Route path="/auth/forgot-password" element={<ForgotPassword />} />
               <Route path="/reset-password" element={<ResetPassword />} />
+              <Route path="/account-activated" element={<AccountActivated />} />
               <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
               <Route path="/dashboard/simulator" element={<ProtectedRoute><Simulator /></ProtectedRoute>} />
               <Route path="/dashboard/leaderboard" element={<ProtectedRoute><Leaderboard /></ProtectedRoute>} />
