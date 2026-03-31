@@ -32,7 +32,8 @@ const COUNTRIES = [
 ];
 
 export default function Auth() {
-  const [isLogin, setIsLogin] = useState(true);
+  const [searchParams] = useState(() => new URLSearchParams(window.location.search));
+  const [isLogin, setIsLogin] = useState(searchParams.get('mode') !== 'signup');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [firstName, setFirstName] = useState('');
