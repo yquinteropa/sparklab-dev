@@ -8,6 +8,7 @@ import { AccessibilityProvider } from "@/contexts/AccessibilityContext";
 import { AccessibilityMenu } from "@/components/AccessibilityMenu";
 import Index from "./pages/Index";
 import Auth from "./pages/Auth";
+import AccountActivated from "./pages/AccountActivated";
 import Dashboard from "./pages/Dashboard";
 import Simulator from "./pages/Simulator";
 import Leaderboard from "./pages/Leaderboard";
