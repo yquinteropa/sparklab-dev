@@ -68,8 +68,15 @@ export default function Auth() {
     setLoading(true);
     try {
       if (isLogin) {
-        const { error } = await supabase.auth.signInWithPassword({ email, password });
+        const { data, error } = await supabase.auth.signInWithPassword({ email, password });
         if (error) throw error;
+        // Check if email is confirmed
+        if (data.user && !data.user.email_confirmed_at) {
+          await supabase.auth.signOut();
+          toast.error('Por favor, verifica tu correo electrónico antes de iniciar sesión.');
+          setLoading(false);
+          return;
+        }
         toast.success('¡Bienvenido de vuelta!');
       } else {
         const { error } = await supabase.auth.signUp({
