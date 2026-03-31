@@ -130,8 +130,11 @@ export default function Auth() {
           </p>
         </div>
 
-        {/* Form Card */}
         <div className="rounded-xl border border-border bg-card p-8 shadow-2xl">
+          {verificationSent ? (
+            <VerificationSent email={email} />
+          ) : (
+          <>
           <h2 className="mb-6 text-center font-display text-lg font-semibold text-card-foreground">
             {isLogin ? 'Iniciar Sesión' : 'Crear Cuenta'}
           </h2>
