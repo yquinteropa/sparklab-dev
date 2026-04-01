@@ -1,6 +1,7 @@
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Zap, Target, Trophy, User, LogOut, ChevronDown } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
+import { useTranslation } from 'react-i18next';
 import { useState, useRef, useEffect } from 'react';
 import {
   AlertDialog,
@@ -15,6 +16,7 @@ import {
 
 export function DashboardNav() {
   const { user, signOut } = useAuth();
+  const { t } = useTranslation();
   const location = useLocation();
   const navigate = useNavigate();
   const [menuOpen, setMenuOpen] = useState(false);
@@ -30,9 +32,9 @@ export function DashboardNav() {
   }, []);
 
   const navItems = [
-    { to: '/dashboard', label: 'Misiones', icon: Target },
-    { to: '/dashboard/simulator', label: 'Simulador', icon: Zap },
-    { to: '/dashboard/leaderboard', label: 'Leaderboard', icon: Trophy },
+    { to: '/dashboard', label: t('nav.missions'), icon: Target },
+    { to: '/dashboard/simulator', label: t('nav.simulator'), icon: Zap },
+    { to: '/dashboard/leaderboard', label: t('nav.leaderboard'), icon: Trophy },
   ];
 
   return (
@@ -81,14 +83,14 @@ export function DashboardNav() {
                   onClick={() => setMenuOpen(false)}
                   className="flex items-center gap-2 px-4 py-2 text-sm text-card-foreground hover:bg-muted"
                 >
-                  <User className="h-4 w-4" /> Actualizar perfil
+                  <User className="h-4 w-4" /> {t('nav.updateProfile')}
                 </Link>
                 <div className="my-1 border-t border-border" />
                 <button
                   onClick={() => { setMenuOpen(false); setShowLogoutConfirm(true); }}
                   className="flex w-full items-center gap-2 px-4 py-2 text-sm text-destructive hover:bg-destructive/10 transition-colors"
                 >
-                  <LogOut className="h-4 w-4" /> Cerrar sesión
+                  <LogOut className="h-4 w-4" /> {t('nav.logout')}
                 </button>
               </div>
             )}
@@ -99,18 +101,18 @@ export function DashboardNav() {
       <AlertDialog open={showLogoutConfirm} onOpenChange={setShowLogoutConfirm}>
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>¿Cerrar sesión?</AlertDialogTitle>
+            <AlertDialogTitle>{t('nav.logoutConfirmTitle')}</AlertDialogTitle>
             <AlertDialogDescription>
-              Estás a punto de salir de tu cuenta. ¿Deseas continuar?
+              {t('nav.logoutConfirmDesc')}
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel>Cancelar</AlertDialogCancel>
+            <AlertDialogCancel>{t('nav.cancel')}</AlertDialogCancel>
             <AlertDialogAction
               onClick={async () => { await signOut(); navigate('/'); }}
               className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
             >
-              Cerrar sesión
+              {t('nav.logout')}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>

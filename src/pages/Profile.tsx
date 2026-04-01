@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { DashboardNav } from '@/components/DashboardNav';
 import { useAuth } from '@/contexts/AuthContext';
+import { useTranslation } from 'react-i18next';
 import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -17,13 +18,6 @@ const LANGUAGES = [
   { value: 'de', label: 'Deutsch' },
 ];
 
-const GENDERS = [
-  { value: 'male', label: 'Masculino' },
-  { value: 'female', label: 'Femenino' },
-  { value: 'non_binary', label: 'No binario' },
-  { value: 'prefer_not_say', label: 'Prefiero no decir' },
-];
-
 const COUNTRIES = [
   'Argentina', 'Bolivia', 'Brasil', 'Chile', 'Colombia', 'Costa Rica', 'Cuba',
   'Ecuador', 'El Salvador', 'España', 'Estados Unidos', 'Guatemala', 'Honduras',
@@ -33,6 +27,7 @@ const COUNTRIES = [
 
 export default function Profile() {
   const { user } = useAuth();
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
@@ -43,6 +38,13 @@ export default function Profile() {
   const [gender, setGender] = useState('');
   const [country, setCountry] = useState('');
 
+  const genders = [
+    { value: 'male', label: t('auth.genderMale') },
+    { value: 'female', label: t('auth.genderFemale') },
+    { value: 'non_binary', label: t('auth.genderNonBinary') },
+    { value: 'prefer_not_say', label: t('auth.genderPreferNot') },
+  ];
+
   useEffect(() => {
     if (!user) return;
     const fetchProfile = async () => {
@@ -51,7 +53,6 @@ export default function Profile() {
         .select('first_name, last_name, username, language, gender, country')
         .eq('user_id', user.id)
         .single();
-      // Use profile data, falling back to auth metadata for Google/OAuth users
       const meta = user.user_metadata || {};
       const fullNameParts = (meta.full_name || meta.name || '').split(' ');
       const metaFirstName = fullNameParts[0] || '';
@@ -90,12 +91,12 @@ export default function Profile() {
     setSaving(false);
     if (error) {
       if (error.code === '23505') {
-        toast.error('El nombre de usuario ya está en uso.');
+        toast.error(t('profile.usernameInUse'));
       } else {
-        toast.error('Error al actualizar el perfil.');
+        toast.error(t('profile.updateError'));
       }
     } else {
-      toast.success('¡Perfil actualizado correctamente!');
+      toast.success(t('profile.updateSuccess'));
       setTimeout(() => navigate('/dashboard'), 1500);
     }
   };
@@ -116,34 +117,32 @@ export default function Profile() {
       <DashboardNav />
       <main className="mx-auto max-w-lg p-6">
         <div className="rounded-xl border border-border bg-card p-8">
-          {/* Header */}
           <div className="flex items-center gap-4 mb-6">
             <div className="flex h-14 w-14 items-center justify-center rounded-full bg-primary text-xl font-bold text-primary-foreground font-display">
               {firstName?.[0]?.toUpperCase() || user?.email?.[0]?.toUpperCase() || 'U'}
             </div>
             <div>
-              <h1 className="font-display text-xl font-bold text-card-foreground">Actualizar Perfil</h1>
+              <h1 className="font-display text-xl font-bold text-card-foreground">{t('profile.title')}</h1>
               <p className="flex items-center gap-1 text-sm text-muted-foreground">
                 <Mail className="h-3.5 w-3.5" /> {user?.email}
               </p>
             </div>
           </div>
 
-          {/* Form */}
           <div className="space-y-4">
             <div className="grid grid-cols-2 gap-3">
               <div>
-                <label className="mb-1 block text-xs font-medium text-muted-foreground">Nombre</label>
-                <Input value={firstName} onChange={e => setFirstName(e.target.value)} placeholder="Nombre" />
+                <label className="mb-1 block text-xs font-medium text-muted-foreground">{t('profile.firstName')}</label>
+                <Input value={firstName} onChange={e => setFirstName(e.target.value)} placeholder={t('profile.firstName')} />
               </div>
               <div>
-                <label className="mb-1 block text-xs font-medium text-muted-foreground">Apellido</label>
-                <Input value={lastName} onChange={e => setLastName(e.target.value)} placeholder="Apellido" />
+                <label className="mb-1 block text-xs font-medium text-muted-foreground">{t('profile.lastName')}</label>
+                <Input value={lastName} onChange={e => setLastName(e.target.value)} placeholder={t('profile.lastName')} />
               </div>
             </div>
 
             <div>
-              <label className="mb-1 block text-xs font-medium text-muted-foreground">Nombre de usuario</label>
+              <label className="mb-1 block text-xs font-medium text-muted-foreground">{t('profile.username')}</label>
               <div className="relative">
                 <User className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
                 <Input value={username} onChange={e => setUsername(e.target.value)} placeholder="nickname" className="pl-9" />
@@ -152,29 +151,29 @@ export default function Profile() {
 
             <div className="grid grid-cols-2 gap-3">
               <div>
-                <label className="mb-1 block text-xs font-medium text-muted-foreground">Idioma</label>
+                <label className="mb-1 block text-xs font-medium text-muted-foreground">{t('profile.language')}</label>
                 <Select value={language} onValueChange={setLanguage}>
-                  <SelectTrigger><SelectValue placeholder="Idioma" /></SelectTrigger>
+                  <SelectTrigger><SelectValue placeholder={t('profile.language')} /></SelectTrigger>
                   <SelectContent>
                     {LANGUAGES.map(l => <SelectItem key={l.value} value={l.value}>{l.label}</SelectItem>)}
                   </SelectContent>
                 </Select>
               </div>
               <div>
-                <label className="mb-1 block text-xs font-medium text-muted-foreground">Género</label>
+                <label className="mb-1 block text-xs font-medium text-muted-foreground">{t('profile.gender')}</label>
                 <Select value={gender} onValueChange={setGender}>
-                  <SelectTrigger><SelectValue placeholder="Género" /></SelectTrigger>
+                  <SelectTrigger><SelectValue placeholder={t('profile.gender')} /></SelectTrigger>
                   <SelectContent>
-                    {GENDERS.map(g => <SelectItem key={g.value} value={g.value}>{g.label}</SelectItem>)}
+                    {genders.map(g => <SelectItem key={g.value} value={g.value}>{g.label}</SelectItem>)}
                   </SelectContent>
                 </Select>
               </div>
             </div>
 
             <div>
-              <label className="mb-1 block text-xs font-medium text-muted-foreground">País</label>
+              <label className="mb-1 block text-xs font-medium text-muted-foreground">{t('profile.country')}</label>
               <Select value={country} onValueChange={setCountry}>
-                <SelectTrigger><SelectValue placeholder="País" /></SelectTrigger>
+                <SelectTrigger><SelectValue placeholder={t('profile.country')} /></SelectTrigger>
                 <SelectContent>
                   {COUNTRIES.map(c => <SelectItem key={c} value={c}>{c}</SelectItem>)}
                 </SelectContent>
@@ -183,7 +182,7 @@ export default function Profile() {
 
             <Button onClick={handleSave} disabled={saving} className="w-full gap-2 mt-2">
               {saving ? <Loader2 className="h-4 w-4 animate-spin" /> : <Save className="h-4 w-4" />}
-              {saving ? 'Guardando...' : 'Actualizar perfil'}
+              {saving ? t('profile.saving') : t('profile.save')}
             </Button>
           </div>
         </div>
