@@ -142,10 +142,21 @@ export default function Auth() {
   };
 
   const handleSocialLogin = async (provider: 'google') => {
-    const result = await lovable.auth.signInWithOAuth(provider, {
-      redirect_uri: `${window.location.origin}/dashboard`,
-    });
-    if (result?.error) toast.error(String(result.error));
+    try {
+      const result = await lovable.auth.signInWithOAuth(provider, {
+        redirect_uri: `${window.location.origin}/dashboard`,
+      });
+      if (result?.error) {
+        const errorMsg = String(result.error);
+        if (errorMsg.includes('already') || errorMsg.includes('conflict')) {
+          toast.error('Hubo un conflicto con tu cuenta. Intenta iniciar sesión con correo y contraseña.', { duration: 5000 });
+        } else {
+          toast.error(errorMsg);
+        }
+      }
+    } catch (err: any) {
+      toast.error('Error al conectar con Google. Intenta de nuevo.');
+    }
   };
 
   return (
