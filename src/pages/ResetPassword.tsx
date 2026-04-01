@@ -2,9 +2,17 @@ import { useState, useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Zap, Lock, Eye, EyeOff } from 'lucide-react';
+import { Zap, Lock, Eye, EyeOff, Check, X } from 'lucide-react';
 import { toast } from 'sonner';
 import { useNavigate } from 'react-router-dom';
+
+const passwordRules = [
+  { label: 'Mínimo 8 caracteres', test: (p: string) => p.length >= 8 },
+  { label: 'Una letra mayúscula', test: (p: string) => /[A-Z]/.test(p) },
+  { label: 'Una letra minúscula', test: (p: string) => /[a-z]/.test(p) },
+  { label: 'Un número', test: (p: string) => /\d/.test(p) },
+  { label: 'Un carácter especial', test: (p: string) => /[!@#$%^&*(),.?":{}|<>_\-+=\[\]\\\/~`]/.test(p) },
+];
 
 export default function ResetPassword() {
   const [password, setPassword] = useState('');
@@ -24,7 +32,6 @@ export default function ResetPassword() {
       setChecking(false);
     });
 
-    // Also check if already in a recovery session
     supabase.auth.getSession().then(({ data: { session } }) => {
       if (session) setIsValidSession(true);
       setChecking(false);
@@ -33,11 +40,14 @@ export default function ResetPassword() {
     return () => subscription.unsubscribe();
   }, []);
 
+  const allRulesPass = passwordRules.every((r) => r.test(password));
+  const passwordsMatch = confirmPassword.length === 0 || password === confirmPassword;
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (password.length < 6) {
-      toast.error('La contraseña debe tener al menos 6 caracteres.');
+    if (!allRulesPass) {
+      toast.error('La contraseña no cumple con todos los requisitos de seguridad.');
       return;
     }
 
@@ -50,8 +60,12 @@ export default function ResetPassword() {
     try {
       const { error } = await supabase.auth.updateUser({ password });
       if (error) throw error;
-      toast.success('¡Contraseña actualizada correctamente! Redirigiendo...');
-      setTimeout(() => navigate('/dashboard'), 2000);
+
+      // Sign out to force manual re-login
+      await supabase.auth.signOut();
+
+      toast.success('Contraseña actualizada. Por favor, inicia sesión con tus nuevas credenciales.');
+      setTimeout(() => navigate('/auth'), 2000);
     } catch (err: any) {
       toast.error(err.message || 'Error al actualizar la contraseña.');
     } finally {
@@ -75,7 +89,7 @@ export default function ResetPassword() {
             Enlace inválido o expirado
           </h2>
           <p className="mb-6 text-sm text-muted-foreground">
-            Este enlace de recuperación ya no es válido. Solicita uno nuevo.
+            Este enlace de recuperación ya no es válido o ha expirado. Solicita uno nuevo para restablecer tu contraseña.
           </p>
           <Button onClick={() => navigate('/auth/forgot-password')} className="glow-primary">
             Solicitar nuevo enlace
@@ -84,8 +98,6 @@ export default function ResetPassword() {
       </div>
     );
   }
-
-  const passwordsMatch = confirmPassword.length === 0 || password === confirmPassword;
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-secondary p-4">
@@ -117,7 +129,6 @@ export default function ResetPassword() {
                 onChange={(e) => setPassword(e.target.value)}
                 className="pl-10 pr-10"
                 required
-                minLength={6}
               />
               <button
                 type="button"
@@ -128,6 +139,23 @@ export default function ResetPassword() {
               </button>
             </div>
 
+            {password.length > 0 && (
+              <div className="space-y-1 rounded-lg border border-border bg-muted/40 p-3">
+                {passwordRules.map((rule, i) => (
+                  <div key={i} className="flex items-center gap-2 text-xs">
+                    {rule.test(password) ? (
+                      <Check className="h-3.5 w-3.5 text-green-500" />
+                    ) : (
+                      <X className="h-3.5 w-3.5 text-destructive" />
+                    )}
+                    <span className={rule.test(password) ? 'text-green-500' : 'text-muted-foreground'}>
+                      {rule.label}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            )}
+
             <div className="relative">
               <Lock className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
               <Input
@@ -137,7 +165,6 @@ export default function ResetPassword() {
                 onChange={(e) => setConfirmPassword(e.target.value)}
                 className={`pl-10 pr-10 ${!passwordsMatch ? 'border-destructive' : ''}`}
                 required
-                minLength={6}
               />
               <button
                 type="button"
@@ -152,7 +179,11 @@ export default function ResetPassword() {
               <p className="text-sm text-destructive">Las contraseñas no coinciden.</p>
             )}
 
-            <Button type="submit" className="w-full glow-primary" disabled={loading || !passwordsMatch}>
+            <Button
+              type="submit"
+              className="w-full glow-primary"
+              disabled={loading || !allRulesPass || !passwordsMatch}
+            >
               {loading ? 'Actualizando...' : 'Restablecer contraseña'}
             </Button>
           </form>
