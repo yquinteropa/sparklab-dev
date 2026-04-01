@@ -8,6 +8,7 @@ import { Zap, Mail, Lock, User, Eye, EyeOff, Check, X, Globe, UserCircle } from 
 import { toast } from 'sonner';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
+import { useTranslation } from 'react-i18next';
 import VerificationSent from '@/components/VerificationSent';
 
 const LANGUAGES = [
@@ -16,13 +17,6 @@ const LANGUAGES = [
   { value: 'pt', label: 'Português' },
   { value: 'fr', label: 'Français' },
   { value: 'de', label: 'Deutsch' },
-];
-
-const GENDERS = [
-  { value: 'male', label: 'Masculino' },
-  { value: 'female', label: 'Femenino' },
-  { value: 'non_binary', label: 'No binario' },
-  { value: 'prefer_not_say', label: 'Prefiero no decir' },
 ];
 
 const COUNTRIES = [
@@ -47,17 +41,26 @@ export default function Auth() {
   const [showPassword, setShowPassword] = useState(false);
   const [verificationSent, setVerificationSent] = useState(false);
 
+  const { t } = useTranslation();
+  const navigate = useNavigate();
+  const { session } = useAuth();
+
   const passwordRules = [
-    { label: 'Mínimo 8 caracteres', test: (p: string) => p.length >= 8 },
-    { label: 'Una letra mayúscula', test: (p: string) => /[A-Z]/.test(p) },
-    { label: 'Una letra minúscula', test: (p: string) => /[a-z]/.test(p) },
-    { label: 'Un número', test: (p: string) => /\d/.test(p) },
-    { label: 'Un carácter especial (!@#$...)', test: (p: string) => /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(p) },
+    { label: t('auth.pwMin8'), test: (p: string) => p.length >= 8 },
+    { label: t('auth.pwUppercase'), test: (p: string) => /[A-Z]/.test(p) },
+    { label: t('auth.pwLowercase'), test: (p: string) => /[a-z]/.test(p) },
+    { label: t('auth.pwNumber'), test: (p: string) => /\d/.test(p) },
+    { label: t('auth.pwSpecial'), test: (p: string) => /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(p) },
+  ];
+
+  const genders = [
+    { value: 'male', label: t('auth.genderMale') },
+    { value: 'female', label: t('auth.genderFemale') },
+    { value: 'non_binary', label: t('auth.genderNonBinary') },
+    { value: 'prefer_not_say', label: t('auth.genderPreferNot') },
   ];
 
   const allRulesPass = passwordRules.every((r) => r.test(password));
-  const navigate = useNavigate();
-  const { session } = useAuth();
 
   useEffect(() => {
     if (session) navigate('/dashboard');
@@ -70,32 +73,24 @@ export default function Auth() {
       if (isLogin) {
         const { data, error } = await supabase.auth.signInWithPassword({ email, password });
         if (error) {
-          // Detect if the account exists but was created via OAuth (no password set)
           if (error.message === 'Invalid login credentials') {
-            // Check if a user with this email exists via OAuth by attempting a password reset hint
             const { data: resetData } = await supabase.auth.resetPasswordForEmail(email, {
               redirectTo: `${window.location.origin}/reset-password`,
             });
-            // We can't know for sure, but provide a helpful dual message
-            toast.error(
-              'Credenciales inválidas. Si creaste tu cuenta con Google, usa el botón "Google" para iniciar sesión, o restablece tu contraseña para crear una.',
-              { duration: 6000 }
-            );
+            toast.error(t('auth.invalidCredentials'), { duration: 6000 });
             setLoading(false);
             return;
           }
           throw error;
         }
-        // Check if email is confirmed
         if (data.user && !data.user.email_confirmed_at) {
           await supabase.auth.signOut();
-          toast.error('Por favor, verifica tu correo electrónico antes de iniciar sesión.');
+          toast.error(t('auth.verifyEmailFirst'));
           setLoading(false);
           return;
         }
-        toast.success('¡Bienvenido de vuelta!');
+        toast.success(t('auth.welcomeBack'));
       } else {
-        // Attempt signup - Supabase will automatically link if the email matches an OAuth account
         const { data, error } = await supabase.auth.signUp({
           email,
           password,
@@ -114,21 +109,14 @@ export default function Auth() {
         });
         if (error) {
           if (error.message?.includes('already registered') || error.message?.includes('already exists')) {
-            toast.error(
-              'Este correo ya está registrado. Intenta iniciar sesión o usa "¿Olvidaste tu contraseña?" para recuperar tu cuenta.',
-              { duration: 5000 }
-            );
+            toast.error(t('auth.emailAlreadyRegistered'), { duration: 5000 });
             setLoading(false);
             return;
           }
           throw error;
         }
-        // Check if the user was returned with identities - if empty, email already exists
         if (data.user && data.user.identities && data.user.identities.length === 0) {
-          toast.error(
-            'Este correo ya está registrado. Intenta iniciar sesión o usa "¿Olvidaste tu contraseña?" para recuperar tu cuenta.',
-            { duration: 5000 }
-          );
+          toast.error(t('auth.emailAlreadyRegistered'), { duration: 5000 });
           setLoading(false);
           return;
         }
@@ -149,13 +137,13 @@ export default function Auth() {
       if (result?.error) {
         const errorMsg = String(result.error);
         if (errorMsg.includes('already') || errorMsg.includes('conflict')) {
-          toast.error('Hubo un conflicto con tu cuenta. Intenta iniciar sesión con correo y contraseña.', { duration: 5000 });
+          toast.error(t('auth.googleConflict'), { duration: 5000 });
         } else {
           toast.error(errorMsg);
         }
       }
     } catch (err: any) {
-      toast.error('Error al conectar con Google. Intenta de nuevo.');
+      toast.error(t('auth.googleError'));
     }
   };
 
@@ -173,7 +161,7 @@ export default function Auth() {
             </h1>
           </Link>
           <p className="mt-2 text-sm text-muted-foreground">
-            Aprende circuitos eléctricos jugando
+            {t('auth.slogan')}
           </p>
         </div>
 
@@ -183,54 +171,33 @@ export default function Auth() {
           ) : (
           <>
           <h2 className="mb-6 text-center font-display text-lg font-semibold text-card-foreground">
-            {isLogin ? 'Iniciar Sesión' : 'Crear Cuenta'}
+            {isLogin ? t('auth.login') : t('auth.signup')}
           </h2>
 
           <form onSubmit={handleSubmit} className="space-y-4">
             {!isLogin && (
               <>
-                {/* Nombre y Apellido */}
                 <div className="grid grid-cols-2 gap-3">
                   <div className="relative">
                     <User className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-                    <Input
-                      placeholder="Nombre"
-                      value={firstName}
-                      onChange={(e) => setFirstName(e.target.value)}
-                      className="pl-10"
-                      required
-                    />
+                    <Input placeholder={t('auth.firstName')} value={firstName} onChange={(e) => setFirstName(e.target.value)} className="pl-10" required />
                   </div>
                   <div className="relative">
                     <User className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-                    <Input
-                      placeholder="Apellido"
-                      value={lastName}
-                      onChange={(e) => setLastName(e.target.value)}
-                      className="pl-10"
-                      required
-                    />
+                    <Input placeholder={t('auth.lastName')} value={lastName} onChange={(e) => setLastName(e.target.value)} className="pl-10" required />
                   </div>
                 </div>
 
-                {/* Username */}
                 <div className="relative">
                   <UserCircle className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-                  <Input
-                    placeholder="Nombre de usuario (nickname)"
-                    value={username}
-                    onChange={(e) => setUsername(e.target.value)}
-                    className="pl-10"
-                    required
-                  />
+                  <Input placeholder={t('auth.username')} value={username} onChange={(e) => setUsername(e.target.value)} className="pl-10" required />
                 </div>
 
-                {/* Idioma y Género */}
                 <div className="grid grid-cols-2 gap-3">
                   <Select value={language} onValueChange={setLanguage}>
                     <SelectTrigger>
                       <Globe className="mr-2 h-4 w-4 text-muted-foreground" />
-                      <SelectValue placeholder="Idioma" />
+                      <SelectValue placeholder={t('auth.language')} />
                     </SelectTrigger>
                     <SelectContent>
                       {LANGUAGES.map((l) => (
@@ -241,21 +208,20 @@ export default function Auth() {
 
                   <Select value={gender} onValueChange={setGender}>
                     <SelectTrigger>
-                      <SelectValue placeholder="Género" />
+                      <SelectValue placeholder={t('auth.gender')} />
                     </SelectTrigger>
                     <SelectContent>
-                      {GENDERS.map((g) => (
+                      {genders.map((g) => (
                         <SelectItem key={g.value} value={g.value}>{g.label}</SelectItem>
                       ))}
                     </SelectContent>
                   </Select>
                 </div>
 
-                {/* País */}
                 <Select value={country} onValueChange={setCountry}>
                   <SelectTrigger>
                     <Globe className="mr-2 h-4 w-4 text-muted-foreground" />
-                    <SelectValue placeholder="País" />
+                    <SelectValue placeholder={t('auth.country')} />
                   </SelectTrigger>
                   <SelectContent>
                     {COUNTRIES.map((c) => (
@@ -267,32 +233,20 @@ export default function Auth() {
             )}
             <div className="relative">
               <Mail className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-              <Input
-                type="email"
-                placeholder="tu@email.com"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="pl-10"
-                required
-              />
+              <Input type="email" placeholder={t('auth.email')} value={email} onChange={(e) => setEmail(e.target.value)} className="pl-10" required />
             </div>
             <div className="relative">
               <Lock className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
               <Input
                 type={showPassword ? 'text' : 'password'}
-                placeholder="Contraseña"
+                placeholder={t('auth.password')}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 className="pl-10 pr-10"
                 required
                 minLength={isLogin ? 6 : 8}
               />
-              <button
-                type="button"
-                onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-3 top-3 text-muted-foreground hover:text-foreground transition-colors"
-                tabIndex={-1}
-              >
+              <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute right-3 top-3 text-muted-foreground hover:text-foreground transition-colors" tabIndex={-1}>
                 {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
               </button>
             </div>
@@ -301,14 +255,8 @@ export default function Auth() {
               <div className="space-y-1.5 rounded-lg border border-border bg-secondary/50 p-3">
                 {passwordRules.map((rule, i) => (
                   <div key={i} className="flex items-center gap-2 text-xs">
-                    {rule.test(password) ? (
-                      <Check className="h-3.5 w-3.5 text-green-500" />
-                    ) : (
-                      <X className="h-3.5 w-3.5 text-muted-foreground" />
-                    )}
-                    <span className={rule.test(password) ? 'text-green-500' : 'text-muted-foreground'}>
-                      {rule.label}
-                    </span>
+                    {rule.test(password) ? <Check className="h-3.5 w-3.5 text-green-500" /> : <X className="h-3.5 w-3.5 text-muted-foreground" />}
+                    <span className={rule.test(password) ? 'text-green-500' : 'text-muted-foreground'}>{rule.label}</span>
                   </div>
                 ))}
               </div>
@@ -317,27 +265,23 @@ export default function Auth() {
             {isLogin && (
               <div className="flex justify-end">
                 <Link to="/auth/forgot-password" className="text-xs text-muted-foreground hover:text-primary transition-colors">
-                  ¿Olvidaste tu contraseña?
+                  {t('auth.forgotPassword')}
                 </Link>
               </div>
             )}
 
             <Button type="submit" className="w-full glow-primary" disabled={loading || (!isLogin && (!allRulesPass || !firstName || !lastName || !username || !gender || !country))}>
-              {loading ? 'Procesando...' : isLogin ? 'Entrar' : 'Registrarse'}
+              {loading ? t('auth.processing') : isLogin ? t('auth.login') : t('auth.register')}
             </Button>
           </form>
 
           <div className="my-6 flex items-center gap-3">
             <div className="h-px flex-1 bg-border" />
-            <span className="text-xs text-muted-foreground">o continúa con</span>
+            <span className="text-xs text-muted-foreground">{t('auth.orContinueWith')}</span>
             <div className="h-px flex-1 bg-border" />
           </div>
 
-          <Button
-            variant="outline"
-            className="w-full"
-            onClick={() => handleSocialLogin('google')}
-          >
+          <Button variant="outline" className="w-full" onClick={() => handleSocialLogin('google')}>
             <svg className="mr-2 h-4 w-4" viewBox="0 0 24 24">
               <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 01-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z" />
               <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" />
@@ -348,12 +292,9 @@ export default function Auth() {
           </Button>
 
           <p className="mt-6 text-center text-sm text-muted-foreground">
-            {isLogin ? '¿No tienes cuenta?' : '¿Ya tienes cuenta?'}{' '}
-            <button
-              onClick={() => setIsLogin(!isLogin)}
-              className="font-medium text-primary hover:underline"
-            >
-              {isLogin ? 'Regístrate' : 'Inicia sesión'}
+            {isLogin ? t('auth.noAccount') : t('auth.hasAccount')}{' '}
+            <button onClick={() => setIsLogin(!isLogin)} className="font-medium text-primary hover:underline">
+              {isLogin ? t('auth.signupLink') : t('auth.loginLink')}
             </button>
           </p>
           </>

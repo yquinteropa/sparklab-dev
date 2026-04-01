@@ -16,8 +16,8 @@ import {
 import '@xyflow/react/dist/style.css';
 import { DashboardNav } from '@/components/DashboardNav';
 import { Battery, Zap, Lightbulb } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
-// Custom node components
 function BatteryNode({ data }: NodeProps) {
   return (
     <div className="rounded-lg border-2 border-primary bg-secondary px-4 py-3 text-center shadow-lg glow-primary">
@@ -40,6 +40,7 @@ function ResistorNode({ data }: NodeProps) {
 }
 
 function LEDNode({ data }: NodeProps) {
+  const { t } = useTranslation();
   const isOn = data.isOn as boolean;
   return (
     <div className={`rounded-lg border-2 px-4 py-3 text-center shadow-lg transition-all ${
@@ -47,7 +48,7 @@ function LEDNode({ data }: NodeProps) {
     }`}>
       <Lightbulb className={`mx-auto h-6 w-6 ${isOn ? 'text-accent' : 'text-muted-foreground'}`} />
       <span className="mt-1 block text-xs font-medium text-secondary-foreground">{data.label as string}</span>
-      {isOn && <span className="text-[10px] text-accent font-bold">● ENCENDIDO</span>}
+      {isOn && <span className="text-[10px] text-accent font-bold">● {t('simulator.ledOn')}</span>}
       <Handle type="target" position={Position.Left} className="!bg-accent !w-3 !h-3" />
       <Handle type="source" position={Position.Right} className="!bg-accent !w-3 !h-3" />
     </div>
@@ -59,19 +60,11 @@ const nodeTypes = { battery: BatteryNode, resistor: ResistorNode, led: LEDNode }
 const initialNodes: Node[] = [];
 const initialEdges: Edge[] = [];
 
-const componentPalette = [
-  { type: 'battery', label: 'Batería 9V', icon: Battery },
-  { type: 'resistor', label: 'Resistencia', icon: Zap },
-  { type: 'led', label: 'LED', icon: Lightbulb },
-];
-
-// Check if circuit is closed: battery -> ... -> led -> ... -> battery
 function isCircuitClosed(nodes: Node[], edges: Edge[]): boolean {
   const batteryNodes = nodes.filter(n => n.type === 'battery');
   const ledNodes = nodes.filter(n => n.type === 'led');
   if (batteryNodes.length === 0 || ledNodes.length === 0) return false;
 
-  // Simple BFS from battery source to check if we reach LED
   const adj = new Map<string, string[]>();
   for (const edge of edges) {
     if (!adj.has(edge.source)) adj.set(edge.source, []);
@@ -99,12 +92,18 @@ export default function Simulator() {
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
   const [idCounter, setIdCounter] = useState(1);
+  const { t } = useTranslation();
+
+  const componentPalette = [
+    { type: 'battery', label: t('simulator.battery'), icon: Battery },
+    { type: 'resistor', label: t('simulator.resistor'), icon: Zap },
+    { type: 'led', label: t('simulator.led'), icon: Lightbulb },
+  ];
 
   const onConnect = useCallback(
     (params: Connection) => {
       setEdges((eds) => {
         const newEdges = addEdge({ ...params, animated: true, style: { stroke: 'hsl(217, 91%, 60%)' } }, eds);
-        // After connecting, check circuit
         setTimeout(() => updateLEDs(nodes, newEdges), 0);
         return newEdges;
       });
@@ -130,7 +129,6 @@ export default function Simulator() {
     setIdCounter((c) => c + 1);
   };
 
-  // Re-check circuit whenever edges change
   const handleEdgesChange: typeof onEdgesChange = (changes) => {
     onEdgesChange(changes);
     setTimeout(() => updateLEDs(nodes, edges), 50);
@@ -140,9 +138,8 @@ export default function Simulator() {
     <div className="flex min-h-screen flex-col bg-background">
       <DashboardNav />
       <div className="flex flex-1">
-        {/* Palette */}
         <aside className="w-56 border-r border-border bg-card p-4">
-          <h3 className="mb-3 font-display text-sm font-semibold text-card-foreground">Componentes</h3>
+          <h3 className="mb-3 font-display text-sm font-semibold text-card-foreground">{t('simulator.components')}</h3>
           <div className="space-y-2">
             {componentPalette.map(({ type, label, icon: Icon }) => (
               <button
@@ -157,7 +154,6 @@ export default function Simulator() {
           </div>
         </aside>
 
-        {/* Canvas */}
         <div className="flex-1" style={{ backgroundColor: 'hsl(220, 26%, 14%)' }}>
           <ReactFlow
             nodes={nodes}

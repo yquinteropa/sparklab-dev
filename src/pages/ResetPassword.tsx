@@ -5,14 +5,7 @@ import { Input } from '@/components/ui/input';
 import { Zap, Lock, Eye, EyeOff, Check, X } from 'lucide-react';
 import { toast } from 'sonner';
 import { useNavigate } from 'react-router-dom';
-
-const passwordRules = [
-  { label: 'Mínimo 8 caracteres', test: (p: string) => p.length >= 8 },
-  { label: 'Una letra mayúscula', test: (p: string) => /[A-Z]/.test(p) },
-  { label: 'Una letra minúscula', test: (p: string) => /[a-z]/.test(p) },
-  { label: 'Un número', test: (p: string) => /\d/.test(p) },
-  { label: 'Un carácter especial', test: (p: string) => /[!@#$%^&*(),.?":{}|<>_\-+=\[\]\\\/~`]/.test(p) },
-];
+import { useTranslation } from 'react-i18next';
 
 export default function ResetPassword() {
   const [password, setPassword] = useState('');
@@ -23,20 +16,25 @@ export default function ResetPassword() {
   const [isValidSession, setIsValidSession] = useState(false);
   const [checking, setChecking] = useState(true);
   const navigate = useNavigate();
+  const { t } = useTranslation();
+
+  const passwordRules = [
+    { label: t('auth.pwMin8'), test: (p: string) => p.length >= 8 },
+    { label: t('auth.pwUppercase'), test: (p: string) => /[A-Z]/.test(p) },
+    { label: t('auth.pwLowercase'), test: (p: string) => /[a-z]/.test(p) },
+    { label: t('auth.pwNumber'), test: (p: string) => /\d/.test(p) },
+    { label: t('auth.pwSpecial'), test: (p: string) => /[!@#$%^&*(),.?":{}|<>_\-+=\[\]\\\/~`]/.test(p) },
+  ];
 
   useEffect(() => {
     const { data: { subscription } } = supabase.auth.onAuthStateChange((event) => {
-      if (event === 'PASSWORD_RECOVERY') {
-        setIsValidSession(true);
-      }
+      if (event === 'PASSWORD_RECOVERY') setIsValidSession(true);
       setChecking(false);
     });
-
     supabase.auth.getSession().then(({ data: { session } }) => {
       if (session) setIsValidSession(true);
       setChecking(false);
     });
-
     return () => subscription.unsubscribe();
   }, []);
 
@@ -45,29 +43,18 @@ export default function ResetPassword() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
-    if (!allRulesPass) {
-      toast.error('La contraseña no cumple con todos los requisitos de seguridad.');
-      return;
-    }
-
-    if (password !== confirmPassword) {
-      toast.error('Las contraseñas no coinciden.');
-      return;
-    }
+    if (!allRulesPass) { toast.error(t('resetPassword.securityError')); return; }
+    if (password !== confirmPassword) { toast.error(t('resetPassword.passwordsDontMatch')); return; }
 
     setLoading(true);
     try {
       const { error } = await supabase.auth.updateUser({ password });
       if (error) throw error;
-
-      // Sign out to force manual re-login
       await supabase.auth.signOut();
-
-      toast.success('Contraseña actualizada. Por favor, inicia sesión con tus nuevas credenciales.');
+      toast.success(t('resetPassword.success'));
       setTimeout(() => navigate('/auth'), 2000);
     } catch (err: any) {
-      toast.error(err.message || 'Error al actualizar la contraseña.');
+      toast.error(err.message || t('resetPassword.error'));
     } finally {
       setLoading(false);
     }
@@ -76,7 +63,7 @@ export default function ResetPassword() {
   if (checking) {
     return (
       <div className="flex min-h-screen items-center justify-center bg-secondary">
-        <span className="text-muted-foreground">Verificando enlace...</span>
+        <span className="text-muted-foreground">{t('resetPassword.verifying')}</span>
       </div>
     );
   }
@@ -85,15 +72,9 @@ export default function ResetPassword() {
     return (
       <div className="flex min-h-screen items-center justify-center bg-secondary p-4">
         <div className="w-full max-w-md rounded-xl border border-border bg-card p-8 text-center shadow-2xl">
-          <h2 className="mb-2 font-display text-lg font-semibold text-card-foreground">
-            Enlace inválido o expirado
-          </h2>
-          <p className="mb-6 text-sm text-muted-foreground">
-            Este enlace de recuperación ya no es válido o ha expirado. Solicita uno nuevo para restablecer tu contraseña.
-          </p>
-          <Button onClick={() => navigate('/auth/forgot-password')} className="glow-primary">
-            Solicitar nuevo enlace
-          </Button>
+          <h2 className="mb-2 font-display text-lg font-semibold text-card-foreground">{t('resetPassword.invalidLink')}</h2>
+          <p className="mb-6 text-sm text-muted-foreground">{t('resetPassword.invalidLinkDesc')}</p>
+          <Button onClick={() => navigate('/auth/forgot-password')} className="glow-primary">{t('resetPassword.requestNewLink')}</Button>
         </div>
       </div>
     );
@@ -106,35 +87,18 @@ export default function ResetPassword() {
           <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-primary glow-primary">
             <Zap className="h-8 w-8 text-primary-foreground" />
           </div>
-          <h1 className="font-display text-3xl font-bold text-secondary-foreground text-glow">
-            SparkLab
-          </h1>
+          <h1 className="font-display text-3xl font-bold text-secondary-foreground text-glow">SparkLab</h1>
         </div>
 
         <div className="rounded-xl border border-border bg-card p-8 shadow-2xl">
-          <h2 className="mb-2 text-center font-display text-lg font-semibold text-card-foreground">
-            Nueva Contraseña
-          </h2>
-          <p className="mb-6 text-center text-sm text-muted-foreground">
-            Ingresa y confirma tu nueva contraseña.
-          </p>
+          <h2 className="mb-2 text-center font-display text-lg font-semibold text-card-foreground">{t('resetPassword.title')}</h2>
+          <p className="mb-6 text-center text-sm text-muted-foreground">{t('resetPassword.desc')}</p>
 
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="relative">
               <Lock className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-              <Input
-                type={showPassword ? 'text' : 'password'}
-                placeholder="Nueva contraseña"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className="pl-10 pr-10"
-                required
-              />
-              <button
-                type="button"
-                onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-3 top-3 text-muted-foreground hover:text-foreground transition-colors"
-              >
+              <Input type={showPassword ? 'text' : 'password'} placeholder={t('resetPassword.newPassword')} value={password} onChange={(e) => setPassword(e.target.value)} className="pl-10 pr-10" required />
+              <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute right-3 top-3 text-muted-foreground hover:text-foreground transition-colors">
                 {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
               </button>
             </div>
@@ -143,14 +107,8 @@ export default function ResetPassword() {
               <div className="space-y-1 rounded-lg border border-border bg-muted/40 p-3">
                 {passwordRules.map((rule, i) => (
                   <div key={i} className="flex items-center gap-2 text-xs">
-                    {rule.test(password) ? (
-                      <Check className="h-3.5 w-3.5 text-green-500" />
-                    ) : (
-                      <X className="h-3.5 w-3.5 text-destructive" />
-                    )}
-                    <span className={rule.test(password) ? 'text-green-500' : 'text-muted-foreground'}>
-                      {rule.label}
-                    </span>
+                    {rule.test(password) ? <Check className="h-3.5 w-3.5 text-green-500" /> : <X className="h-3.5 w-3.5 text-destructive" />}
+                    <span className={rule.test(password) ? 'text-green-500' : 'text-muted-foreground'}>{rule.label}</span>
                   </div>
                 ))}
               </div>
@@ -158,33 +116,16 @@ export default function ResetPassword() {
 
             <div className="relative">
               <Lock className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-              <Input
-                type={showConfirm ? 'text' : 'password'}
-                placeholder="Confirmar contraseña"
-                value={confirmPassword}
-                onChange={(e) => setConfirmPassword(e.target.value)}
-                className={`pl-10 pr-10 ${!passwordsMatch ? 'border-destructive' : ''}`}
-                required
-              />
-              <button
-                type="button"
-                onClick={() => setShowConfirm(!showConfirm)}
-                className="absolute right-3 top-3 text-muted-foreground hover:text-foreground transition-colors"
-              >
+              <Input type={showConfirm ? 'text' : 'password'} placeholder={t('resetPassword.confirmPassword')} value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} className={`pl-10 pr-10 ${!passwordsMatch ? 'border-destructive' : ''}`} required />
+              <button type="button" onClick={() => setShowConfirm(!showConfirm)} className="absolute right-3 top-3 text-muted-foreground hover:text-foreground transition-colors">
                 {showConfirm ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
               </button>
             </div>
 
-            {!passwordsMatch && (
-              <p className="text-sm text-destructive">Las contraseñas no coinciden.</p>
-            )}
+            {!passwordsMatch && <p className="text-sm text-destructive">{t('resetPassword.passwordsDontMatch')}</p>}
 
-            <Button
-              type="submit"
-              className="w-full glow-primary"
-              disabled={loading || !allRulesPass || !passwordsMatch}
-            >
-              {loading ? 'Actualizando...' : 'Restablecer contraseña'}
+            <Button type="submit" className="w-full glow-primary" disabled={loading || !allRulesPass || !passwordsMatch}>
+              {loading ? t('resetPassword.submitting') : t('resetPassword.submit')}
             </Button>
           </form>
         </div>

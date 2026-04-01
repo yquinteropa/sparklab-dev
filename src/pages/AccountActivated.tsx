@@ -3,19 +3,20 @@ import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
 import { CheckCircle, Zap } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 export default function AccountActivated() {
   const [ready, setReady] = useState(false);
+  const { t } = useTranslation();
 
   useEffect(() => {
-    // Force sign out so the user must log in manually
     supabase.auth.signOut().then(() => setReady(true));
   }, []);
 
   if (!ready) {
     return (
       <div className="flex min-h-screen items-center justify-center bg-secondary">
-        <span className="text-muted-foreground">Procesando...</span>
+        <span className="text-muted-foreground">{t('accountActivated.processing')}</span>
       </div>
     );
   }
@@ -28,23 +29,16 @@ export default function AccountActivated() {
             <Zap className="h-8 w-8 text-primary-foreground" />
           </div>
         </Link>
-
         <div className="rounded-xl border border-border bg-card p-8 shadow-2xl space-y-6">
           <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-green-500/10">
             <CheckCircle className="h-10 w-10 text-green-500" />
           </div>
-
           <div className="space-y-2">
-            <h1 className="font-display text-2xl font-bold text-card-foreground">
-              ¡Cuenta Activada!
-            </h1>
-            <p className="text-sm text-muted-foreground">
-              Tu correo electrónico ha sido verificado exitosamente. Ya puedes iniciar sesión con tus credenciales.
-            </p>
+            <h1 className="font-display text-2xl font-bold text-card-foreground">{t('accountActivated.title')}</h1>
+            <p className="text-sm text-muted-foreground">{t('accountActivated.desc')}</p>
           </div>
-
           <Button asChild className="w-full glow-primary">
-            <Link to="/auth">Iniciar Sesión</Link>
+            <Link to="/auth">{t('accountActivated.login')}</Link>
           </Button>
         </div>
       </div>

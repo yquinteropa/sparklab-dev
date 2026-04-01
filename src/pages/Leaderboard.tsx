@@ -1,5 +1,6 @@
 import { DashboardNav } from '@/components/DashboardNav';
 import { Trophy, Medal, Zap } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 const mockPlayers = [
   { name: 'ElectroMaster', xp: 2450, level: 8 },
@@ -10,12 +11,14 @@ const mockPlayers = [
 ];
 
 export default function Leaderboard() {
+  const { t } = useTranslation();
+
   return (
     <div className="min-h-screen bg-background">
       <DashboardNav />
       <main className="mx-auto max-w-3xl p-6">
         <h1 className="mb-6 flex items-center gap-2 font-display text-2xl font-bold text-foreground">
-          <Trophy className="h-6 w-6 text-primary" /> Leaderboard
+          <Trophy className="h-6 w-6 text-primary" /> {t('leaderboard.title')}
         </h1>
         <div className="space-y-3">
           {mockPlayers.map((p, i) => (
@@ -32,7 +35,7 @@ export default function Leaderboard() {
               </span>
               <div className="flex-1">
                 <span className="font-medium text-card-foreground">{p.name}</span>
-                <span className="ml-2 text-xs text-muted-foreground">Nivel {p.level}</span>
+                <span className="ml-2 text-xs text-muted-foreground">{t('leaderboard.level', { level: p.level })}</span>
               </div>
               <div className="flex items-center gap-1 text-sm font-bold text-primary">
                 <Zap className="h-3.5 w-3.5" /> {p.xp} XP
