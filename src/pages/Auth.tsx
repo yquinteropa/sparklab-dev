@@ -69,7 +69,23 @@ export default function Auth() {
     try {
       if (isLogin) {
         const { data, error } = await supabase.auth.signInWithPassword({ email, password });
-        if (error) throw error;
+        if (error) {
+          // Detect if the account exists but was created via OAuth (no password set)
+          if (error.message === 'Invalid login credentials') {
+            // Check if a user with this email exists via OAuth by attempting a password reset hint
+            const { data: resetData } = await supabase.auth.resetPasswordForEmail(email, {
+              redirectTo: `${window.location.origin}/reset-password`,
+            });
+            // We can't know for sure, but provide a helpful dual message
+            toast.error(
+              'Credenciales inválidas. Si creaste tu cuenta con Google, usa el botón "Google" para iniciar sesión, o restablece tu contraseña para crear una.',
+              { duration: 6000 }
+            );
+            setLoading(false);
+            return;
+          }
+          throw error;
+        }
         // Check if email is confirmed
         if (data.user && !data.user.email_confirmed_at) {
           await supabase.auth.signOut();
@@ -79,7 +95,8 @@ export default function Auth() {
         }
         toast.success('¡Bienvenido de vuelta!');
       } else {
-        const { error } = await supabase.auth.signUp({
+        // Attempt signup - Supabase will automatically link if the email matches an OAuth account
+        const { data, error } = await supabase.auth.signUp({
           email,
           password,
           options: {
@@ -95,7 +112,26 @@ export default function Auth() {
             emailRedirectTo: window.location.origin + '/account-activated',
           },
         });
-        if (error) throw error;
+        if (error) {
+          if (error.message?.includes('already registered') || error.message?.includes('already exists')) {
+            toast.error(
+              'Este correo ya está registrado. Intenta iniciar sesión o usa "¿Olvidaste tu contraseña?" para recuperar tu cuenta.',
+              { duration: 5000 }
+            );
+            setLoading(false);
+            return;
+          }
+          throw error;
+        }
+        // Check if the user was returned with identities - if empty, email already exists
+        if (data.user && data.user.identities && data.user.identities.length === 0) {
+          toast.error(
+            'Este correo ya está registrado. Intenta iniciar sesión o usa "¿Olvidaste tu contraseña?" para recuperar tu cuenta.',
+            { duration: 5000 }
+          );
+          setLoading(false);
+          return;
+        }
         setVerificationSent(true);
       }
     } catch (err: any) {
