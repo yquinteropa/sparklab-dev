@@ -172,5 +172,21 @@
     "highContrast": "Hoher Kontrast",
     "changeLanguage": "Sprache Ändern",
     "openMenu": "Barrierefreiheitsmenü öffnen"
+  },
+  "security": {
+    "title": "Sicherheit",
+    "currentPassword": "Aktuelles Passwort",
+    "newPassword": "Neues Passwort",
+    "confirmNewPassword": "Neues Passwort bestätigen",
+    "changePassword": "Passwort ändern",
+    "changing": "Wird geändert...",
+    "currentPasswordWrong": "Das aktuelle Passwort ist falsch.",
+    "requirementsNotMet": "Das Passwort erfüllt nicht alle Anforderungen.",
+    "updateError": "Fehler beim Ändern des Passworts.",
+    "updateSuccess": "Passwort geändert. Ihre Sitzung wird geschlossen, damit Sie sich mit Ihrem neuen Passwort anmelden können.",
+    "googleMessage": "Ihr Konto ist mit Google verknüpft. Die Sicherheit Ihres Zugangs wird von Ihrem E-Mail-Anbieter verwaltet.",
+    "googleSetPassword": "Möchten Sie ein Passwort erstellen, um sich in Zukunft manuell anzumelden?",
+    "sendResetLink": "Passwort-Link senden",
+    "resetEmailSent": "Ein Link wurde an Ihre E-Mail gesendet, um ein Passwort festzulegen."
   }
 }
