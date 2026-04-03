@@ -172,5 +172,21 @@
     "highContrast": "Alto Contraste",
     "changeLanguage": "Cambiar Idioma",
     "openMenu": "Abrir menú de accesibilidad"
+  },
+  "security": {
+    "title": "Seguridad",
+    "currentPassword": "Contraseña actual",
+    "newPassword": "Nueva contraseña",
+    "confirmNewPassword": "Confirmar nueva contraseña",
+    "changePassword": "Cambiar contraseña",
+    "changing": "Cambiando...",
+    "currentPasswordWrong": "La contraseña actual es incorrecta.",
+    "requirementsNotMet": "La contraseña no cumple con todos los requisitos.",
+    "updateError": "Error al cambiar la contraseña.",
+    "updateSuccess": "Contraseña cambiada. Se cerrará tu sesión para que ingreses con tu nueva clave.",
+    "googleMessage": "Tu cuenta está vinculada a Google. La seguridad de tu acceso es gestionada por tu proveedor de correo.",
+    "googleSetPassword": "¿Deseas crear una contraseña para iniciar sesión manualmente en el futuro?",
+    "sendResetLink": "Enviar enlace de contraseña",
+    "resetEmailSent": "Se ha enviado un enlace a tu correo para establecer una contraseña."
   }
 }

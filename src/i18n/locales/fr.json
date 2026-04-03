@@ -172,5 +172,21 @@
     "highContrast": "Contraste Élevé",
     "changeLanguage": "Changer la Langue",
     "openMenu": "Ouvrir le menu d'accessibilité"
+  },
+  "security": {
+    "title": "Sécurité",
+    "currentPassword": "Mot de passe actuel",
+    "newPassword": "Nouveau mot de passe",
+    "confirmNewPassword": "Confirmer le nouveau mot de passe",
+    "changePassword": "Changer le mot de passe",
+    "changing": "Modification...",
+    "currentPasswordWrong": "Le mot de passe actuel est incorrect.",
+    "requirementsNotMet": "Le mot de passe ne respecte pas toutes les exigences.",
+    "updateError": "Erreur lors du changement de mot de passe.",
+    "updateSuccess": "Mot de passe modifié. Votre session sera fermée pour que vous vous connectiez avec votre nouveau mot de passe.",
+    "googleMessage": "Votre compte est lié à Google. La sécurité de votre accès est gérée par votre fournisseur de messagerie.",
+    "googleSetPassword": "Souhaitez-vous créer un mot de passe pour vous connecter manuellement à l'avenir ?",
+    "sendResetLink": "Envoyer le lien de mot de passe",
+    "resetEmailSent": "Un lien a été envoyé à votre e-mail pour définir un mot de passe."
   }
 }

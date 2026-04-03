@@ -9,6 +9,7 @@ import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { User, Mail, Save, Loader2 } from 'lucide-react';
 import { toast } from 'sonner';
+import { ProfileSecurity } from '@/components/ProfileSecurity';
 
 const LANGUAGES = [
   { value: 'es', label: 'Español' },
@@ -186,6 +187,7 @@ export default function Profile() {
             </Button>
           </div>
         </div>
+        <ProfileSecurity />
       </main>
     </div>
   );
