@@ -172,5 +172,21 @@
     "highContrast": "High Contrast",
     "changeLanguage": "Change Language",
     "openMenu": "Open accessibility menu"
+  },
+  "security": {
+    "title": "Security",
+    "currentPassword": "Current password",
+    "newPassword": "New password",
+    "confirmNewPassword": "Confirm new password",
+    "changePassword": "Change password",
+    "changing": "Changing...",
+    "currentPasswordWrong": "Current password is incorrect.",
+    "requirementsNotMet": "Password does not meet all requirements.",
+    "updateError": "Error changing password.",
+    "updateSuccess": "Password changed. Your session will be closed so you can sign in with your new password.",
+    "googleMessage": "Your account is linked to Google. Your access security is managed by your email provider.",
+    "googleSetPassword": "Want to create a password to sign in manually in the future?",
+    "sendResetLink": "Send password link",
+    "resetEmailSent": "A link has been sent to your email to set a password."
   }
 }
