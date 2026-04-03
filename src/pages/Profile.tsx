@@ -187,6 +187,7 @@ export default function Profile() {
             </Button>
           </div>
         </div>
+        <ProfileSecurity />
       </main>
     </div>
   );
