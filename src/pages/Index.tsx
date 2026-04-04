@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
-import { Zap, FlaskConical, Trophy, ChevronRight, BookOpen, Users, Atom, Wind, Database, FileCode, Flame, Triangle } from "lucide-react";
+import { Zap, FlaskConical, Trophy, ChevronRight, BookOpen, Users, Atom, Wind, Database, FileCode, Flame, Triangle, Github } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import heroBg from "@/assets/hero-bg.webp";
 import { Button } from "@/components/ui/button";
@@ -74,12 +74,18 @@ export default function Index() {
           <div className="hidden md:flex items-center gap-8">
             <a href="#features" className="text-sm text-muted-foreground hover:text-foreground transition-colors">{t('nav.features')}</a>
             <a href="#tech" className="text-sm text-muted-foreground hover:text-foreground transition-colors">{t('nav.technologies')}</a>
+            <a href="#signup-section" className="text-sm text-muted-foreground hover:text-foreground transition-colors">{t('nav.register')}</a>
           </div>
-          <Link to="/auth">
-            <Button size="sm" className="glow-primary gap-1.5">
-              {t('nav.enter')} <ChevronRight className="w-4 h-4" />
-            </Button>
-          </Link>
+          <div className="flex items-center gap-3">
+            <a href="https://github.com/yquinteropa/sparklab-dev" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground transition-colors">
+              <Github className="w-5 h-5" />
+            </a>
+            <Link to="/auth">
+              <Button size="sm" className="glow-primary gap-1.5">
+                {t('nav.enter')} <ChevronRight className="w-4 h-4" />
+              </Button>
+            </Link>
+          </div>
         </div>
       </nav>
 
@@ -146,7 +152,7 @@ export default function Index() {
       </section>
 
       {/* CTA */}
-      <section id="cta" className="py-24 px-6 text-center" ref={ctaRef}>
+      <section id="signup-section" className="py-24 px-6 text-center scroll-mt-20" ref={ctaRef}>
         <div className="max-w-2xl mx-auto flex flex-col items-center gap-6">
           <h2 className="text-3xl md:text-4xl font-bold text-foreground" style={{ fontFamily: "var(--font-display)" }}>
             {t('index.ctaTitle')} <span className="text-primary text-glow">{t('index.ctaHighlight')}</span> {t('index.ctaSuffix')}
