@@ -152,7 +152,7 @@ export default function Index() {
       </section>
 
       {/* CTA */}
-      <section id="cta" className="py-24 px-6 text-center" ref={ctaRef}>
+      <section id="signup-section" className="py-24 px-6 text-center scroll-mt-20" ref={ctaRef}>
         <div className="max-w-2xl mx-auto flex flex-col items-center gap-6">
           <h2 className="text-3xl md:text-4xl font-bold text-foreground" style={{ fontFamily: "var(--font-display)" }}>
             {t('index.ctaTitle')} <span className="text-primary text-glow">{t('index.ctaHighlight')}</span> {t('index.ctaSuffix')}
