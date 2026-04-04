@@ -73,19 +73,15 @@ export function AccessibilityMenu() {
             <label className="mb-1 flex items-center gap-2 text-xs text-muted-foreground">
               <Globe className="h-3.5 w-3.5" /> {t('accessibility.changeLanguage')}
             </label>
-            <div className="flex flex-wrap gap-1">
+            <select
+              value={language}
+              onChange={(e) => setLanguage(e.target.value)}
+              className="w-full rounded-md border border-border bg-muted px-3 py-1.5 text-xs text-foreground transition-colors focus:border-primary focus:outline-none focus:ring-1 focus:ring-ring"
+            >
               {LANGUAGES.map((l) => (
-                <button
-                  key={l.value}
-                  onClick={() => setLanguage(l.value)}
-                  className={`rounded-md border px-2.5 py-1.5 text-xs transition-colors ${
-                    language === l.value ? 'border-primary bg-primary text-primary-foreground' : 'border-border bg-muted text-muted-foreground hover:bg-accent'
-                  }`}
-                >
-                  {l.label}
-                </button>
+                <option key={l.value} value={l.value}>{l.label}</option>
               ))}
-            </div>
+            </select>
           </div>
         </div>
       )}
