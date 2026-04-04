@@ -74,12 +74,18 @@ export default function Index() {
           <div className="hidden md:flex items-center gap-8">
             <a href="#features" className="text-sm text-muted-foreground hover:text-foreground transition-colors">{t('nav.features')}</a>
             <a href="#tech" className="text-sm text-muted-foreground hover:text-foreground transition-colors">{t('nav.technologies')}</a>
+            <a href="#signup-section" className="text-sm text-muted-foreground hover:text-foreground transition-colors">{t('nav.register')}</a>
           </div>
-          <Link to="/auth">
-            <Button size="sm" className="glow-primary gap-1.5">
-              {t('nav.enter')} <ChevronRight className="w-4 h-4" />
-            </Button>
-          </Link>
+          <div className="flex items-center gap-3">
+            <a href="https://github.com/yquinteropa/sparklab-dev" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground transition-colors">
+              <Github className="w-5 h-5" />
+            </a>
+            <Link to="/auth">
+              <Button size="sm" className="glow-primary gap-1.5">
+                {t('nav.enter')} <ChevronRight className="w-4 h-4" />
+              </Button>
+            </Link>
+          </div>
         </div>
       </nav>
 
