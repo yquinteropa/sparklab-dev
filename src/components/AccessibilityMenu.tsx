@@ -20,20 +20,20 @@ export function AccessibilityMenu() {
   return (
     <div className="fixed bottom-6 right-6 z-50">
       {open && (
-        <div className="mb-3 w-72 rounded-lg border bg-card p-4 shadow-xl" role="dialog" aria-label={t('accessibility.title')}>
+        <div className="mb-3 w-64 rounded-lg border bg-card p-4 shadow-xl" role="dialog" aria-label={t('accessibility.title')}>
           <h3 className="mb-3 text-sm font-semibold text-card-foreground font-display">{t('accessibility.title')}</h3>
 
           {/* Font Size */}
           <div className="mb-3">
-            <label className="mb-1 flex items-center gap-2 text-xs text-muted-foreground">
+            <label className="mb-1.5 flex items-center gap-2 text-xs text-muted-foreground">
               <Type className="h-3.5 w-3.5" /> {t('accessibility.fontSize')}
             </label>
-            <div className="flex gap-1">
+            <div className="grid grid-cols-3 gap-1.5">
               {(['small', 'normal', 'large'] as const).map((s) => (
                 <button
                   key={s}
                   onClick={() => setFontSize(s)}
-                  className={`flex-1 rounded-md border px-2 py-1.5 text-xs transition-colors ${
+                  className={`rounded-md border py-2 text-xs font-medium transition-colors ${
                     fontSize === s ? 'border-primary bg-primary text-primary-foreground' : 'border-border bg-muted text-muted-foreground hover:bg-accent'
                   }`}
                 >
@@ -45,10 +45,10 @@ export function AccessibilityMenu() {
 
           {/* Theme */}
           <div className="mb-3">
-            <label className="mb-1 flex items-center gap-2 text-xs text-muted-foreground">
+            <label className="mb-1.5 flex items-center gap-2 text-xs text-muted-foreground">
               <Sun className="h-3.5 w-3.5" /> {t('accessibility.visualMode')}
             </label>
-            <div className="flex gap-1">
+            <div className="grid grid-cols-3 gap-1.5">
               {([
                 { key: 'light' as const, label: t('accessibility.light'), icon: Sun },
                 { key: 'dark' as const, label: t('accessibility.dark'), icon: Moon },
@@ -57,12 +57,12 @@ export function AccessibilityMenu() {
                 <button
                   key={key}
                   onClick={() => setThemeMode(key)}
-                  className={`flex flex-1 items-center justify-center gap-1 rounded-md border px-2 py-1.5 text-xs transition-colors ${
+                  className={`flex items-center justify-center gap-1 rounded-md border py-2 text-xs font-medium transition-colors ${
                     themeMode === key ? 'border-primary bg-primary text-primary-foreground' : 'border-border bg-muted text-muted-foreground hover:bg-accent'
                   }`}
                 >
-                  <Icon className="h-3 w-3" />
-                  <span className="hidden sm:inline">{label}</span>
+                  <Icon className="h-3 w-3 shrink-0" />
+                  <span className="truncate">{label}</span>
                 </button>
               ))}
             </div>
@@ -70,13 +70,13 @@ export function AccessibilityMenu() {
 
           {/* Language */}
           <div>
-            <label className="mb-1 flex items-center gap-2 text-xs text-muted-foreground">
+            <label className="mb-1.5 flex items-center gap-2 text-xs text-muted-foreground">
               <Globe className="h-3.5 w-3.5" /> {t('accessibility.changeLanguage')}
             </label>
             <select
               value={language}
               onChange={(e) => setLanguage(e.target.value)}
-              className="w-full rounded-md border border-border bg-muted px-3 py-1.5 text-xs text-foreground transition-colors focus:border-primary focus:outline-none focus:ring-1 focus:ring-ring"
+              className="w-full rounded-md border border-border bg-muted px-3 py-2 text-xs text-foreground transition-colors focus:border-primary focus:outline-none focus:ring-1 focus:ring-ring"
             >
               {LANGUAGES.map((l) => (
                 <option key={l.value} value={l.value}>{l.label}</option>
