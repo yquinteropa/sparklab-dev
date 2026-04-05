@@ -108,18 +108,6 @@ export function ProfileSecurity() {
           <div className="rounded-lg border border-border bg-muted/50 p-4">
             <p className="text-sm text-muted-foreground">{t('security.googleMessage')}</p>
           </div>
-          <div className="border-t border-border pt-4">
-            <p className="text-sm text-muted-foreground mb-3">{t('security.googleSetPassword')}</p>
-            <Button
-              variant="outline"
-              onClick={handleSendResetEmail}
-              disabled={sendingReset}
-              className="gap-2"
-            >
-              {sendingReset ? <Loader2 className="h-4 w-4 animate-spin" /> : <Mail className="h-4 w-4" />}
-              {t('security.sendResetLink')}
-            </Button>
-          </div>
         </div>
       ) : (
         <div className="space-y-4">
