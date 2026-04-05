@@ -88,7 +88,7 @@ export default function Index() {
       </nav>
 
       {/* Hero */}
-      <section className="relative min-h-[calc(100vh-4rem)] flex items-center justify-center px-6 text-center overflow-hidden" ref={heroRef}>
+      <section className="relative min-h-[calc(100vh-4rem)] flex items-center justify-center px-6 text-center overflow-hidden" style={{ clipPath: 'inset(0)' }} ref={heroRef}>
         <div className="absolute inset-0" style={{ transform: `translateY(${scrollY * 0.4}px)` }}>
           <img src={heroBg} alt="" className="w-full h-full object-cover scale-125" />
           <div className="absolute inset-0 bg-background/30" />
