@@ -20,7 +20,7 @@ export function AccessibilityMenu() {
   return (
     <div className="fixed bottom-6 right-6 z-50">
       {open && (
-        <div className="mb-3 w-64 rounded-lg border bg-card p-4 shadow-xl" role="dialog" aria-label={t('accessibility.title')}>
+        <div className="mb-3 w-64 rounded-lg border bg-card p-4 shadow-xl animate-in fade-in slide-in-from-bottom-4 duration-300" role="dialog" aria-label={t('accessibility.title')}>
           <h3 className="mb-3 text-sm font-semibold text-card-foreground font-display">{t('accessibility.title')}</h3>
 
           {/* Font Size */}
