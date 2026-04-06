@@ -124,7 +124,7 @@ export default function ResetPassword() {
 
             {!passwordsMatch && <p className="text-sm text-destructive">{t('resetPassword.passwordsDontMatch')}</p>}
 
-            <Button type="submit" className="w-full glow-primary" disabled={loading || !allRulesPass || !passwordsMatch}>
+            <Button type="submit" className="w-full glow-primary" disabled={loading || !allRulesPass || !passwordsMatch || confirmPassword.length === 0}>
               {loading ? t('resetPassword.submitting') : t('resetPassword.submit')}
             </Button>
           </form>

@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { Zap, FlaskConical, Trophy, ChevronRight, BookOpen, Users, Atom, Wind, Database, FileCode, Flame, Triangle, Github } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import heroBg from "@/assets/hero-bg.webp";
@@ -11,17 +11,19 @@ function useScrollReveal() {
     const el = ref.current;
     if (!el) return;
     el.style.opacity = "0";
-    el.style.transform = "translateY(40px)";
-    el.style.transition = "opacity 0.7s ease-out, transform 0.7s ease-out";
+    el.style.transform = "translateY(24px)";
+    el.style.transition = "opacity 0.6s cubic-bezier(0.4,0,0.2,1), transform 0.6s cubic-bezier(0.4,0,0.2,1)";
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
           el.style.opacity = "1";
           el.style.transform = "translateY(0)";
-          observer.unobserve(el);
+        } else {
+          el.style.opacity = "0";
+          el.style.transform = "translateY(24px)";
         }
       },
-      { threshold: 0.15 }
+      { threshold: 0.1 }
     );
     observer.observe(el);
     return () => observer.disconnect();
@@ -39,9 +41,7 @@ const techStack = [
 ];
 
 export default function Index() {
-  const [scrollY, setScrollY] = useState(0);
   const { t } = useTranslation();
-  const heroRef = useScrollReveal();
   const featuresRef = useScrollReveal();
   const techRef = useScrollReveal();
   const ctaRef = useScrollReveal();
@@ -54,16 +54,10 @@ export default function Index() {
     { icon: Users, title: t('index.globalLeaderboard'), desc: t('index.globalLeaderboardDesc') },
   ];
 
-  useEffect(() => {
-    const handleScroll = () => setScrollY(window.scrollY);
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background overflow-x-hidden">
       {/* Navbar */}
-      <nav className="sticky top-0 z-50 border-b border-border bg-background/80 backdrop-blur-md">
+      <nav className="fixed top-0 left-0 right-0 z-50 border-b border-border bg-background/80 backdrop-blur-md">
         <div className="max-w-7xl mx-auto flex items-center justify-between px-6 h-16">
           <Link to="/" className="flex items-center gap-2">
             <Zap className="w-7 h-7 text-primary" />
@@ -87,10 +81,10 @@ export default function Index() {
         </div>
       </nav>
 
-      {/* Hero */}
-      <section className="relative min-h-[calc(100vh-4rem)] flex items-center justify-center px-6 text-center overflow-hidden" ref={heroRef}>
-        <div className="absolute inset-0" style={{ transform: `translateY(${scrollY * 0.4}px)` }}>
-          <img src={heroBg} alt="" className="w-full h-full object-cover scale-125" />
+      {/* Hero - static background, no parallax */}
+      <section className="relative min-h-[calc(100vh-4rem)] mt-16 flex items-center justify-center px-6 text-center overflow-hidden">
+        <div className="absolute inset-0">
+          <img src={heroBg} alt="" className="w-full h-full object-cover" />
           <div className="absolute inset-0 bg-background/30" />
         </div>
         <div className="relative max-w-3xl mx-auto flex flex-col items-center gap-6">
@@ -113,7 +107,7 @@ export default function Index() {
       </section>
 
       {/* Features */}
-      <section id="features" className="py-20 px-6 scroll-mt-20" ref={featuresRef}>
+      <section id="features" className="relative z-10 py-20 px-6 scroll-mt-16 bg-background" ref={featuresRef}>
         <div className="max-w-6xl mx-auto">
           <h2 className="text-3xl font-bold text-center text-foreground mb-12" style={{ fontFamily: "var(--font-display)" }}>{t('index.featuresTitle')}</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -130,7 +124,7 @@ export default function Index() {
         </div>
       </section>
 
-      <section id="tech" className="py-20 px-6 bg-muted/30 scroll-mt-20" ref={techRef}>
+      <section id="tech" className="relative z-10 py-20 px-6 bg-muted/30 scroll-mt-16" ref={techRef}>
         <div className="max-w-4xl mx-auto">
           <h2 className="text-3xl font-bold text-center text-foreground mb-14" style={{ fontFamily: "var(--font-display)" }}>
             {t('index.techTitle')}
@@ -150,7 +144,7 @@ export default function Index() {
       </section>
 
       {/* CTA */}
-      <section id="signup-section" className="py-24 px-6 text-center scroll-mt-20" ref={ctaRef}>
+      <section id="signup-section" className="relative z-10 py-24 px-6 text-center scroll-mt-16 bg-background" ref={ctaRef}>
         <div className="max-w-2xl mx-auto flex flex-col items-center gap-6">
           <h2 className="text-3xl md:text-4xl font-bold text-foreground" style={{ fontFamily: "var(--font-display)" }}>
             {t('index.ctaTitle')} <span className="text-primary text-glow">{t('index.ctaHighlight')}</span> {t('index.ctaSuffix')}
@@ -165,7 +159,7 @@ export default function Index() {
       </section>
 
       {/* Footer */}
-      <footer className="border-t border-border py-8 px-6 text-center text-sm text-muted-foreground" ref={footerRef}>
+      <footer className="relative z-10 border-t border-border py-8 px-6 text-center text-sm text-muted-foreground bg-background" ref={footerRef}>
         {t('index.footer', { year: new Date().getFullYear() })}
       </footer>
     </div>
