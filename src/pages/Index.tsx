@@ -77,6 +77,7 @@ export default function Index() {
           <div className="hidden md:flex items-center gap-8">
             <a href="#features" onClick={handleAnchorClick} className="text-sm text-muted-foreground hover:text-foreground transition-colors">{t('nav.features')}</a>
             <a href="#tech" onClick={handleAnchorClick} className="text-sm text-muted-foreground hover:text-foreground transition-colors">{t('nav.technologies')}</a>
+            <Link to="/dashboard" className="text-sm text-muted-foreground hover:text-foreground transition-colors">{t('nav.levels')}</Link>
             <a href="#signup-section" onClick={handleAnchorClick} className="text-sm text-muted-foreground hover:text-foreground transition-colors">{t('nav.register')}</a>
           </div>
           <div className="flex items-center gap-3">
