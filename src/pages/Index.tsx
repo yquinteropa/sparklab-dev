@@ -47,6 +47,17 @@ export default function Index() {
   const ctaRef = useScrollReveal();
   const footerRef = useScrollReveal();
 
+  const handleAnchorClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    const href = e.currentTarget.getAttribute("href");
+    if (!href?.startsWith("#")) return;
+    const target = document.getElementById(href.slice(1));
+    if (!target) return;
+    const NAVBAR_OFFSET = 64; // h-16
+    const top = target.getBoundingClientRect().top + window.scrollY - NAVBAR_OFFSET;
+    window.scrollTo({ top, behavior: "smooth" });
+  };
+
   const features = [
     { icon: FlaskConical, title: t('index.virtualLab'), desc: t('index.virtualLabDesc') },
     { icon: Trophy, title: t('index.gamification'), desc: t('index.gamificationDesc') },
