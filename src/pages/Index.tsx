@@ -47,6 +47,17 @@ export default function Index() {
   const ctaRef = useScrollReveal();
   const footerRef = useScrollReveal();
 
+  const handleAnchorClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    const href = e.currentTarget.getAttribute("href");
+    if (!href?.startsWith("#")) return;
+    const target = document.getElementById(href.slice(1));
+    if (!target) return;
+    const NAVBAR_OFFSET = 64; // h-16
+    const top = target.getBoundingClientRect().top + window.scrollY - NAVBAR_OFFSET;
+    window.scrollTo({ top, behavior: "smooth" });
+  };
+
   const features = [
     { icon: FlaskConical, title: t('index.virtualLab'), desc: t('index.virtualLabDesc') },
     { icon: Trophy, title: t('index.gamification'), desc: t('index.gamificationDesc') },
@@ -64,9 +75,9 @@ export default function Index() {
             <span className="text-xl font-bold text-foreground" style={{ fontFamily: "var(--font-display)" }}>SparkLab</span>
           </Link>
           <div className="hidden md:flex items-center gap-8">
-            <a href="#features" className="text-sm text-muted-foreground hover:text-foreground transition-colors">{t('nav.features')}</a>
-            <a href="#tech" className="text-sm text-muted-foreground hover:text-foreground transition-colors">{t('nav.technologies')}</a>
-            <a href="#signup-section" className="text-sm text-muted-foreground hover:text-foreground transition-colors">{t('nav.register')}</a>
+            <a href="#features" onClick={handleAnchorClick} className="text-sm text-muted-foreground hover:text-foreground transition-colors">{t('nav.features')}</a>
+            <a href="#tech" onClick={handleAnchorClick} className="text-sm text-muted-foreground hover:text-foreground transition-colors">{t('nav.technologies')}</a>
+            <a href="#signup-section" onClick={handleAnchorClick} className="text-sm text-muted-foreground hover:text-foreground transition-colors">{t('nav.register')}</a>
           </div>
           <div className="flex items-center gap-3">
             <a href="https://github.com/yquinteropa/sparklab-dev" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground transition-colors">
