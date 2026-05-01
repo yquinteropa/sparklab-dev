@@ -1,14 +1,48 @@
+import { useEffect, useRef } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import { DashboardNav } from '@/components/DashboardNav';
 import { Zap, Target, Trophy, ArrowRight } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/button';
+import { supabase } from '@/integrations/supabase/client';
+import { toast } from 'sonner';
 
 export default function Dashboard() {
   const { user } = useAuth();
   const { t } = useTranslation();
+  const navigate = useNavigate();
   const displayName = user?.user_metadata?.full_name || user?.email?.split('@')[0] || 'Explorer';
+  const profileCheckedRef = useRef(false);
+
+  useEffect(() => {
+    if (!user || profileCheckedRef.current) return;
+    profileCheckedRef.current = true;
+    (async () => {
+      const { data, error } = await supabase
+        .from('profiles')
+        .select('username, language, gender, country')
+        .eq('user_id', user.id)
+        .maybeSingle();
+      if (error) return;
+      const missing =
+        !data ||
+        !data.username ||
+        !data.language ||
+        !data.gender ||
+        !data.country;
+      if (missing) {
+        toast.warning(t('dashboard.profileIncompleteTitle'), {
+          description: t('dashboard.profileIncompleteDesc'),
+          duration: 8000,
+          action: {
+            label: t('dashboard.completeProfile'),
+            onClick: () => navigate('/dashboard/profile'),
+          },
+        });
+      }
+    })();
+  }, [user, t, navigate]);
 
   const missions = [
     { id: 1, title: t('dashboard.mission1Title'), desc: t('dashboard.mission1Desc'), xp: 100, status: 'disponible' },
