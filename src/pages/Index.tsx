@@ -158,10 +158,9 @@ export default function Index() {
 
         <nav className="hidden md:flex items-center gap-1">
           {[
-            { label: t("nav.features"), href: "#features", isAnchor: true },
-            { label: t("nav.technologies"), href: "#tech", isAnchor: true },
             { label: t("nav.levels"), href: "/dashboard", isAnchor: false },
-            { label: t("nav.register"), href: "#signup-section", isAnchor: true },
+            { label: t("nav.ranking"), href: "/dashboard/leaderboard", isAnchor: false },
+            { label: t("nav.information"), href: "#features", isAnchor: true },
           ].map((link) =>
             link.isAnchor ? (
               <a
