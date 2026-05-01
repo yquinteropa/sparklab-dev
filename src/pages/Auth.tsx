@@ -263,22 +263,38 @@ export default function Auth() {
                 {!isLogin && (
                   <>
                     {/* Step indicator */}
-                    <div className="flex items-center justify-center gap-1 mb-2 select-none" aria-hidden="true">
-                      {[1, 2, 3, 4].map((step, idx) => (
-                        <div key={step} className="flex items-center gap-1">
-                          <div className="w-7 h-7 rounded-md bg-secondary/70 border border-border flex items-center justify-center text-xs font-semibold text-muted-foreground">
-                            {step}
-                          </div>
-                          {idx < 3 && (
-                            <div className="flex items-center gap-1">
-                              <span className="w-4 h-px bg-border" />
-                              <span className="w-1 h-1 rounded-full bg-border" />
-                              <span className="w-4 h-px bg-border" />
+                    {(() => {
+                      const steps = [
+                        fullName.trim().length > 0,
+                        /^\S+@\S+\.\S+$/.test(email),
+                        allRulesPass,
+                        confirmPassword.length > 0 && confirmPassword === password,
+                      ];
+                      return (
+                        <div className="flex items-center justify-center gap-1 mb-2 select-none" aria-hidden="true">
+                          {steps.map((done, idx) => (
+                            <div key={idx} className="flex items-center gap-1">
+                              <div
+                                className={`w-8 h-8 rounded-md flex items-center justify-center text-xs font-semibold transition-all duration-300 ${
+                                  done
+                                    ? 'bg-gradient-to-br from-primary to-cyan-500 border border-primary/60 text-primary-foreground shadow-[0_0_10px_hsl(var(--primary)/0.5)]'
+                                    : 'bg-secondary/70 border border-border text-muted-foreground'
+                                }`}
+                              >
+                                {done ? <Check className="w-4 h-4" strokeWidth={3} /> : idx + 1}
+                              </div>
+                              {idx < 3 && (
+                                <div className="flex items-center gap-1">
+                                  <span className={`w-4 h-px transition-colors duration-300 ${done ? 'bg-primary' : 'bg-border'}`} />
+                                  <span className={`w-1 h-1 rounded-full transition-colors duration-300 ${done ? 'bg-primary' : 'bg-border'}`} />
+                                  <span className={`w-4 h-px transition-colors duration-300 ${done ? 'bg-primary' : 'bg-border'}`} />
+                                </div>
+                              )}
                             </div>
-                          )}
+                          ))}
                         </div>
-                      ))}
-                    </div>
+                      );
+                    })()}
 
                     <FieldShell icon={User} filled={fullName.length > 0}>
                       <Input
