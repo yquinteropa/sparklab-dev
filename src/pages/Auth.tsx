@@ -370,6 +370,42 @@ export default function Auth() {
                   </div>
                 )}
 
+                {!isLogin && (
+                  <div className="group relative">
+                    <Lock className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground group-focus-within:text-primary transition-colors" />
+                    <Input
+                      type={showConfirmPassword ? 'text' : 'password'}
+                      placeholder={t('auth.confirmPassword')}
+                      value={confirmPassword}
+                      onChange={(e) => setConfirmPassword(e.target.value)}
+                      className={`${inputBase} pr-20`}
+                      required
+                      minLength={8}
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                      className="absolute right-10 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-primary transition-colors"
+                      tabIndex={-1}
+                    >
+                      {showConfirmPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                    </button>
+                    <div
+                      className={`pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 w-2 h-2 rounded-full transition-all duration-300 ${
+                        confirmPassword.length > 0 && confirmPassword === password
+                          ? 'bg-[hsl(var(--success))] shadow-[0_0_8px_hsl(var(--success)/0.6)]'
+                          : confirmPassword.length > 0
+                          ? 'bg-destructive shadow-[0_0_8px_hsl(var(--destructive)/0.6)]'
+                          : 'bg-muted-foreground/40 group-focus-within:bg-primary'
+                      }`}
+                    />
+                  </div>
+                )}
+
+                {!isLogin && confirmPassword.length > 0 && confirmPassword !== password && (
+                  <p className="text-xs text-destructive -mt-2 ml-1">{t('auth.passwordsDontMatch')}</p>
+                )}
+
                 {isLogin && (
                   <div className="text-right">
                     <Link
