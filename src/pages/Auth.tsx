@@ -139,6 +139,10 @@ export default function Auth() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!isLogin && password !== confirmPassword) {
+      toast.error(t('auth.passwordsDontMatch'));
+      return;
+    }
     setLoading(true);
     try {
       if (isLogin) {
@@ -162,18 +166,18 @@ export default function Auth() {
         }
         toast.success(t('auth.welcomeBack'));
       } else {
+        const trimmed = fullName.trim();
+        const parts = trimmed.split(/\s+/);
+        const firstName = parts.slice(0, -1).join(' ') || parts[0] || '';
+        const lastName = parts.length > 1 ? parts[parts.length - 1] : '';
         const { data, error } = await supabase.auth.signUp({
           email,
           password,
           options: {
             data: {
-              full_name: `${firstName} ${lastName}`,
+              full_name: trimmed,
               first_name: firstName,
               last_name: lastName,
-              username,
-              language,
-              gender,
-              country,
             },
             emailRedirectTo: window.location.origin + '/account-activated',
           },
