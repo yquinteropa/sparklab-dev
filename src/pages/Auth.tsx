@@ -284,73 +284,33 @@ export default function Auth() {
               <form onSubmit={handleSubmit} className="space-y-4">
                 {!isLogin && (
                   <>
-                    <div className="grid grid-cols-2 gap-3">
-                      <FieldShell icon={User} filled={firstName.length > 0}>
-                        <Input
-                          placeholder={t('auth.firstName')}
-                          value={firstName}
-                          onChange={(e) => setFirstName(e.target.value)}
-                          className={inputBase}
-                          required
-                        />
-                      </FieldShell>
-                      <FieldShell icon={User} filled={lastName.length > 0}>
-                        <Input
-                          placeholder={t('auth.lastName')}
-                          value={lastName}
-                          onChange={(e) => setLastName(e.target.value)}
-                          className={inputBase}
-                          required
-                        />
-                      </FieldShell>
+                    {/* Step indicator */}
+                    <div className="flex items-center justify-center gap-1 mb-2 select-none" aria-hidden="true">
+                      {[1, 2, 3, 4].map((step, idx) => (
+                        <div key={step} className="flex items-center gap-1">
+                          <div className="w-7 h-7 rounded-md bg-secondary/70 border border-border flex items-center justify-center text-xs font-semibold text-muted-foreground">
+                            {step}
+                          </div>
+                          {idx < 3 && (
+                            <div className="flex items-center gap-1">
+                              <span className="w-4 h-px bg-border" />
+                              <span className="w-1 h-1 rounded-full bg-border" />
+                              <span className="w-4 h-px bg-border" />
+                            </div>
+                          )}
+                        </div>
+                      ))}
                     </div>
 
-                    <FieldShell icon={UserCircle} filled={username.length > 0}>
+                    <FieldShell icon={User} filled={fullName.length > 0}>
                       <Input
-                        placeholder={t('auth.username')}
-                        value={username}
-                        onChange={(e) => setUsername(e.target.value)}
+                        placeholder={t('auth.fullName')}
+                        value={fullName}
+                        onChange={(e) => setFullName(e.target.value)}
                         className={inputBase}
                         required
                       />
                     </FieldShell>
-
-                    <div className="grid grid-cols-2 gap-3">
-                      <Select value={language} onValueChange={setLanguage}>
-                        <SelectTrigger className="bg-background/60 border-border h-12 rounded-xl">
-                          <Globe className="mr-2 h-4 w-4 text-muted-foreground" />
-                          <SelectValue placeholder={t('auth.language')} />
-                        </SelectTrigger>
-                        <SelectContent>
-                          {LANGUAGES.map((l) => (
-                            <SelectItem key={l.value} value={l.value}>{l.label}</SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
-
-                      <Select value={gender} onValueChange={setGender}>
-                        <SelectTrigger className="bg-background/60 border-border h-12 rounded-xl">
-                          <SelectValue placeholder={t('auth.gender')} />
-                        </SelectTrigger>
-                        <SelectContent>
-                          {genders.map((g) => (
-                            <SelectItem key={g.value} value={g.value}>{g.label}</SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
-                    </div>
-
-                    <Select value={country} onValueChange={setCountry}>
-                      <SelectTrigger className="bg-background/60 border-border h-12 rounded-xl">
-                        <Globe className="mr-2 h-4 w-4 text-muted-foreground" />
-                        <SelectValue placeholder={t('auth.country')} />
-                      </SelectTrigger>
-                      <SelectContent>
-                        {COUNTRIES.map((c) => (
-                          <SelectItem key={c} value={c}>{c}</SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
                   </>
                 )}
 
