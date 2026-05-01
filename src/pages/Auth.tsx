@@ -226,7 +226,7 @@ export default function Auth() {
     'w-full bg-background/60 border border-border rounded-xl py-3 pl-12 pr-12 text-foreground placeholder:text-muted-foreground/70 focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all duration-300';
 
   const submitDisabled =
-    loading || (!isLogin && (!allRulesPass || !firstName || !lastName || !username || !gender || !country));
+    loading || (!isLogin && (!allRulesPass || !fullName.trim() || password !== confirmPassword));
 
   return (
     <div className="min-h-screen bg-[hsl(var(--simulator-bg))] flex items-center justify-center p-4 overflow-hidden relative">
