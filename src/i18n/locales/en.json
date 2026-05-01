@@ -12,7 +12,9 @@
     "technologies": "Technologies",
     "enter": "Sign In",
     "register": "Sign Up",
-    "levels": "Levels"
+    "levels": "Levels",
+    "ranking": "Ranking",
+    "information": "Information"
   },
   "index": {
     "badge": "Gamified Educational Platform",
@@ -71,7 +73,10 @@
     "verifyEmailFirst": "Please verify your email address before signing in.",
     "emailAlreadyRegistered": "This email is already registered. Try signing in or use \"Forgot your password?\" to recover your account.",
     "googleError": "Error connecting with Google. Please try again.",
-    "googleConflict": "There was a conflict with your account. Try signing in with email and password."
+    "googleConflict": "There was a conflict with your account. Try signing in with email and password.",
+    "fullName": "Full name",
+    "confirmPassword": "Confirm password",
+    "passwordsDontMatch": "Passwords don't match"
   },
   "dashboard": {
     "hello": "Hello, {{name}}!",
@@ -86,7 +91,10 @@
     "mission2Title": "Series Resistance",
     "mission2Desc": "Learn to limit current",
     "mission3Title": "Parallel Circuit",
-    "mission3Desc": "Distribute energy"
+    "mission3Desc": "Distribute energy",
+    "profileIncompleteTitle": "Complete your profile",
+    "profileIncompleteDesc": "You have pending data to add to your profile (username, language, gender or country).",
+    "completeProfile": "Complete"
   },
   "simulator": {
     "components": "Components",

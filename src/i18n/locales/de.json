@@ -12,7 +12,9 @@
     "technologies": "Technologien",
     "enter": "Anmelden",
     "register": "Registrieren",
-    "levels": "Level"
+    "levels": "Level",
+    "ranking": "Rangliste",
+    "information": "Informationen"
   },
   "index": {
     "badge": "Gamifizierte Bildungsplattform",
@@ -71,7 +73,10 @@
     "verifyEmailFirst": "Bitte bestätige deine E-Mail-Adresse, bevor du dich anmeldest.",
     "emailAlreadyRegistered": "Diese E-Mail ist bereits registriert. Versuche dich anzumelden oder verwende \"Passwort vergessen?\".",
     "googleError": "Fehler bei der Verbindung mit Google. Bitte versuche es erneut.",
-    "googleConflict": "Es gab einen Konflikt mit deinem Konto. Versuche dich mit E-Mail und Passwort anzumelden."
+    "googleConflict": "Es gab einen Konflikt mit deinem Konto. Versuche dich mit E-Mail und Passwort anzumelden.",
+    "fullName": "Vollständiger Name",
+    "confirmPassword": "Passwort bestätigen",
+    "passwordsDontMatch": "Die Passwörter stimmen nicht überein"
   },
   "dashboard": {
     "hello": "Hallo, {{name}}!",
@@ -86,7 +91,10 @@
     "mission2Title": "Reihenwiderstand",
     "mission2Desc": "Lerne den Strom zu begrenzen",
     "mission3Title": "Parallelschaltung",
-    "mission3Desc": "Verteile die Energie"
+    "mission3Desc": "Verteile die Energie",
+    "profileIncompleteTitle": "Profil vervollständigen",
+    "profileIncompleteDesc": "Es fehlen noch Daten in deinem Profil (Benutzername, Sprache, Geschlecht oder Land).",
+    "completeProfile": "Vervollständigen"
   },
   "simulator": {
     "components": "Komponenten",

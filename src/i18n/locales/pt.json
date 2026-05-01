@@ -12,7 +12,9 @@
     "technologies": "Tecnologias",
     "enter": "Entrar",
     "register": "Registro",
-    "levels": "Níveis"
+    "levels": "Níveis",
+    "ranking": "Ranking",
+    "information": "Informações"
   },
   "index": {
     "badge": "Plataforma Educacional Gamificada",
@@ -71,7 +73,10 @@
     "verifyEmailFirst": "Por favor, verifique seu email antes de entrar.",
     "emailAlreadyRegistered": "Este email já está registrado. Tente entrar ou use \"Esqueceu sua senha?\" para recuperar sua conta.",
     "googleError": "Erro ao conectar com Google. Tente novamente.",
-    "googleConflict": "Houve um conflito com sua conta. Tente entrar com email e senha."
+    "googleConflict": "Houve um conflito com sua conta. Tente entrar com email e senha.",
+    "fullName": "Nome completo",
+    "confirmPassword": "Confirmar senha",
+    "passwordsDontMatch": "As senhas não coincidem"
   },
   "dashboard": {
     "hello": "Olá, {{name}}!",
@@ -86,7 +91,10 @@
     "mission2Title": "Resistência em Série",
     "mission2Desc": "Aprenda a limitar a corrente",
     "mission3Title": "Circuito Paralelo",
-    "mission3Desc": "Distribua a energia"
+    "mission3Desc": "Distribua a energia",
+    "profileIncompleteTitle": "Complete seu perfil",
+    "profileIncompleteDesc": "Você tem dados pendentes para adicionar ao seu perfil (usuário, idioma, gênero ou país).",
+    "completeProfile": "Completar"
   },
   "simulator": {
     "components": "Componentes",

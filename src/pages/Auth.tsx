@@ -2,28 +2,12 @@ import { useState, useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { lovable } from '@/integrations/lovable';
 import { Input } from '@/components/ui/input';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Zap, Mail, Lock, User, Eye, EyeOff, Check, X, Globe, UserCircle, Home } from 'lucide-react';
+import { Zap, Mail, Lock, User, Eye, EyeOff, Check, X, Home } from 'lucide-react';
 import { toast } from 'sonner';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import { useTranslation } from 'react-i18next';
 import VerificationSent from '@/components/VerificationSent';
-
-const LANGUAGES = [
-  { value: 'es', label: 'Español' },
-  { value: 'en', label: 'English' },
-  { value: 'pt', label: 'Português' },
-  { value: 'fr', label: 'Français' },
-  { value: 'de', label: 'Deutsch' },
-];
-
-const COUNTRIES = [
-  'Argentina', 'Bolivia', 'Brasil', 'Chile', 'Colombia', 'Costa Rica', 'Cuba',
-  'Ecuador', 'El Salvador', 'España', 'Estados Unidos', 'Guatemala', 'Honduras',
-  'México', 'Nicaragua', 'Panamá', 'Paraguay', 'Perú', 'Puerto Rico',
-  'República Dominicana', 'Uruguay', 'Venezuela',
-];
 
 /* ───────── Decorative SVGs ───────── */
 
@@ -105,14 +89,11 @@ export default function Auth() {
   const [isLogin, setIsLogin] = useState(searchParams.get('mode') !== 'signup');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [username, setUsername] = useState('');
-  const [language, setLanguage] = useState('es');
-  const [gender, setGender] = useState('');
-  const [country, setCountry] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [fullName, setFullName] = useState('');
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [verificationSent, setVerificationSent] = useState(false);
 
   const { t } = useTranslation();
@@ -127,12 +108,6 @@ export default function Auth() {
     { label: t('auth.pwSpecial'), test: (p: string) => /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(p) },
   ];
 
-  const genders = [
-    { value: 'male', label: t('auth.genderMale') },
-    { value: 'female', label: t('auth.genderFemale') },
-    { value: 'non_binary', label: t('auth.genderNonBinary') },
-    { value: 'prefer_not_say', label: t('auth.genderPreferNot') },
-  ];
 
   const allRulesPass = passwordRules.every((r) => r.test(password));
 
@@ -142,6 +117,10 @@ export default function Auth() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!isLogin && password !== confirmPassword) {
+      toast.error(t('auth.passwordsDontMatch'));
+      return;
+    }
     setLoading(true);
     try {
       if (isLogin) {
@@ -165,18 +144,18 @@ export default function Auth() {
         }
         toast.success(t('auth.welcomeBack'));
       } else {
+        const trimmed = fullName.trim();
+        const parts = trimmed.split(/\s+/);
+        const firstName = parts.slice(0, -1).join(' ') || parts[0] || '';
+        const lastName = parts.length > 1 ? parts[parts.length - 1] : '';
         const { data, error } = await supabase.auth.signUp({
           email,
           password,
           options: {
             data: {
-              full_name: `${firstName} ${lastName}`,
+              full_name: trimmed,
               first_name: firstName,
               last_name: lastName,
-              username,
-              language,
-              gender,
-              country,
             },
             emailRedirectTo: window.location.origin + '/account-activated',
           },
@@ -225,7 +204,7 @@ export default function Auth() {
     'w-full bg-background/60 border border-border rounded-xl py-3 pl-12 pr-12 text-foreground placeholder:text-muted-foreground/70 focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all duration-300';
 
   const submitDisabled =
-    loading || (!isLogin && (!allRulesPass || !firstName || !lastName || !username || !gender || !country));
+    loading || (!isLogin && (!allRulesPass || !fullName.trim() || password !== confirmPassword));
 
   return (
     <div className="min-h-screen bg-[hsl(var(--simulator-bg))] flex items-center justify-center p-4 overflow-hidden relative">
@@ -283,73 +262,33 @@ export default function Auth() {
               <form onSubmit={handleSubmit} className="space-y-4">
                 {!isLogin && (
                   <>
-                    <div className="grid grid-cols-2 gap-3">
-                      <FieldShell icon={User} filled={firstName.length > 0}>
-                        <Input
-                          placeholder={t('auth.firstName')}
-                          value={firstName}
-                          onChange={(e) => setFirstName(e.target.value)}
-                          className={inputBase}
-                          required
-                        />
-                      </FieldShell>
-                      <FieldShell icon={User} filled={lastName.length > 0}>
-                        <Input
-                          placeholder={t('auth.lastName')}
-                          value={lastName}
-                          onChange={(e) => setLastName(e.target.value)}
-                          className={inputBase}
-                          required
-                        />
-                      </FieldShell>
+                    {/* Step indicator */}
+                    <div className="flex items-center justify-center gap-1 mb-2 select-none" aria-hidden="true">
+                      {[1, 2, 3, 4].map((step, idx) => (
+                        <div key={step} className="flex items-center gap-1">
+                          <div className="w-7 h-7 rounded-md bg-secondary/70 border border-border flex items-center justify-center text-xs font-semibold text-muted-foreground">
+                            {step}
+                          </div>
+                          {idx < 3 && (
+                            <div className="flex items-center gap-1">
+                              <span className="w-4 h-px bg-border" />
+                              <span className="w-1 h-1 rounded-full bg-border" />
+                              <span className="w-4 h-px bg-border" />
+                            </div>
+                          )}
+                        </div>
+                      ))}
                     </div>
 
-                    <FieldShell icon={UserCircle} filled={username.length > 0}>
+                    <FieldShell icon={User} filled={fullName.length > 0}>
                       <Input
-                        placeholder={t('auth.username')}
-                        value={username}
-                        onChange={(e) => setUsername(e.target.value)}
+                        placeholder={t('auth.fullName')}
+                        value={fullName}
+                        onChange={(e) => setFullName(e.target.value)}
                         className={inputBase}
                         required
                       />
                     </FieldShell>
-
-                    <div className="grid grid-cols-2 gap-3">
-                      <Select value={language} onValueChange={setLanguage}>
-                        <SelectTrigger className="bg-background/60 border-border h-12 rounded-xl">
-                          <Globe className="mr-2 h-4 w-4 text-muted-foreground" />
-                          <SelectValue placeholder={t('auth.language')} />
-                        </SelectTrigger>
-                        <SelectContent>
-                          {LANGUAGES.map((l) => (
-                            <SelectItem key={l.value} value={l.value}>{l.label}</SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
-
-                      <Select value={gender} onValueChange={setGender}>
-                        <SelectTrigger className="bg-background/60 border-border h-12 rounded-xl">
-                          <SelectValue placeholder={t('auth.gender')} />
-                        </SelectTrigger>
-                        <SelectContent>
-                          {genders.map((g) => (
-                            <SelectItem key={g.value} value={g.value}>{g.label}</SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
-                    </div>
-
-                    <Select value={country} onValueChange={setCountry}>
-                      <SelectTrigger className="bg-background/60 border-border h-12 rounded-xl">
-                        <Globe className="mr-2 h-4 w-4 text-muted-foreground" />
-                        <SelectValue placeholder={t('auth.country')} />
-                      </SelectTrigger>
-                      <SelectContent>
-                        {COUNTRIES.map((c) => (
-                          <SelectItem key={c} value={c}>{c}</SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
                   </>
                 )}
 
@@ -407,6 +346,42 @@ export default function Auth() {
                       </div>
                     ))}
                   </div>
+                )}
+
+                {!isLogin && (
+                  <div className="group relative">
+                    <Lock className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground group-focus-within:text-primary transition-colors" />
+                    <Input
+                      type={showConfirmPassword ? 'text' : 'password'}
+                      placeholder={t('auth.confirmPassword')}
+                      value={confirmPassword}
+                      onChange={(e) => setConfirmPassword(e.target.value)}
+                      className={`${inputBase} pr-20`}
+                      required
+                      minLength={8}
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                      className="absolute right-10 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-primary transition-colors"
+                      tabIndex={-1}
+                    >
+                      {showConfirmPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                    </button>
+                    <div
+                      className={`pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 w-2 h-2 rounded-full transition-all duration-300 ${
+                        confirmPassword.length > 0 && confirmPassword === password
+                          ? 'bg-[hsl(var(--success))] shadow-[0_0_8px_hsl(var(--success)/0.6)]'
+                          : confirmPassword.length > 0
+                          ? 'bg-destructive shadow-[0_0_8px_hsl(var(--destructive)/0.6)]'
+                          : 'bg-muted-foreground/40 group-focus-within:bg-primary'
+                      }`}
+                    />
+                  </div>
+                )}
+
+                {!isLogin && confirmPassword.length > 0 && confirmPassword !== password && (
+                  <p className="text-xs text-destructive -mt-2 ml-1">{t('auth.passwordsDontMatch')}</p>
                 )}
 
                 {isLogin && (
