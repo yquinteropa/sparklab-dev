@@ -108,12 +108,6 @@ export default function Auth() {
     { label: t('auth.pwSpecial'), test: (p: string) => /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(p) },
   ];
 
-  const genders = [
-    { value: 'male', label: t('auth.genderMale') },
-    { value: 'female', label: t('auth.genderFemale') },
-    { value: 'non_binary', label: t('auth.genderNonBinary') },
-    { value: 'prefer_not_say', label: t('auth.genderPreferNot') },
-  ];
 
   const allRulesPass = passwordRules.every((r) => r.test(password));
 
