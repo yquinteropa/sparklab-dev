@@ -134,7 +134,7 @@ export default function Index() {
     { icon: Github, href: "https://github.com/yquinteropa/sparklab-dev", label: "GitHub" },
     { icon: Twitter, href: "#", label: "Twitter" },
     { icon: Linkedin, href: "#", label: "LinkedIn" },
-    { icon: Mail, href: "#", label: "Email" },
+    { icon: Mail, href: "https://mail.google.com/mail/?view=cm&fs=1&to=kdbermudezr@ufpso.edu.co", label: "Email" },
   ];
 
   return (
