@@ -198,12 +198,13 @@ export default function Dashboard() {
       href: '/dashboard',
     },
     {
-      icon: '🎯',
-      title: 'Retos Guiados',
-      desc: 'Desafíos paso a paso con instrucciones claras. Arma circuitos específicos y recibe feedback inmediato sobre si funcionan correctamente.',
-      tag: 'Práctica · 30+ retos',
+      icon: '⚡',
+      title: 'Preguntas Rápidas',
+      desc: 'Quiz cronometrado al estilo Duolingo: V/F, opción múltiple y emparejar. Responde rápido para sumar más puntos y mantener tu racha.',
+      tag: 'Cronometrado · 15s',
       tagColor: '#f59e0b',
-      href: '/dashboard',
+      badge: 'Nuevo',
+      href: '/dashboard/quiz',
     },
     {
       icon: '🏆',
