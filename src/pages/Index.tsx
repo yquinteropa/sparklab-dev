@@ -13,7 +13,6 @@ import {
   Flame,
   Triangle,
   Github,
-  Twitter,
   Linkedin,
   Mail,
 } from "lucide-react";
