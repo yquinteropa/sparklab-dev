@@ -131,7 +131,6 @@ export default function Index() {
 
   const socialLinks = [
     { icon: Github, href: "https://github.com/yquinteropa/sparklab-dev", label: "GitHub" },
-    { icon: Linkedin, href: "#", label: "LinkedIn" },
     { icon: Mail, href: "https://mail.google.com/mail/?view=cm&fs=1&to=kdbermudezr@ufpso.edu.co", label: "Email" },
   ];
 
