@@ -48,7 +48,7 @@ export function AccessibilityMenu() {
             <label className="mb-1.5 flex items-center gap-2 text-xs text-muted-foreground">
               <Sun className="h-3.5 w-3.5" /> {t('accessibility.visualMode')}
             </label>
-            <div className="grid grid-cols-3 gap-1.5">
+            <div className="grid grid-cols-1 gap-1.5">
               {([
                 { key: 'light' as const, label: t('accessibility.light'), icon: Sun },
                 { key: 'dark' as const, label: t('accessibility.dark'), icon: Moon },
@@ -57,12 +57,12 @@ export function AccessibilityMenu() {
                 <button
                   key={key}
                   onClick={() => setThemeMode(key)}
-                  className={`flex items-center justify-center gap-1 rounded-md border py-2 text-xs font-medium transition-colors ${
+                  className={`flex items-center justify-center gap-2 rounded-md border py-2 px-3 text-xs font-medium transition-colors ${
                     themeMode === key ? 'border-primary bg-primary text-primary-foreground' : 'border-border bg-muted text-muted-foreground hover:bg-accent'
                   }`}
                 >
-                  <Icon className="h-3 w-3 shrink-0" />
-                  <span className="truncate">{label}</span>
+                  <Icon className="h-3.5 w-3.5 shrink-0" />
+                  <span>{label}</span>
                 </button>
               ))}
             </div>
