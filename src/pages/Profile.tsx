@@ -14,7 +14,7 @@ import {
   Shield, Target, Clock, Zap, Loader2, Save, User as UserIcon,
 } from 'lucide-react';
 import { toast } from 'sonner';
-import { ProfileSecurity } from '@/components/ProfileSecurity';
+
 
 const LANGUAGES = [
   { value: 'es', label: 'Español' },
@@ -576,8 +576,6 @@ export default function Profile() {
               </div>
             )}
 
-            {/* Security section (real) */}
-            <ProfileSecurity />
           </div>
 
           {/* RIGHT */}

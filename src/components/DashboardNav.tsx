@@ -1,5 +1,5 @@
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { Zap, Target, Trophy, User, LogOut, ChevronDown } from 'lucide-react';
+import { Zap, Target, Trophy, User, LogOut, ChevronDown, Settings } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useTranslation } from 'react-i18next';
 import { useState, useRef, useEffect } from 'react';
@@ -84,6 +84,13 @@ export function DashboardNav() {
                   className="flex items-center gap-2 px-4 py-2 text-sm text-card-foreground hover:bg-muted"
                 >
                   <User className="h-4 w-4" /> {t('nav.updateProfile')}
+                </Link>
+                <Link
+                  to="/dashboard/settings"
+                  onClick={() => setMenuOpen(false)}
+                  className="flex items-center gap-2 px-4 py-2 text-sm text-card-foreground hover:bg-muted"
+                >
+                  <Settings className="h-4 w-4" /> Configuración y privacidad
                 </Link>
                 <div className="my-1 border-t border-border" />
                 <button
