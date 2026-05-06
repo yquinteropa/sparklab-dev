@@ -13,7 +13,6 @@ import {
   Flame,
   Triangle,
   Github,
-  Linkedin,
   Mail,
 } from "lucide-react";
 import { useTranslation } from "react-i18next";
