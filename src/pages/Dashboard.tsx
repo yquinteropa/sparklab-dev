@@ -5,7 +5,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
-import { Zap, Github, Twitter, Linkedin, Mail } from 'lucide-react';
+import { Zap, Github, Mail } from 'lucide-react';
 
 /* ── Robot pixel art ── */
 function RobotPixel() {
@@ -218,8 +218,6 @@ export default function Dashboard() {
 
   const socialLinks = [
     { icon: Github, href: 'https://github.com/yquinteropa/sparklab-dev', label: 'GitHub' },
-    { icon: Twitter, href: '#', label: 'Twitter' },
-    { icon: Linkedin, href: '#', label: 'LinkedIn' },
     { icon: Mail, href: '#', label: 'Email' },
   ];
 
