@@ -5,7 +5,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
-import { Zap, Github, Mail } from 'lucide-react';
+import { Zap } from 'lucide-react';
+import { SiteFooter } from '@/components/SiteFooter';
 
 /* ── Robot pixel art ── */
 function RobotPixel() {
@@ -216,11 +217,6 @@ export default function Dashboard() {
     },
   ];
 
-  const socialLinks = [
-    { icon: Github, href: 'https://github.com/yquinteropa/sparklab-dev', label: 'GitHub' },
-    { icon: Mail, href: '#', label: 'Email' },
-  ];
-
   return (
     <div className="min-h-screen flex flex-col" style={{ background: 'linear-gradient(160deg,#060e1d 0%,#091624 60%,#060e1d 100%)', color: '#e2e8f0', fontFamily: "'Courier New',monospace" }}>
       <DashboardNav />
@@ -395,66 +391,7 @@ export default function Dashboard() {
       </main>
 
       {/* FOOTER */}
-      <footer className="border-t" style={{ background: '#0a1122', borderColor: 'rgba(255,255,255,0.06)' }}>
-        <div className="max-w-6xl mx-auto px-4 py-12">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-8">
-            <div className="flex flex-col items-center md:items-start gap-3">
-              <div className="flex items-center gap-2">
-                <Zap className="w-6 h-6" style={{ color: '#22d3ee' }} />
-                <span className="text-xl font-bold" style={{ color: '#22d3ee' }}>SparkLab</span>
-              </div>
-              <p className="text-sm text-center md:text-left max-w-xs" style={{ color: '#94a3b8' }}>
-                Aprende electrónica de forma interactiva y divertida.
-              </p>
-            </div>
-
-            <nav className="flex flex-wrap justify-center gap-6">
-              {[
-                { name: t('nav.levels'), href: '/dashboard' },
-                { name: t('nav.ranking'), href: '/dashboard/leaderboard' },
-                { name: t('nav.information'), href: '/' },
-              ].map((link) => (
-                <Link key={link.name} to={link.href} className="text-sm transition-colors duration-300" style={{ color: '#94a3b8' }}
-                  onMouseEnter={(e) => (e.currentTarget.style.color = '#22d3ee')}
-                  onMouseLeave={(e) => (e.currentTarget.style.color = '#94a3b8')}>
-                  {link.name}
-                </Link>
-              ))}
-            </nav>
-
-            <div className="flex items-center gap-4">
-              {socialLinks.map((social) => (
-                <a key={social.label} href={social.href} target="_blank" rel="noopener noreferrer" aria-label={social.label}
-                  className="w-10 h-10 rounded-lg flex items-center justify-center transition-all duration-300 hover:-translate-y-1"
-                  style={{ background: 'rgba(30,41,59,0.5)', border: '1px solid rgba(100,116,139,0.3)', color: '#94a3b8' }}
-                  onMouseEnter={(e) => { e.currentTarget.style.color = '#22d3ee'; e.currentTarget.style.borderColor = 'rgba(34,211,238,0.5)'; }}
-                  onMouseLeave={(e) => { e.currentTarget.style.color = '#94a3b8'; e.currentTarget.style.borderColor = 'rgba(100,116,139,0.3)'; }}
-                >
-                  <social.icon className="w-5 h-5" />
-                </a>
-              ))}
-            </div>
-          </div>
-
-          <div className="my-8" style={{ height: 1, background: 'rgba(255,255,255,0.06)' }} />
-
-          <div className="flex flex-col md:flex-row justify-between items-center gap-4 text-sm" style={{ color: '#64748b' }}>
-            <p>&copy; {new Date().getFullYear()} SparkLab. Todos los derechos reservados.</p>
-            <div className="flex gap-6">
-              <a href="#" className="transition-colors duration-300" style={{ color: '#64748b' }}
-                onMouseEnter={(e) => (e.currentTarget.style.color = '#22d3ee')}
-                onMouseLeave={(e) => (e.currentTarget.style.color = '#64748b')}>
-                Política de privacidad
-              </a>
-              <a href="#" className="transition-colors duration-300" style={{ color: '#64748b' }}
-                onMouseEnter={(e) => (e.currentTarget.style.color = '#22d3ee')}
-                onMouseLeave={(e) => (e.currentTarget.style.color = '#64748b')}>
-                Términos de uso
-              </a>
-            </div>
-          </div>
-        </div>
-      </footer>
+      <SiteFooter />
 
       <style>{`
         @keyframes dash-float { 0%,100% { transform: translateY(0px); } 50% { transform: translateY(-9px); } }
