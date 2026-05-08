@@ -16,6 +16,7 @@ import {
   Mail,
 } from "lucide-react";
 import { useTranslation } from "react-i18next";
+import { SiteFooter } from "@/components/SiteFooter";
 
 /* ───────────────────── Decorative SVGs ───────────────────── */
 
