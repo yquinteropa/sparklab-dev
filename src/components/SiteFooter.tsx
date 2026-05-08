@@ -16,10 +16,11 @@ export function SiteFooter({ footerRef }: SiteFooterProps) {
   return (
     <footer
       ref={footerRef}
-      className="bg-[hsl(220_30%_5%)] border-t border-border"
+      className="bg-background/80 backdrop-blur-xl border-t border-border/50 shadow-[0_-4px_20px_-5px_hsl(var(--primary)/0.1)]"
     >
-      <div className="max-w-6xl mx-auto px-4 py-12">
-        <div className="flex flex-col md:flex-row justify-between items-center gap-8">
+      <div className="max-w-6xl mx-auto px-4 py-10">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-start">
+          {/* Brand */}
           <div className="flex flex-col items-center md:items-start gap-3">
             <div className="flex items-center gap-2">
               <Zap className="w-6 h-6 text-primary" />
@@ -31,27 +32,54 @@ export function SiteFooter({ footerRef }: SiteFooterProps) {
               </span>
             </div>
             <p className="text-muted-foreground text-sm text-center md:text-left max-w-xs">
-              {t("index.heroDesc")}
+              {t("index.footerShortDesc")}
             </p>
           </div>
 
-          <div className="flex items-center gap-4">
-            {socialLinks.map((social) => (
+          {/* Legal Links */}
+          <div className="flex flex-col items-center md:items-start gap-3">
+            <span className="text-sm font-semibold text-foreground uppercase tracking-wider">
+              Legal
+            </span>
+            <div className="flex flex-col items-center md:items-start gap-2">
               <a
-                key={social.label}
-                href={social.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label={social.label}
-                className="w-10 h-10 rounded-lg bg-secondary/60 border border-border flex items-center justify-center text-muted-foreground hover:text-primary hover:border-primary/50 hover:-translate-y-1 transition-all duration-300"
+                href="#"
+                className="text-sm text-muted-foreground hover:text-primary transition-colors duration-200"
               >
-                <social.icon className="w-5 h-5" />
+                {t("index.terms")}
               </a>
-            ))}
+              <a
+                href="#"
+                className="text-sm text-muted-foreground hover:text-primary transition-colors duration-200"
+              >
+                {t("index.privacy")}
+              </a>
+            </div>
+          </div>
+
+          {/* Social */}
+          <div className="flex flex-col items-center md:items-end gap-3">
+            <span className="text-sm font-semibold text-foreground uppercase tracking-wider">
+              {t("index.followUs")}
+            </span>
+            <div className="flex items-center gap-3">
+              {socialLinks.map((social) => (
+                <a
+                  key={social.label}
+                  href={social.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={social.label}
+                  className="w-10 h-10 rounded-lg bg-secondary/60 border border-border/60 flex items-center justify-center text-muted-foreground hover:text-primary hover:border-primary/50 hover:-translate-y-1 hover:shadow-[0_0_15px_hsl(var(--primary)/0.3)] transition-all duration-300"
+                >
+                  <social.icon className="w-5 h-5" />
+                </a>
+              ))}
+            </div>
           </div>
         </div>
 
-        <div className="h-px bg-border my-8" />
+        <div className="h-px bg-border/50 my-8" />
 
         <div className="text-center text-muted-foreground text-sm">
           {t("index.footer", { year: new Date().getFullYear() })}
