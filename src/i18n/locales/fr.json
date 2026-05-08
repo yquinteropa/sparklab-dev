@@ -37,7 +37,11 @@
     "ctaSuffix": "votre apprentissage ?",
     "ctaDesc": "Créez votre compte gratuit et commencez à construire des circuits aujourd'hui.",
     "createAccount": "Créer un Compte",
-    "footer": "© {{year}} SparkLab. Tous droits réservés."
+    "footer": "© {{year}} SparkLab. Tous droits réservés.",
+    "footerShortDesc": "Apprenez l'électronique via des expériences interactives, missions et compétitions.",
+    "terms": "Conditions Générales",
+    "privacy": "Politique de Confidentialité",
+    "followUs": "Suivez-nous"
   },
   "auth": {
     "slogan": "Apprenez les circuits électriques en jouant",
