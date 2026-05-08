@@ -5,7 +5,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
-import { Zap, Github, Mail } from 'lucide-react';
+import { Zap } from 'lucide-react';
+import { SiteFooter } from '@/components/SiteFooter';
 
 /* ── Robot pixel art ── */
 function RobotPixel() {
