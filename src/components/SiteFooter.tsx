@@ -1,5 +1,6 @@
 import { Zap, Github, Mail } from "lucide-react";
 import { useTranslation } from "react-i18next";
+import { Link } from "react-router-dom";
 
 const socialLinks = [
   { icon: Github, href: "https://github.com/yquinteropa/sparklab-dev", label: "GitHub" },
@@ -42,18 +43,18 @@ export function SiteFooter({ footerRef }: SiteFooterProps) {
               Legal
             </span>
             <div className="flex flex-col items-center md:items-start gap-2">
-              <a
-                href="#"
+              <Link
+                to="/terms"
                 className="text-sm text-muted-foreground hover:text-primary transition-colors duration-200"
               >
                 {t("index.terms")}
-              </a>
-              <a
-                href="#"
+              </Link>
+              <Link
+                to="/privacy"
                 className="text-sm text-muted-foreground hover:text-primary transition-colors duration-200"
               >
                 {t("index.privacy")}
-              </a>
+              </Link>
             </div>
           </div>
 
