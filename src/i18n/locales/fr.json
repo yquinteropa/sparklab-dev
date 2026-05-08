@@ -202,5 +202,41 @@
     "googleSetPassword": "Souhaitez-vous créer un mot de passe pour vous connecter manuellement à l'avenir ?",
     "sendResetLink": "Envoyer le lien de mot de passe",
     "resetEmailSent": "Un lien a été envoyé à votre e-mail pour définir un mot de passe."
+  },
+  "legal": {
+    "back": "Retour à l'accueil",
+    "lastUpdated": "Dernière mise à jour : {{date}}"
+  },
+  "terms": {
+    "title": "Conditions Générales",
+    "intro": "Bienvenue sur SparkLab. En accédant et en utilisant notre plateforme, vous acceptez ces Conditions Générales. Veuillez les lire attentivement avant d'utiliser nos services.",
+    "sections": [
+      { "title": "Acceptation des Conditions", "content": "En vous inscrivant ou en utilisant SparkLab, vous acceptez d'être lié par ces conditions. Si vous n'êtes pas d'accord, vous ne devez pas utiliser la plateforme." },
+      { "title": "Description du Service", "content": "SparkLab est une plateforme éducative gamifiée pour apprendre les circuits électriques via des simulations interactives, des missions et des compétitions. Le contenu a un but éducatif." },
+      { "title": "Compte Utilisateur", "content": "Vous êtes responsable de la confidentialité de votre mot de passe et de toute activité réalisée sous votre compte. Vous devez fournir des informations exactes lors de l'inscription." },
+      { "title": "Utilisation Acceptable", "content": "Vous ne devez pas utiliser SparkLab à des fins illégales, porter atteinte aux droits de tiers, diffuser des logiciels malveillants ou tenter un accès non autorisé aux systèmes." },
+      { "title": "Propriété Intellectuelle", "content": "Tout le contenu (textes, graphiques, code, marques) appartient à SparkLab ou à ses concédants et est protégé par les lois sur la propriété intellectuelle." },
+      { "title": "Contenu de l'Utilisateur", "content": "Vous conservez la propriété du contenu que vous créez, mais vous nous accordez une licence pour l'afficher au sein de la plateforme à des fins éducatives." },
+      { "title": "Limitation de Responsabilité", "content": "SparkLab est fourni \"tel quel\". Nous ne garantissons pas une disponibilité ininterrompue ni un service sans erreur. Nous ne sommes pas responsables des dommages indirects." },
+      { "title": "Modifications du Service", "content": "Nous nous réservons le droit de modifier, suspendre ou interrompre des fonctionnalités à tout moment, en notifiant les changements lorsque cela est possible." },
+      { "title": "Modifications des Conditions", "content": "Nous pouvons mettre à jour ces conditions. Les modifications prennent effet à leur publication sur cette page. L'utilisation continue implique l'acceptation des nouvelles conditions." },
+      { "title": "Contact", "content": "Pour toute question, contactez-nous à kdbermudezr@ufpso.edu.co." }
+    ]
+  },
+  "privacy": {
+    "title": "Politique de Confidentialité",
+    "intro": "Votre vie privée est importante pour SparkLab. Cette politique explique quelles données nous collectons, comment nous les utilisons et les droits que vous avez sur celles-ci.",
+    "sections": [
+      { "title": "Informations Collectées", "content": "Nous collectons les données que vous fournissez (nom, e-mail, nom d'utilisateur, langue, genre, pays) et celles générées par votre utilisation (progression, XP, missions terminées)." },
+      { "title": "Utilisation des Informations", "content": "Nous utilisons vos données pour vous authentifier, personnaliser votre expérience, afficher votre progression et votre classement, et améliorer la plateforme." },
+      { "title": "Base Légale", "content": "Nous traitons vos données sur la base de l'exécution du service demandé lors de l'inscription et de votre consentement, que vous pouvez retirer à tout moment." },
+      { "title": "Partage des Données", "content": "Nous ne vendons pas vos données. Nous les partageons uniquement avec des prestataires qui nous aident à exploiter le service, sous accords de confidentialité." },
+      { "title": "Cookies et Technologies Similaires", "content": "Nous utilisons des cookies et du stockage local pour maintenir votre session et mémoriser vos préférences. Vous pouvez les effacer depuis votre navigateur." },
+      { "title": "Sécurité", "content": "Nous appliquons des mesures techniques et organisationnelles raisonnables (chiffrement en transit, RLS, hachage des mots de passe) pour protéger vos informations." },
+      { "title": "Conservation des Données", "content": "Nous conservons vos données tant que votre compte est actif ou nécessaire pour fournir le service. Vous pouvez demander leur suppression en nous contactant." },
+      { "title": "Vos Droits", "content": "Vous avez le droit d'accéder, rectifier, supprimer et porter vos données, ainsi que de vous opposer à leur traitement. Écrivez à kdbermudezr@ufpso.edu.co." },
+      { "title": "Mineurs", "content": "Si vous êtes mineur, vous devez avoir le consentement de votre parent ou tuteur légal pour utiliser SparkLab." },
+      { "title": "Modifications de cette Politique", "content": "Nous pouvons mettre à jour cette politique. La version en vigueur sera publiée sur cette page avec la date de dernière mise à jour." }
+    ]
   }
 }
