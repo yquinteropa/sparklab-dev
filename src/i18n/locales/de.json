@@ -37,7 +37,11 @@
     "ctaSuffix": "zu entfachen?",
     "ctaDesc": "Erstelle dein kostenloses Konto und beginne heute Schaltungen zu bauen.",
     "createAccount": "Konto Erstellen",
-    "footer": "© {{year}} SparkLab. Alle Rechte vorbehalten."
+    "footer": "© {{year}} SparkLab. Alle Rechte vorbehalten.",
+    "footerShortDesc": "Lerne Elektronik durch interaktive Erfahrungen, Missionen und Wettbewerbe.",
+    "terms": "Nutzungsbedingungen",
+    "privacy": "Datenschutzrichtlinie",
+    "followUs": "Folge uns"
   },
   "auth": {
     "slogan": "Lerne elektrische Schaltungen spielend",
