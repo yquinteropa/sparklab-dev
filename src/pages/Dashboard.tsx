@@ -217,11 +217,6 @@ export default function Dashboard() {
     },
   ];
 
-  const socialLinks = [
-    { icon: Github, href: 'https://github.com/yquinteropa/sparklab-dev', label: 'GitHub' },
-    { icon: Mail, href: '#', label: 'Email' },
-  ];
-
   return (
     <div className="min-h-screen flex flex-col" style={{ background: 'linear-gradient(160deg,#060e1d 0%,#091624 60%,#060e1d 100%)', color: '#e2e8f0', fontFamily: "'Courier New',monospace" }}>
       <DashboardNav />
