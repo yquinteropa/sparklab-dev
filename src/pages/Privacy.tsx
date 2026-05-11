@@ -1,10 +1,11 @@
 import { Zap, ArrowLeft } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { Button } from "@/components/ui/button";
 
 export default function Privacy() {
   const { t } = useTranslation();
+  const navigate = useNavigate();
   const sections = t("privacy.sections", { returnObjects: true }) as {
     title: string;
     content: string;
@@ -14,20 +15,17 @@ export default function Privacy() {
     <div className="min-h-screen bg-background">
       <header className="border-b border-border/50 bg-background/80 backdrop-blur-xl sticky top-0 z-40">
         <div className="max-w-4xl mx-auto px-4 py-4 flex items-center justify-between">
-          <Link to="/" className="flex items-center gap-2">
-            <Zap className="w-6 h-6 text-primary" />
-            <span
-              className="text-primary text-xl font-bold"
-              style={{ fontFamily: "var(--font-display)" }}
-            >
+          <Link to="/" className="flex items-center gap-3 group">
+            <div className="w-9 h-9 rounded-lg bg-primary/10 border border-primary/40 shadow-[0_0_12px_hsl(var(--primary)/0.25)] flex items-center justify-center">
+              <Zap className="w-5 h-5 text-primary" />
+            </div>
+            <span className="text-sm font-bold tracking-[0.22em] uppercase text-primary">
               SparkLab
             </span>
           </Link>
-          <Button variant="outline" size="sm" asChild>
-            <Link to="/">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              {t("legal.back")}
-            </Link>
+          <Button variant="outline" size="sm" onClick={() => navigate(-1)}>
+            <ArrowLeft className="w-4 h-4 mr-2" />
+            {t("legal.back")}
           </Button>
         </div>
       </header>

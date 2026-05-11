@@ -204,7 +204,7 @@
     "resetEmailSent": "Se ha enviado un enlace a tu correo para establecer una contraseña."
   },
   "legal": {
-    "back": "Volver al inicio",
+    "back": "Volver",
     "lastUpdated": "Última actualización: {{date}}"
   },
   "terms": {

@@ -204,7 +204,7 @@
     "resetEmailSent": "Um link foi enviado ao seu e-mail para definir uma senha."
   },
   "legal": {
-    "back": "Voltar ao início",
+    "back": "Voltar",
     "lastUpdated": "Última atualização: {{date}}"
   },
   "terms": {

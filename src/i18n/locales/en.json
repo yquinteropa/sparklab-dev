@@ -204,7 +204,7 @@
     "resetEmailSent": "A link has been sent to your email to set a password."
   },
   "legal": {
-    "back": "Back to home",
+    "back": "Back",
     "lastUpdated": "Last updated: {{date}}"
   },
   "terms": {

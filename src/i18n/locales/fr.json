@@ -204,7 +204,7 @@
     "resetEmailSent": "Un lien a été envoyé à votre e-mail pour définir un mot de passe."
   },
   "legal": {
-    "back": "Retour à l'accueil",
+    "back": "Retour",
     "lastUpdated": "Dernière mise à jour : {{date}}"
   },
   "terms": {
