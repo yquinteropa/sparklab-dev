@@ -34,7 +34,7 @@ export function SiteFooter({ footerRef }: SiteFooterProps) {
                 SparkLab
               </span>
             </Link>
-            <p className="text-muted-foreground text-sm text-center md:text-left max-w-xs">
+            <p className="text-muted-foreground text-sm text-center max-w-xs">
               {t("index.footerShortDesc")}
             </p>
           </div>
