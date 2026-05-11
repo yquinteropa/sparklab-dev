@@ -39,37 +39,54 @@ export function DashboardNav() {
 
   return (
     <>
-      <header className="sticky top-0 z-40 border-b border-border bg-card/80 backdrop-blur-md">
-        <div className="mx-auto flex h-14 max-w-7xl items-center justify-between px-4">
-          <Link to="/dashboard" className="flex items-center gap-2">
-            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary">
-              <Zap className="h-4 w-4 text-primary-foreground" />
+      <header
+        className="sticky top-0 z-40 flex items-center justify-between px-6 md:px-10 h-20 backdrop-blur-md"
+        style={{
+          background: "hsl(var(--simulator-bg) / 0.92)",
+          borderBottom: "1px solid hsl(var(--primary) / 0.18)",
+        }}
+      >
+        <div className="mx-auto flex w-full max-w-7xl items-center justify-between">
+          <Link to="/dashboard" className="flex items-center gap-2 group">
+            <div className="w-9 h-9 rounded-lg flex items-center justify-center transition-transform duration-300 group-hover:scale-110 bg-primary/10 border border-primary/40 shadow-[0_0_12px_hsl(var(--primary)/0.25)]">
+              <Zap className="w-4 h-4 text-primary" />
             </div>
-            <span className="font-display text-lg font-bold text-foreground">SparkLab</span>
+            <span
+              className="text-sm font-bold tracking-[0.22em] uppercase text-primary"
+              style={{ fontFamily: "var(--font-display)" }}
+            >
+              SparkLab
+            </span>
           </Link>
 
           <nav className="flex items-center gap-1">
-            {navItems.map(({ to, label, icon: Icon }) => (
-              <Link
-                key={to}
-                to={to}
-                className={`flex items-center gap-1.5 rounded-lg px-3 py-2 text-sm font-medium transition-colors ${
-                  location.pathname === to
-                    ? 'bg-primary/10 text-primary'
-                    : 'text-muted-foreground hover:bg-muted hover:text-foreground'
-                }`}
-              >
-                <Icon className="h-4 w-4" />
-                <span className="hidden sm:inline">{label}</span>
-              </Link>
-            ))}
+            {navItems.map(({ to, label, icon: Icon }) => {
+              const active = location.pathname === to;
+              return (
+                <Link
+                  key={to}
+                  to={to}
+                  className={`relative flex items-center gap-1.5 rounded-lg px-4 py-1.5 text-xs font-semibold tracking-[0.12em] uppercase transition-colors duration-200 group ${
+                    active
+                      ? 'text-primary bg-primary/10 border border-primary/40 shadow-[0_0_12px_hsl(var(--primary)/0.25)]'
+                      : 'text-muted-foreground hover:text-primary'
+                  }`}
+                >
+                  <Icon className="h-4 w-4" />
+                  <span className="hidden sm:inline">{label}</span>
+                  {!active && (
+                    <span className="absolute bottom-0.5 left-3 right-3 h-px rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-200 bg-gradient-to-r from-transparent via-primary to-transparent" />
+                  )}
+                </Link>
+              );
+            })}
           </nav>
 
           {/* User Menu */}
           <div className="relative" ref={menuRef}>
             <button
               onClick={() => setMenuOpen(!menuOpen)}
-              className="flex items-center gap-2 rounded-lg px-3 py-2 text-sm text-muted-foreground hover:bg-muted hover:text-foreground transition-colors"
+              className="flex items-center gap-2 rounded-lg px-3 py-1.5 text-xs font-semibold tracking-[0.1em] uppercase text-muted-foreground border border-border hover:text-foreground hover:border-foreground/30 transition-all duration-200"
             >
               <div className="flex h-7 w-7 items-center justify-center rounded-full bg-primary text-xs font-bold text-primary-foreground">
                 {user?.email?.[0]?.toUpperCase() || 'U'}
