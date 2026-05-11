@@ -23,15 +23,17 @@ export function SiteFooter({ footerRef }: SiteFooterProps) {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-start">
           {/* Brand */}
           <div className="flex flex-col items-center md:items-start gap-3">
-            <div className="flex items-center gap-2">
-              <Zap className="w-6 h-6 text-primary" />
+            <Link to="/" className="flex items-center gap-2 group">
+              <div className="w-9 h-9 rounded-lg flex items-center justify-center transition-transform duration-300 group-hover:scale-110 bg-primary/10 border border-primary/40 shadow-[0_0_12px_hsl(var(--primary)/0.25)]">
+                <Zap className="w-4 h-4 text-primary" />
+              </div>
               <span
-                className="text-primary text-xl font-bold"
+                className="text-sm font-bold tracking-[0.22em] uppercase text-primary"
                 style={{ fontFamily: "var(--font-display)" }}
               >
                 SparkLab
               </span>
-            </div>
+            </Link>
             <p className="text-muted-foreground text-sm text-center md:text-left max-w-xs">
               {t("index.footerShortDesc")}
             </p>
