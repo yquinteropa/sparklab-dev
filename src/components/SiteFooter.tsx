@@ -44,7 +44,7 @@ export function SiteFooter({ footerRef }: SiteFooterProps) {
             <span className="text-sm font-semibold text-foreground uppercase tracking-wider">
               Legal
             </span>
-            <div className="flex flex-col items-center md:items-start gap-2">
+            <div className="flex flex-col items-center gap-2">
               <Link
                 to="/terms"
                 className="text-sm text-muted-foreground hover:text-primary transition-colors duration-200"
