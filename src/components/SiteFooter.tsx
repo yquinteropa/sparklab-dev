@@ -20,9 +20,9 @@ export function SiteFooter({ footerRef }: SiteFooterProps) {
       className="bg-background/80 backdrop-blur-xl border-t border-border/50 shadow-[0_-4px_20px_-5px_hsl(var(--primary)/0.1)]"
     >
       <div className="max-w-6xl mx-auto px-4 py-10">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-start md:items-start">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-center">
           {/* Brand */}
-          <div className="flex flex-col items-center md:items-start gap-3">
+          <div className="flex flex-col items-center gap-3">
             <Link to="/" className="flex items-center gap-2 group">
               <div className="w-9 h-9 rounded-lg flex items-center justify-center transition-transform duration-300 group-hover:scale-110 bg-primary/10 border border-primary/40 shadow-[0_0_12px_hsl(var(--primary)/0.25)]">
                 <Zap className="w-4 h-4 text-primary" />
@@ -40,7 +40,7 @@ export function SiteFooter({ footerRef }: SiteFooterProps) {
           </div>
 
           {/* Legal Links */}
-          <div className="flex flex-col items-center md:items-center gap-3">
+          <div className="flex flex-col items-center gap-3">
             <span className="text-sm font-semibold text-foreground uppercase tracking-wider">
               Legal
             </span>
@@ -61,7 +61,7 @@ export function SiteFooter({ footerRef }: SiteFooterProps) {
           </div>
 
           {/* Social */}
-          <div className="flex flex-col items-center md:items-end gap-3">
+          <div className="flex flex-col items-center gap-3">
             <span className="text-sm font-semibold text-foreground uppercase tracking-wider">
               {t("index.followUs")}
             </span>
