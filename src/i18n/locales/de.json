@@ -204,7 +204,7 @@
     "resetEmailSent": "Ein Link wurde an Ihre E-Mail gesendet, um ein Passwort festzulegen."
   },
   "legal": {
-    "back": "Zurück zur Startseite",
+    "back": "Zurück",
     "lastUpdated": "Zuletzt aktualisiert: {{date}}"
   },
   "terms": {
