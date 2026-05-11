@@ -40,7 +40,7 @@ export function SiteFooter({ footerRef }: SiteFooterProps) {
           </div>
 
           {/* Legal Links */}
-          <div className="flex flex-col items-center md:items-start gap-3">
+          <div className="flex flex-col items-center md:items-center gap-3">
             <span className="text-sm font-semibold text-foreground uppercase tracking-wider">
               Legal
             </span>
