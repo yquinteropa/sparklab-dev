@@ -20,7 +20,7 @@ export function SiteFooter({ footerRef }: SiteFooterProps) {
       className="bg-background/80 backdrop-blur-xl border-t border-border/50 shadow-[0_-4px_20px_-5px_hsl(var(--primary)/0.1)]"
     >
       <div className="max-w-6xl mx-auto px-4 py-10">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-start">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-start md:items-start">
           {/* Brand */}
           <div className="flex flex-col items-center md:items-start gap-3">
             <Link to="/" className="flex items-center gap-2 group">
