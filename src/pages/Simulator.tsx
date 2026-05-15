@@ -1,173 +1,151 @@
-import { useCallback, useState } from 'react';
-import {
-  ReactFlow,
-  Background,
-  Controls,
-  addEdge,
-  useNodesState,
-  useEdgesState,
-  Connection,
-  Edge,
-  Node,
-  Handle,
-  Position,
-  NodeProps,
-} from '@xyflow/react';
-import '@xyflow/react/dist/style.css';
+import { useEffect, useCallback } from 'react';
 import { DashboardNav } from '@/components/DashboardNav';
-import { Battery, Zap, Lightbulb } from 'lucide-react';
-import { useTranslation } from 'react-i18next';
-
-function BatteryNode({ data }: NodeProps) {
-  return (
-    <div className="rounded-lg border-2 border-primary bg-secondary px-4 py-3 text-center shadow-lg glow-primary">
-      <Battery className="mx-auto h-6 w-6 text-primary" />
-      <span className="mt-1 block text-xs font-medium text-secondary-foreground">{data.label as string}</span>
-      <Handle type="source" position={Position.Right} className="!bg-primary !w-3 !h-3" />
-    </div>
-  );
-}
-
-function ResistorNode({ data }: NodeProps) {
-  return (
-    <div className="rounded-lg border-2 border-muted-foreground bg-secondary px-4 py-3 text-center shadow-lg">
-      <Zap className="mx-auto h-6 w-6 text-muted-foreground" />
-      <span className="mt-1 block text-xs font-medium text-secondary-foreground">{data.label as string}</span>
-      <Handle type="target" position={Position.Left} className="!bg-muted-foreground !w-3 !h-3" />
-      <Handle type="source" position={Position.Right} className="!bg-muted-foreground !w-3 !h-3" />
-    </div>
-  );
-}
-
-function LEDNode({ data }: NodeProps) {
-  const { t } = useTranslation();
-  const isOn = data.isOn as boolean;
-  return (
-    <div className={`rounded-lg border-2 px-4 py-3 text-center shadow-lg transition-all ${
-      isOn ? 'border-accent bg-accent/20 glow-success' : 'border-muted-foreground bg-secondary'
-    }`}>
-      <Lightbulb className={`mx-auto h-6 w-6 ${isOn ? 'text-accent' : 'text-muted-foreground'}`} />
-      <span className="mt-1 block text-xs font-medium text-secondary-foreground">{data.label as string}</span>
-      {isOn && <span className="text-[10px] text-accent font-bold">● {t('simulator.ledOn')}</span>}
-      <Handle type="target" position={Position.Left} className="!bg-accent !w-3 !h-3" />
-      <Handle type="source" position={Position.Right} className="!bg-accent !w-3 !h-3" />
-    </div>
-  );
-}
-
-const nodeTypes = { battery: BatteryNode, resistor: ResistorNode, led: LEDNode };
-
-const initialNodes: Node[] = [];
-const initialEdges: Edge[] = [];
-
-function isCircuitClosed(nodes: Node[], edges: Edge[]): boolean {
-  const batteryNodes = nodes.filter(n => n.type === 'battery');
-  const ledNodes = nodes.filter(n => n.type === 'led');
-  if (batteryNodes.length === 0 || ledNodes.length === 0) return false;
-
-  const adj = new Map<string, string[]>();
-  for (const edge of edges) {
-    if (!adj.has(edge.source)) adj.set(edge.source, []);
-    adj.get(edge.source)!.push(edge.target);
-  }
-
-  const visited = new Set<string>();
-  const queue = batteryNodes.map(n => n.id);
-  queue.forEach(id => visited.add(id));
-
-  while (queue.length > 0) {
-    const current = queue.shift()!;
-    for (const next of adj.get(current) || []) {
-      if (!visited.has(next)) {
-        visited.add(next);
-        queue.push(next);
-      }
-    }
-  }
-
-  return ledNodes.some(n => visited.has(n.id));
-}
+import Protoboard from '@/components/Protoboard';
+import ComponentPanel from '@/components/ComponentPanel';
+import { useCircuitLogic } from '@/hooks/useCircuitLogic';
 
 export default function Simulator() {
-  const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
-  const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
-  const [idCounter, setIdCounter] = useState(1);
-  const { t } = useTranslation();
+  const {
+    components,
+    selectedTool,
+    setSelectedTool,
+    pendingPoint,
+    hoveredPoint,
+    selectedComponent,
+    setSelectedComponent,
+    previewWire,
+    handlePointClick,
+    handlePointHover,
+    deleteComponent,
+    clearAll,
+    cancelPlacement,
+  } = useCircuitLogic();
 
-  const componentPalette = [
-    { type: 'battery', label: t('simulator.battery'), icon: Battery },
-    { type: 'resistor', label: t('simulator.resistor'), icon: Zap },
-    { type: 'led', label: t('simulator.led'), icon: Lightbulb },
-  ];
-
-  const onConnect = useCallback(
-    (params: Connection) => {
-      setEdges((eds) => {
-        const newEdges = addEdge({ ...params, animated: true, style: { stroke: 'hsl(217, 91%, 60%)' } }, eds);
-        setTimeout(() => updateLEDs(nodes, newEdges), 0);
-        return newEdges;
-      });
+  const handleKeyDown = useCallback(
+    (e: KeyboardEvent) => {
+      if ((e.key === 'Delete' || e.key === 'Backspace') && selectedComponent) {
+        deleteComponent(selectedComponent);
+      }
+      if (e.key === 'Escape') {
+        cancelPlacement();
+        setSelectedComponent(null);
+        setSelectedTool(null);
+      }
     },
-    [nodes, setEdges]
+    [selectedComponent, deleteComponent, cancelPlacement, setSelectedComponent, setSelectedTool]
   );
 
-  const updateLEDs = useCallback((currentNodes: Node[], currentEdges: Edge[]) => {
-    const closed = isCircuitClosed(currentNodes, currentEdges);
-    setNodes((nds) =>
-      nds.map((n) => (n.type === 'led' ? { ...n, data: { ...n.data, isOn: closed } } : n))
-    );
-  }, [setNodes]);
-
-  const addComponent = (type: string, label: string) => {
-    const newNode: Node = {
-      id: `node-${idCounter}`,
-      type,
-      position: { x: 100 + Math.random() * 300, y: 100 + Math.random() * 200 },
-      data: { label, isOn: false },
-    };
-    setNodes((nds) => [...nds, newNode]);
-    setIdCounter((c) => c + 1);
-  };
-
-  const handleEdgesChange: typeof onEdgesChange = (changes) => {
-    onEdgesChange(changes);
-    setTimeout(() => updateLEDs(nodes, edges), 50);
-  };
+  useEffect(() => {
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [handleKeyDown]);
 
   return (
-    <div className="flex min-h-screen flex-col bg-background">
+    <div
+      className="flex min-h-screen flex-col"
+      style={{
+        background:
+          'linear-gradient(135deg, #020c06 0%, #031a0d 50%, #020c06 100%)',
+        fontFamily: "'Courier New', monospace",
+      }}
+    >
       <DashboardNav />
-      <div className="flex flex-1">
-        <aside className="w-56 border-r border-border bg-card p-4">
-          <h3 className="mb-3 font-display text-sm font-semibold text-card-foreground">{t('simulator.components')}</h3>
-          <div className="space-y-2">
-            {componentPalette.map(({ type, label, icon: Icon }) => (
-              <button
-                key={type}
-                onClick={() => addComponent(type, label)}
-                className="flex w-full items-center gap-3 rounded-lg border border-border bg-muted px-3 py-2.5 text-sm text-muted-foreground transition-colors hover:border-primary hover:text-primary"
-              >
-                <Icon className="h-4 w-4" />
-                {label}
-              </button>
-            ))}
+
+      {/* Sub-header del laboratorio */}
+      <div className="flex items-center justify-between border-b border-green-900/30 px-6 py-3">
+        <div className="flex items-center gap-3">
+          <div className="flex h-8 w-8 items-center justify-center rounded-lg border border-green-500/40 bg-green-500/20 text-lg">
+            ⚡
           </div>
+          <div>
+            <h1 className="text-lg font-black leading-none tracking-tight text-green-400">
+              LABORATORIO
+            </h1>
+            <p className="text-xs text-slate-500">Práctica libre · Arma tu circuito</p>
+          </div>
+        </div>
+
+        <div className="hidden md:flex items-center gap-2 rounded-full border border-slate-700/40 bg-slate-900/50 px-3 py-1.5 text-xs text-slate-400">
+          <span className="font-bold text-slate-300">{components.length}</span>
+          <span>componente{components.length === 1 ? '' : 's'}</span>
+        </div>
+      </div>
+
+      {/* Main content */}
+      <div className="flex flex-1 overflow-hidden">
+        <aside className="w-52 flex-shrink-0 overflow-y-auto border-r border-green-900/20 p-3">
+          <ComponentPanel
+            selectedTool={selectedTool}
+            setSelectedTool={setSelectedTool}
+            onClear={clearAll}
+            onCancel={cancelPlacement}
+            pendingPoint={pendingPoint}
+          />
         </aside>
 
-        <div className="flex-1" style={{ backgroundColor: 'hsl(220, 26%, 14%)' }}>
-          <ReactFlow
-            nodes={nodes}
-            edges={edges}
-            onNodesChange={onNodesChange}
-            onEdgesChange={handleEdgesChange}
-            onConnect={onConnect}
-            nodeTypes={nodeTypes}
-            fitView
-          >
-            <Background color="hsl(217, 91%, 60%)" gap={20} size={1} style={{ opacity: 0.1 }} />
-            <Controls />
-          </ReactFlow>
-        </div>
+        <main className="flex flex-1 flex-col items-center justify-start gap-4 overflow-auto p-4">
+          {/* Instrucciones básicas */}
+          <div className="flex w-full max-w-4xl flex-wrap items-center gap-3 rounded-xl border border-slate-700/40 bg-slate-900/60 px-4 py-2 text-xs text-slate-400">
+            <span className="font-bold text-slate-300">Cómo armar un circuito:</span>
+            <span>1. Selecciona un componente</span>
+            <span className="text-slate-600">›</span>
+            <span>2. Haz clic en el punto inicial</span>
+            <span className="text-slate-600">›</span>
+            <span>3. Haz clic en el punto final</span>
+            <span className="ml-auto text-slate-600">ESC = cancelar · Del = eliminar</span>
+          </div>
+
+          <div className="w-full max-w-4xl">
+            <Protoboard
+              components={components}
+              selectedTool={selectedTool}
+              pendingPoint={pendingPoint}
+              hoveredPoint={hoveredPoint}
+              selectedComponent={selectedComponent}
+              previewWire={previewWire}
+              onPointClick={handlePointClick}
+              onPointHover={handlePointHover}
+              onComponentClick={setSelectedComponent}
+            />
+          </div>
+
+          {/* Guía básica de armado (sin validación) */}
+          {components.length === 0 && (
+            <div className="w-full max-w-4xl rounded-2xl border border-green-700/30 bg-gradient-to-br from-green-900/20 to-emerald-900/10 p-5">
+              <h3 className="mb-3 text-sm font-bold text-green-400">
+                🎓 Guía rápida de la protoboard
+              </h3>
+              <div className="grid grid-cols-1 gap-3 text-xs text-slate-400 md:grid-cols-3">
+                <div className="flex gap-2">
+                  <span className="font-bold text-green-500">1.</span>
+                  <span>
+                    Las filas <strong className="text-red-400">rojas (+)</strong> y{' '}
+                    <strong className="text-blue-400">azules (−)</strong> son los rieles
+                    de alimentación: cada riel está conectado de extremo a extremo.
+                  </span>
+                </div>
+                <div className="flex gap-2">
+                  <span className="font-bold text-green-500">2.</span>
+                  <span>
+                    En la zona central, cada{' '}
+                    <strong className="text-slate-200">columna</strong> conecta sus 5
+                    huecos verticales (a–e arriba, f–j abajo) entre sí.
+                  </span>
+                </div>
+                <div className="flex gap-2">
+                  <span className="font-bold text-green-500">3.</span>
+                  <span>
+                    Usa <strong className="text-amber-400">cables</strong> para puentear
+                    señales, <strong className="text-purple-400">resistencias</strong>{' '}
+                    para limitar corriente y{' '}
+                    <strong className="text-emerald-400">baterías</strong> para alimentar
+                    el circuito. Practica libremente.
+                  </span>
+                </div>
+              </div>
+            </div>
+          )}
+        </main>
       </div>
     </div>
   );
