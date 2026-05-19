@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { DashboardNav } from '@/components/DashboardNav';
 import { Check, X, Timer, Trophy, Zap, RotateCcw } from 'lucide-react';
+import { useAccessibility } from '@/contexts/AccessibilityContext';
 
 /* ─────────── Tipos & Banco de preguntas ─────────── */
 type BoolQ = {
@@ -151,7 +152,7 @@ function BoolView({ q, onAnswer }: { q: BoolQ; onAnswer: (correct: boolean) => v
           whileHover={{ scale: 1.03 }}
           whileTap={{ scale: 0.96 }}
           onClick={() => onAnswer(v === q.answer)}
-          className="rounded-2xl border-2 border-cyan-500/30 bg-slate-900/60 px-6 py-8 text-lg font-bold text-slate-100 transition-colors hover:border-cyan-400 hover:bg-cyan-500/10"
+          className="rounded-2xl border-2 border-cyan-500/40 bg-white px-6 py-8 text-lg font-bold text-slate-900 transition-colors hover:border-cyan-500 hover:bg-cyan-50 dark:border-cyan-500/30 dark:bg-slate-900/60 dark:text-slate-100 dark:hover:border-cyan-400 dark:hover:bg-cyan-500/10"
         >
           {v ? '✅ Verdadero' : '❌ Falso'}
         </motion.button>
@@ -170,7 +171,7 @@ function MultipleView({ q, onAnswer }: { q: MultipleQ; onAnswer: (correct: boole
           whileHover={{ scale: 1.02, y: -2 }}
           whileTap={{ scale: 0.97 }}
           onClick={() => onAnswer(i === q.correctIndex)}
-          className="flex items-center gap-3 rounded-xl border-2 bg-slate-900/60 px-5 py-4 text-left text-base font-semibold text-slate-100"
+          className="flex items-center gap-3 rounded-xl border-2 bg-white px-5 py-4 text-left text-base font-semibold text-slate-900 dark:bg-slate-900/60 dark:text-slate-100"
           style={{ borderColor: `${colors[i % colors.length]}55` }}
         >
           <span
