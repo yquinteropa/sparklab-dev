@@ -219,15 +219,14 @@ function MatchingView({ q, onAnswer }: { q: MatchingQ; onAnswer: (correct: boole
               whileTap={{ scale: 0.97 }}
               onClick={() => !isMatched && setSelectedLeft(l)}
               disabled={isMatched}
-              className="rounded-xl border-2 px-4 py-3 text-sm font-bold transition-colors disabled:opacity-50"
+              className="rounded-xl border-2 px-4 py-3 text-sm font-bold text-slate-900 transition-colors disabled:opacity-50 dark:text-slate-100"
               style={{
-                borderColor: isMatched ? '#34d39955' : isSelected ? '#22d3ee' : '#334155',
-                background: isMatched ? 'rgba(52,211,153,0.12)' : isSelected ? 'rgba(34,211,238,0.15)' : 'rgba(15,23,42,0.6)',
-                color: '#f1f5f9',
+                borderColor: isMatched ? '#34d39955' : isSelected ? '#22d3ee' : '#94a3b8',
+                background: isMatched ? 'rgba(52,211,153,0.12)' : isSelected ? 'rgba(34,211,238,0.15)' : 'transparent',
               }}
             >
               {l}
-              {isMatched && <span className="ml-2 text-emerald-400">→ {matched[l]}</span>}
+              {isMatched && <span className="ml-2 text-emerald-600 dark:text-emerald-400">→ {matched[l]}</span>}
             </motion.button>
           );
         })}
@@ -241,8 +240,8 @@ function MatchingView({ q, onAnswer }: { q: MatchingQ; onAnswer: (correct: boole
               whileTap={{ scale: 0.97 }}
               onClick={() => handleRight(r)}
               disabled={used || !selectedLeft}
-              className="rounded-xl border-2 px-4 py-3 text-sm font-bold transition-colors disabled:opacity-30"
-              style={{ borderColor: '#a78bfa55', background: 'rgba(15,23,42,0.6)', color: '#f1f5f9' }}
+              className="rounded-xl border-2 px-4 py-3 text-sm font-bold text-slate-900 transition-colors disabled:opacity-30 dark:text-slate-100"
+              style={{ borderColor: '#a78bfa55', background: 'transparent' }}
             >
               {r}
             </motion.button>
