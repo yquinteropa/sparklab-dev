@@ -284,7 +284,7 @@ export default function QuickQuiz() {
   }, [state.index, state.questions.length, state.status]);
 
   return (
-    <div className="min-h-screen flex flex-col" style={{ background: 'linear-gradient(160deg,#060e1d 0%,#091624 60%,#060e1d 100%)', color: '#e2e8f0' }}>
+    <div className="min-h-screen flex flex-col text-slate-900 dark:text-slate-200" style={{ background: isDark ? 'linear-gradient(160deg,#060e1d 0%,#091624 60%,#060e1d 100%)' : 'linear-gradient(160deg,#f8fafc 0%,#eff6ff 60%,#f8fafc 100%)' }}>
       <DashboardNav />
 
       <main className="flex-1 px-4 py-10">
@@ -295,25 +295,25 @@ export default function QuickQuiz() {
               <div className="inline-block rounded-full border border-cyan-500/30 px-3 py-1 text-[10px] font-bold uppercase tracking-widest text-cyan-400">
                 ⚡ Preguntas Rápidas
               </div>
-              <h1 className="mt-2 text-2xl font-black text-slate-100 sm:text-3xl">Quiz Cronometrado</h1>
+              <h1 className="mt-2 text-2xl font-black text-slate-900 dark:text-slate-100 sm:text-3xl">Quiz Cronometrado</h1>
             </div>
-            <Link to="/dashboard" className="text-xs text-slate-400 hover:text-cyan-400">← Volver</Link>
+            <Link to="/dashboard" className="text-xs text-slate-600 hover:text-cyan-600 dark:text-slate-400 dark:hover:text-cyan-400">← Volver</Link>
           </div>
 
           {/* IDLE */}
           {state.status === 'idle' && (
             <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }}
-              className="rounded-2xl border border-cyan-500/20 bg-slate-900/60 p-8 text-center backdrop-blur">
+              className="rounded-2xl border border-cyan-500/30 bg-white p-8 text-center backdrop-blur dark:border-cyan-500/20 dark:bg-slate-900/60">
               <div className="mb-4 text-5xl">🎮</div>
-              <h2 className="mb-2 text-xl font-black text-slate-100">¿Listo para el reto?</h2>
-              <p className="mb-6 text-sm text-slate-400">
+              <h2 className="mb-2 text-xl font-black text-slate-900 dark:text-slate-100">¿Listo para el reto?</h2>
+              <p className="mb-6 text-sm text-slate-600 dark:text-slate-400">
                 Responde {QUESTIONS_PER_GAME} preguntas en menos de {TIME_PER_QUESTION}s cada una.<br />
                 ¡Cuanto más rápido, más puntos!
               </p>
               <div className="mb-6 grid grid-cols-3 gap-3 text-xs">
-                <div className="rounded-lg bg-slate-800/60 p-3"><div className="text-lg">✅❌</div><div className="text-slate-400">V/F</div></div>
-                <div className="rounded-lg bg-slate-800/60 p-3"><div className="text-lg">🔘</div><div className="text-slate-400">Opción múltiple</div></div>
-                <div className="rounded-lg bg-slate-800/60 p-3"><div className="text-lg">🔗</div><div className="text-slate-400">Emparejar</div></div>
+                <div className="rounded-lg bg-slate-100 p-3 dark:bg-slate-800/60"><div className="text-lg">✅❌</div><div className="text-slate-600 dark:text-slate-400">V/F</div></div>
+                <div className="rounded-lg bg-slate-100 p-3 dark:bg-slate-800/60"><div className="text-lg">🔘</div><div className="text-slate-600 dark:text-slate-400">Opción múltiple</div></div>
+                <div className="rounded-lg bg-slate-100 p-3 dark:bg-slate-800/60"><div className="text-lg">🔗</div><div className="text-slate-600 dark:text-slate-400">Emparejar</div></div>
               </div>
               <motion.button whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.96 }}
                 onClick={() => dispatch({ type: 'START' })}
@@ -328,18 +328,18 @@ export default function QuickQuiz() {
             <>
               {/* Barra de progreso + stats */}
               <div className="mb-4 flex items-center gap-3 text-xs font-bold">
-                <span className="text-slate-400">{state.index + 1} / {state.questions.length}</span>
-                <div className="relative h-2 flex-1 overflow-hidden rounded-full bg-slate-800">
+                <span className="text-slate-600 dark:text-slate-400">{state.index + 1} / {state.questions.length}</span>
+                <div className="relative h-2 flex-1 overflow-hidden rounded-full bg-slate-200 dark:bg-slate-800">
                   <motion.div className="absolute inset-y-0 left-0 bg-gradient-to-r from-cyan-400 to-emerald-400"
                     animate={{ width: `${progress}%` }} transition={{ duration: 0.4 }} />
                 </div>
-                <span className="text-cyan-400">⭐ {state.score}</span>
+                <span className="text-cyan-600 dark:text-cyan-400">⭐ {state.score}</span>
               </div>
 
               {/* Cronómetro */}
               <div className="mb-4 flex items-center gap-2">
-                <Timer className="h-4 w-4 text-cyan-400" />
-                <div className="relative h-1.5 flex-1 overflow-hidden rounded-full bg-slate-800">
+                <Timer className="h-4 w-4 text-cyan-600 dark:text-cyan-400" />
+                <div className="relative h-1.5 flex-1 overflow-hidden rounded-full bg-slate-200 dark:bg-slate-800">
                   <motion.div
                     className="absolute inset-y-0 left-0"
                     style={{
@@ -349,7 +349,7 @@ export default function QuickQuiz() {
                     transition={{ duration: 0.4, ease: 'linear' }}
                   />
                 </div>
-                <span className="w-8 text-right text-sm font-black text-slate-100">{state.timeLeft}s</span>
+                <span className="w-8 text-right text-sm font-black text-slate-900 dark:text-slate-100">{state.timeLeft}s</span>
               </div>
 
               {/* Card de la pregunta */}
@@ -360,12 +360,12 @@ export default function QuickQuiz() {
                   animate={{ opacity: 1, x: 0 }}
                   exit={{ opacity: 0, x: -30 }}
                   transition={{ duration: 0.25 }}
-                  className="rounded-2xl border border-cyan-500/20 bg-slate-900/60 p-6 backdrop-blur"
+                  className="rounded-2xl border border-cyan-500/30 bg-white p-6 backdrop-blur dark:border-cyan-500/20 dark:bg-slate-900/60"
                 >
-                  <div className="mb-2 text-[10px] font-bold uppercase tracking-widest text-cyan-400">
+                  <div className="mb-2 text-[10px] font-bold uppercase tracking-widest text-cyan-600 dark:text-cyan-400">
                     {current.type === 'boolean' ? 'Verdadero / Falso' : current.type === 'multiple' ? 'Opción múltiple' : 'Empareja'}
                   </div>
-                  <h3 className="mb-6 text-lg font-bold text-slate-100">{current.question}</h3>
+                  <h3 className="mb-6 text-lg font-bold text-slate-900 dark:text-slate-100">{current.question}</h3>
 
                   <div className={state.status === 'feedback' ? 'pointer-events-none opacity-60' : ''}>
                     {current.type === 'boolean' && <BoolView q={current} onAnswer={(c) => dispatch({ type: 'ANSWER', correct: c })} />}
@@ -392,7 +392,7 @@ export default function QuickQuiz() {
                             {state.lastCorrect ? `¡Correcto! ${state.combo > 1 ? `🔥 x${state.combo}` : ''}` : '¡Incorrecto!'}
                           </div>
                           {('explanation' in current) && current.explanation && (
-                            <div className="mt-1 text-slate-300">{current.explanation}</div>
+                            <div className="mt-1 text-slate-700 dark:text-slate-300">{current.explanation}</div>
                           )}
                         </div>
                       </motion.div>
@@ -406,23 +406,23 @@ export default function QuickQuiz() {
           {/* FINISHED */}
           {state.status === 'finished' && (
             <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }}
-              className="rounded-2xl border border-cyan-500/20 bg-slate-900/60 p-8 text-center backdrop-blur">
-              <Trophy className="mx-auto mb-4 h-16 w-16 text-amber-400" />
-              <h2 className="mb-2 text-3xl font-black text-slate-100">¡Quiz completado!</h2>
-              <p className="mb-6 text-sm text-slate-400">Has terminado el reto cronometrado.</p>
+              className="rounded-2xl border border-cyan-500/30 bg-white p-8 text-center backdrop-blur dark:border-cyan-500/20 dark:bg-slate-900/60">
+              <Trophy className="mx-auto mb-4 h-16 w-16 text-amber-500 dark:text-amber-400" />
+              <h2 className="mb-2 text-3xl font-black text-slate-900 dark:text-slate-100">¡Quiz completado!</h2>
+              <p className="mb-6 text-sm text-slate-600 dark:text-slate-400">Has terminado el reto cronometrado.</p>
 
               <div className="mb-6 grid grid-cols-3 gap-3">
-                <div className="rounded-xl border border-cyan-500/30 bg-slate-800/60 p-4">
-                  <div className="text-xs text-slate-400">Aciertos</div>
-                  <div className="text-2xl font-black text-emerald-400">{state.correctCount}/{state.questions.length}</div>
+                <div className="rounded-xl border border-cyan-500/40 bg-slate-50 p-4 dark:border-cyan-500/30 dark:bg-slate-800/60">
+                  <div className="text-xs text-slate-600 dark:text-slate-400">Aciertos</div>
+                  <div className="text-2xl font-black text-emerald-600 dark:text-emerald-400">{state.correctCount}/{state.questions.length}</div>
                 </div>
-                <div className="rounded-xl border border-cyan-500/30 bg-slate-800/60 p-4">
-                  <div className="text-xs text-slate-400">Puntuación</div>
-                  <div className="text-2xl font-black text-cyan-400">{state.score}</div>
+                <div className="rounded-xl border border-cyan-500/40 bg-slate-50 p-4 dark:border-cyan-500/30 dark:bg-slate-800/60">
+                  <div className="text-xs text-slate-600 dark:text-slate-400">Puntuación</div>
+                  <div className="text-2xl font-black text-cyan-600 dark:text-cyan-400">{state.score}</div>
                 </div>
-                <div className="rounded-xl border border-cyan-500/30 bg-slate-800/60 p-4">
-                  <div className="text-xs text-slate-400">Precisión</div>
-                  <div className="text-2xl font-black text-amber-400">
+                <div className="rounded-xl border border-cyan-500/40 bg-slate-50 p-4 dark:border-cyan-500/30 dark:bg-slate-800/60">
+                  <div className="text-xs text-slate-600 dark:text-slate-400">Precisión</div>
+                  <div className="text-2xl font-black text-amber-600 dark:text-amber-400">
                     {Math.round((state.correctCount / state.questions.length) * 100)}%
                   </div>
                 </div>
@@ -436,7 +436,7 @@ export default function QuickQuiz() {
                 </motion.button>
                 <motion.button whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.96 }}
                   onClick={() => navigate('/dashboard')}
-                  className="rounded-xl border border-slate-700 px-6 py-3 font-black uppercase tracking-wider text-slate-300">
+                  className="rounded-xl border border-slate-300 px-6 py-3 font-black uppercase tracking-wider text-slate-700 dark:border-slate-700 dark:text-slate-300">
                   Inicio
                 </motion.button>
               </div>
