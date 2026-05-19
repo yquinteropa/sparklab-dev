@@ -256,6 +256,8 @@ function MatchingView({ q, onAnswer }: { q: MatchingQ; onAnswer: (correct: boole
 export default function QuickQuiz() {
   const [state, dispatch] = useReducer(reducer, initialState);
   const navigate = useNavigate();
+  const { themeMode } = useAccessibility();
+  const isDark = themeMode !== 'light';
   const current = state.questions[state.index];
 
   /* Cronómetro */
