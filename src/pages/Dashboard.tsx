@@ -196,7 +196,7 @@ export default function Dashboard() {
       desc: 'Aprende los fundamentos: voltaje, corriente, resistencia y la Ley de Ohm. Lecciones cortas con ejemplos visuales y quizzes al final de cada tema.',
       tag: 'Teoría · 6 módulos',
       tagColor: '#a78bfa',
-      href: '/dashboard',
+      href: '/dashboard/modules',
     },
     {
       icon: '⚡',
