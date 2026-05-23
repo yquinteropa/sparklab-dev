@@ -259,7 +259,7 @@ export default function Level1() {
         if(currentPuzzle < PUZZLES.length-1) {
           const next = currentPuzzle+1;
           setCurrentPuzzle(next);
-          setGrid([...PUZZLES[next].grid]);
+          setGrid(randomizeGrid(PUZZLES[next].grid));
           setLit(false);
           setMsg({ type:"info", text:"Rota los cables para trazar un camino continuo desde la batería hasta la bombilla." });
         } else {
