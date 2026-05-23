@@ -64,6 +64,7 @@ const randomizeGrid = (g) => g.map(t => {
   for (let i=0;i<n;i++) cur = ROTATE[cur];
   return cur;
 });
+const COLS = 7;
 
 // ── SVGs de cables ──
 function CableH({ color }) {
