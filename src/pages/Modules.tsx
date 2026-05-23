@@ -1,7 +1,9 @@
 import { useState } from 'react';
+import { useNavigate }  from 'react-router-dom';
 import { DashboardNav } from '@/components/DashboardNav';
 import { SiteFooter } from '@/components/SiteFooter';
 import { useAccessibility } from '@/contexts/AccessibilityContext';
+import { toast } from 'sonner';
 
 type Lesson = { id: number; title: string; icon: string; done: boolean; xp: number };
 type Module = {
@@ -33,12 +35,12 @@ const MODULES_DATA: Module[] = [
     colorBorder: 'rgba(34,211,238,0.35)',
     colorGlow: 'rgba(34,211,238,0.18)',
     unlocked: true,
-    currentLevel: 2,
+    currentLevel: 0,
     totalLevels: 6,
     xpReward: 600,
     lessons: [
-      { id: 1, title: '¿Qué es la electricidad?', icon: '⚡', done: true, xp: 50 },
-      { id: 2, title: 'Voltaje y corriente', icon: '🔋', done: true, xp: 75 },
+      { id: 1, title: 'nivel 1: ¿Qué es la electricidad?', icon: '⚡', done: false, xp: 50 },
+      { id: 2, title: 'Voltaje y corriente', icon: '🔋', done: false, xp: 75 },
       { id: 3, title: 'La Ley de Ohm', icon: '📐', done: false, xp: 100 },
       { id: 4, title: 'Resistencias en serie', icon: '▬', done: false, xp: 100 },
       { id: 5, title: 'Resistencias en paralelo', icon: '🔗', done: false, xp: 125 },
@@ -335,6 +337,7 @@ function ModuleCard({ mod, onOpen, isLight }: { mod: Module; onOpen: (m: Module)
 }
 
 function LessonsDrawer({ mod, onClose, isLight }: { mod: Module | null; onClose: () => void; isLight: boolean }) {
+  const navigate = useNavigate();
   if (!mod) return null;
   const completedCount = mod.lessons.filter((l) => l.done).length;
   const panelBg = isLight ? 'linear-gradient(180deg,#ffffff 0%,#f8fafc 100%)' : 'linear-gradient(180deg,#0a1628 0%,#060e1d 100%)';
@@ -342,6 +345,15 @@ function LessonsDrawer({ mod, onClose, isLight }: { mod: Module | null; onClose:
   const titleColor = isLight ? '#0f172a' : '#f1f5f9';
   const subColor = isLight ? '#64748b' : '#64748b';
   const dividerColor = isLight ? 'rgba(15,23,42,0.08)' : 'rgba(255,255,255,0.07)';
+
+  const handleLessonClick = (lesson: Lesson, isLocked: boolean) => {
+    if (isLocked) return;
+    if (mod.id === 'basico' && lesson.id === 1) {
+      navigate('/dashboard/level1');
+    } else {
+      toast('Próximamente', { description: 'Este nivel aún no está disponible.' });
+    }
+  };
 
   return (
     <div
@@ -442,6 +454,7 @@ function LessonsDrawer({ mod, onClose, isLight }: { mod: Module | null; onClose:
             return (
               <div
                 key={lesson.id}
+                onClick={() => handleLessonClick(lesson, isLockedLesson)}
                 style={{
                   display: 'flex',
                   alignItems: 'center',
