@@ -338,7 +338,7 @@ export default function Level1() {
         <div style={{display:"grid",gridTemplateColumns:`repeat(${COLS},1fr)`,gap:5}}>
           {grid.map((type,i)=>(
             <CableCell key={i} type={type} lit={lit && pz.solution[i]!=='empty'}
-              rotatable={!!pz.rotatable[i]} onClick={()=>rotateCell(i)}/>
+              rotatable={isRotatableType(type)} onClick={()=>rotateCell(i)}/>
           ))}
         </div>
       </div>
