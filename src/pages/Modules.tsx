@@ -337,6 +337,7 @@ function ModuleCard({ mod, onOpen, isLight }: { mod: Module; onOpen: (m: Module)
 }
 
 function LessonsDrawer({ mod, onClose, isLight }: { mod: Module | null; onClose: () => void; isLight: boolean }) {
+  const navigate = useNavigate();
   if (!mod) return null;
   const completedCount = mod.lessons.filter((l) => l.done).length;
   const panelBg = isLight ? 'linear-gradient(180deg,#ffffff 0%,#f8fafc 100%)' : 'linear-gradient(180deg,#0a1628 0%,#060e1d 100%)';
@@ -344,6 +345,15 @@ function LessonsDrawer({ mod, onClose, isLight }: { mod: Module | null; onClose:
   const titleColor = isLight ? '#0f172a' : '#f1f5f9';
   const subColor = isLight ? '#64748b' : '#64748b';
   const dividerColor = isLight ? 'rgba(15,23,42,0.08)' : 'rgba(255,255,255,0.07)';
+
+  const handleLessonClick = (lesson: Lesson, isLocked: boolean) => {
+    if (isLocked) return;
+    if (mod.id === 'basico' && lesson.id === 1) {
+      navigate('/dashboard/level1');
+    } else {
+      toast('Próximamente', { description: 'Este nivel aún no está disponible.' });
+    }
+  };
 
   return (
     <div
