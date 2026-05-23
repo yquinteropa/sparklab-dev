@@ -454,6 +454,7 @@ function LessonsDrawer({ mod, onClose, isLight }: { mod: Module | null; onClose:
             return (
               <div
                 key={lesson.id}
+                onClick={() => handleLessonClick(lesson, isLockedLesson)}
                 style={{
                   display: 'flex',
                   alignItems: 'center',
