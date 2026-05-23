@@ -12,6 +12,7 @@ import AccountActivated from "./pages/AccountActivated";
 import Dashboard from "./pages/Dashboard";
 import Simulator from "./pages/Simulator";
 import Modules from "./pages/Modules";
+import Level1 from "./pages/Level1";
 import QuickQuiz from "./pages/QuickQuiz";
 import Leaderboard from "./pages/Leaderboard";
 import Profile from "./pages/Profile";
