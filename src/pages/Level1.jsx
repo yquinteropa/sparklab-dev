@@ -4,18 +4,17 @@ const PUZZLES = [
   {
     label: "Puzzle 1 — Circuito básico",
     grid: [
-      'bat','H','bend_br','H','H','bend_bl','empty',
-      'empty','empty','V','empty','V','H','empty',
-      'empty','empty','V','empty','V','H','empty',
-      'empty','empty','bend_tr','H','bend_tl','bend_br','bulb',
-    ],
-    solution: [
-      'bat','H','bend_br','H','H','bend_bl','empty',
+      'bat','H','bend_br','H','empty','bend_bl','empty',
       'empty','empty','V','empty','V','V','empty',
       'empty','empty','V','empty','V','V','empty',
       'empty','empty','bend_tr','H','bend_tl','bend_tr','bulb',
     ],
-    rotatable: [0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,1,0],
+    solution: [
+      'bat','H','bend_br','H','empty','bend_bl','empty',
+      'empty','empty','V','empty','V','V','empty',
+      'empty','empty','V','empty','V','V','empty',
+      'empty','empty','bend_tr','H','bend_tl','bend_tr','bulb',
+    ],
     hint: 26,
   },
   {
@@ -55,6 +54,16 @@ const PUZZLES = [
 ];
 
 const ROTATE = { H:'V',V:'H',bend_br:'bend_bl',bend_bl:'bend_tl',bend_tl:'bend_tr',bend_tr:'bend_br',broken:'H',empty:'empty',bat:'bat',bulb:'bulb' };
+const ROTATABLE_FOR_CLICK = ['H','V','bend_br','bend_bl','bend_tl','bend_tr','broken'];
+const isRotatableType = (t) => ROTATABLE_FOR_CLICK.includes(t);
+const RANDOMIZABLE = ['H','V','bend_br','bend_bl','bend_tl','bend_tr'];
+const randomizeGrid = (g) => g.map(t => {
+  if (!RANDOMIZABLE.includes(t)) return t;
+  let cur = t;
+  const n = Math.floor(Math.random()*4);
+  for (let i=0;i<n;i++) cur = ROTATE[cur];
+  return cur;
+});
 const COLS = 7;
 
 // ── SVGs de cables ──
@@ -220,7 +229,7 @@ export default function Level1() {
   const [showIntro, setShowIntro] = useState(true);
   const [showBook, setShowBook]   = useState(false);
   const [currentPuzzle, setCurrentPuzzle] = useState(0);
-  const [grid, setGrid] = useState([...PUZZLES[0].grid]);
+  const [grid, setGrid] = useState(() => randomizeGrid(PUZZLES[0].grid));
   const [lit, setLit]   = useState(false);
   const [msg, setMsg]   = useState({ type:"info", text:"Rota los cables para trazar un camino continuo desde la batería hasta la bombilla." });
   const [completed, setCompleted] = useState([false,false,false]);
@@ -231,7 +240,7 @@ export default function Level1() {
   const checkSolved = (g) => pz.solution.every((v,i)=>v===g[i]);
 
   const rotateCell = (i) => {
-    if(!pz.rotatable[i]) return;
+    if(!isRotatableType(grid[i])) return;
     const newGrid = [...grid];
     newGrid[i] = ROTATE[newGrid[i]] || newGrid[i];
     setGrid(newGrid);
@@ -250,7 +259,7 @@ export default function Level1() {
         if(currentPuzzle < PUZZLES.length-1) {
           const next = currentPuzzle+1;
           setCurrentPuzzle(next);
-          setGrid([...PUZZLES[next].grid]);
+          setGrid(randomizeGrid(PUZZLES[next].grid));
           setLit(false);
           setMsg({ type:"info", text:"Rota los cables para trazar un camino continuo desde la batería hasta la bombilla." });
         } else {
@@ -273,7 +282,7 @@ export default function Level1() {
   };
 
   const reset = () => {
-    setGrid([...pz.grid]); setLit(false);
+    setGrid(randomizeGrid(pz.grid)); setLit(false);
     setMsg({ type:"info", text:"Rota los cables para trazar un camino continuo desde la batería hasta la bombilla." });
   };
 
@@ -329,7 +338,7 @@ export default function Level1() {
         <div style={{display:"grid",gridTemplateColumns:`repeat(${COLS},1fr)`,gap:5}}>
           {grid.map((type,i)=>(
             <CableCell key={i} type={type} lit={lit && pz.solution[i]!=='empty'}
-              rotatable={!!pz.rotatable[i]} onClick={()=>rotateCell(i)}/>
+              rotatable={isRotatableType(type)} onClick={()=>rotateCell(i)}/>
           ))}
         </div>
       </div>
