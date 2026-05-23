@@ -4,18 +4,17 @@ const PUZZLES = [
   {
     label: "Puzzle 1 — Circuito básico",
     grid: [
-      'bat','H','bend_br','H','H','bend_bl','empty',
-      'empty','empty','V','empty','V','H','empty',
-      'empty','empty','V','empty','V','H','empty',
-      'empty','empty','bend_tr','H','bend_tl','bend_br','bulb',
-    ],
-    solution: [
-      'bat','H','bend_br','H','H','bend_bl','empty',
+      'bat','H','bend_br','H','empty','bend_bl','empty',
       'empty','empty','V','empty','V','V','empty',
       'empty','empty','V','empty','V','V','empty',
       'empty','empty','bend_tr','H','bend_tl','bend_tr','bulb',
     ],
-    rotatable: [0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,1,0],
+    solution: [
+      'bat','H','bend_br','H','empty','bend_bl','empty',
+      'empty','empty','V','empty','V','V','empty',
+      'empty','empty','V','empty','V','V','empty',
+      'empty','empty','bend_tr','H','bend_tl','bend_tr','bulb',
+    ],
     hint: 26,
   },
   {
