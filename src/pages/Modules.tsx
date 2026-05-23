@@ -1,7 +1,9 @@
 import { useState } from 'react';
+import { useNavigate }  from 'react-router-dom';
 import { DashboardNav } from '@/components/DashboardNav';
 import { SiteFooter } from '@/components/SiteFooter';
 import { useAccessibility } from '@/contexts/AccessibilityContext';
+import { toast } from 'sonner';
 
 type Lesson = { id: number; title: string; icon: string; done: boolean; xp: number };
 type Module = {
