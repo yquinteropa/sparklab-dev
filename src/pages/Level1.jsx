@@ -282,7 +282,7 @@ export default function Level1() {
   };
 
   const reset = () => {
-    setGrid([...pz.grid]); setLit(false);
+    setGrid(randomizeGrid(pz.grid)); setLit(false);
     setMsg({ type:"info", text:"Rota los cables para trazar un camino continuo desde la batería hasta la bombilla." });
   };
 
