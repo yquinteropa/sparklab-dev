@@ -229,7 +229,7 @@ export default function Level1() {
   const [showIntro, setShowIntro] = useState(true);
   const [showBook, setShowBook]   = useState(false);
   const [currentPuzzle, setCurrentPuzzle] = useState(0);
-  const [grid, setGrid] = useState([...PUZZLES[0].grid]);
+  const [grid, setGrid] = useState(() => randomizeGrid(PUZZLES[0].grid));
   const [lit, setLit]   = useState(false);
   const [msg, setMsg]   = useState({ type:"info", text:"Rota los cables para trazar un camino continuo desde la batería hasta la bombilla." });
   const [completed, setCompleted] = useState([false,false,false]);
@@ -240,7 +240,7 @@ export default function Level1() {
   const checkSolved = (g) => pz.solution.every((v,i)=>v===g[i]);
 
   const rotateCell = (i) => {
-    if(!pz.rotatable[i]) return;
+    if(!isRotatableType(grid[i])) return;
     const newGrid = [...grid];
     newGrid[i] = ROTATE[newGrid[i]] || newGrid[i];
     setGrid(newGrid);
