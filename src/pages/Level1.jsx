@@ -56,14 +56,14 @@ const PUZZLES = [
 const ROTATE = { H:'V',V:'H',bend_br:'bend_bl',bend_bl:'bend_tl',bend_tl:'bend_tr',bend_tr:'bend_br',broken:'H',empty:'empty',bat:'bat',bulb:'bulb' };
 const ROTATABLE_FOR_CLICK = ['H','V','bend_br','bend_bl','bend_tl','bend_tr','broken'];
 const isRotatableType = (t) => ROTATABLE_FOR_CLICK.includes(t);
+const RANDOMIZABLE = ['H','V','bend_br','bend_bl','bend_tl','bend_tr'];
 const randomizeGrid = (g) => g.map(t => {
-  if (!isRotatableType(t)) return t;
+  if (!RANDOMIZABLE.includes(t)) return t;
   let cur = t;
   const n = Math.floor(Math.random()*4);
   for (let i=0;i<n;i++) cur = ROTATE[cur];
   return cur;
 });
-const COLS = 7;
 
 // ── SVGs de cables ──
 function CableH({ color }) {
