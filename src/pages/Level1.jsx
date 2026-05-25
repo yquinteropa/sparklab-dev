@@ -368,7 +368,7 @@ export default function Level1() {
 
       <style>{`
         @keyframes flash {
-          0%,100%{background:#f8fafc} 50%{background:#fef2f2}
+          0%,100%{background:hsl(217, 33%, 17%)} 50%{background:hsl(0, 70%, 25%)}
         }
       `}</style>
     </div>
