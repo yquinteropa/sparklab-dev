@@ -95,30 +95,30 @@ function BrokenCable({ color }) {
 }
 function Battery() {
   return <svg viewBox="0 0 40 40" style={{width:"68%",height:"68%"}}>
-    <rect x="4" y="14" width="24" height="12" rx="2" fill="none" stroke="#64748b" strokeWidth="1.5"/>
-    <rect x="28" y="17" width="4" height="6" rx="1" fill="#64748b"/>
-    <line x1="28" y1="20" x2="40" y2="20" stroke="#64748b" strokeWidth="3"/>
-    <text x="16" y="24" fontSize="8" textAnchor="middle" fill="#64748b" fontFamily="sans-serif">9V</text>
+    <rect x="4" y="14" width="24" height="12" rx="2" fill="none" stroke="hsl(215, 20%, 70%)" strokeWidth="1.5"/>
+    <rect x="28" y="17" width="4" height="6" rx="1" fill="hsl(215, 20%, 70%)"/>
+    <line x1="28" y1="20" x2="40" y2="20" stroke="hsl(215, 20%, 70%)" strokeWidth="3"/>
+    <text x="16" y="24" fontSize="8" textAnchor="middle" fill="hsl(215, 20%, 70%)" fontFamily="sans-serif">9V</text>
   </svg>;
 }
 function Bulb({ lit }) {
   return lit
     ? <svg viewBox="0 0 40 40" style={{width:"68%",height:"68%"}}>
-        <circle cx="20" cy="17" r="9" fill="#fef3c7" stroke="#f59e0b" strokeWidth="1.5"/>
-        <line x1="16" y1="27" x2="24" y2="27" stroke="#94a3b8" strokeWidth="1.5"/>
-        <line x1="17" y1="30" x2="23" y2="30" stroke="#94a3b8" strokeWidth="1.5"/>
+        <circle cx="20" cy="17" r="9" fill="hsl(45, 90%, 70%)" stroke="#f59e0b" strokeWidth="1.5"/>
+        <line x1="16" y1="27" x2="24" y2="27" stroke="hsl(215, 20%, 65%)" strokeWidth="1.5"/>
+        <line x1="17" y1="30" x2="23" y2="30" stroke="hsl(215, 20%, 65%)" strokeWidth="1.5"/>
         <line x1="20" y1="0" x2="20" y2="8" stroke="#f59e0b" strokeWidth="2.5"/>
       </svg>
     : <svg viewBox="0 0 40 40" style={{width:"68%",height:"68%"}}>
-        <circle cx="20" cy="17" r="9" fill="none" stroke="#94a3b8" strokeWidth="1.5"/>
-        <line x1="16" y1="27" x2="24" y2="27" stroke="#94a3b8" strokeWidth="1.5"/>
-        <line x1="17" y1="30" x2="23" y2="30" stroke="#94a3b8" strokeWidth="1.5"/>
-        <line x1="20" y1="0" x2="20" y2="8" stroke="#cbd5e1" strokeWidth="2.5"/>
+        <circle cx="20" cy="17" r="9" fill="none" stroke="hsl(215, 20%, 65%)" strokeWidth="1.5"/>
+        <line x1="16" y1="27" x2="24" y2="27" stroke="hsl(215, 20%, 65%)" strokeWidth="1.5"/>
+        <line x1="17" y1="30" x2="23" y2="30" stroke="hsl(215, 20%, 65%)" strokeWidth="1.5"/>
+        <line x1="20" y1="0" x2="20" y2="8" stroke="hsl(217, 33%, 35%)" strokeWidth="2.5"/>
       </svg>;
 }
 
 function CableCell({ type, lit, rotatable, onClick }) {
-  const col = lit ? "#f59e0b" : "#94a3b8";
+  const col = lit ? "#f59e0b" : "hsl(215, 20%, 65%)";
   const content = () => {
     if(type==='bat') return <Battery/>;
     if(type==='bulb') return <Bulb lit={lit}/>;
@@ -130,8 +130,8 @@ function CableCell({ type, lit, rotatable, onClick }) {
   };
   return (
     <div onClick={rotatable ? onClick : undefined} style={{
-      aspectRatio:"1", borderRadius:8, border:"0.5px solid rgba(100,116,139,0.2)",
-      background: rotatable ? "rgba(34,211,238,0.04)" : "transparent",
+      aspectRatio:"1", borderRadius:8, border:"0.5px solid rgba(148,163,184,0.25)",
+      background: rotatable ? "rgba(34,211,238,0.10)" : "transparent",
       display:"flex", alignItems:"center", justifyContent:"center",
       cursor: rotatable ? "pointer" : "default",
       transition:"background .15s",
@@ -145,40 +145,40 @@ function CableCell({ type, lit, rotatable, onClick }) {
 function IntroModal({ onPlay, onBook }) {
   return (
     <div style={{
-      position:"fixed", inset:0, background:"rgba(0,0,0,0.45)",
+      position:"fixed", inset:0, background:"rgba(0,0,0,0.7)",
       display:"flex", alignItems:"center", justifyContent:"center", zIndex:99, padding:16,
     }}>
       <div style={{
-        background:"var(--color-background-primary, #fff)",
-        border:"0.5px solid rgba(100,116,139,0.3)",
+        background:"hsl(222, 47%, 11%)",
+        border:"0.5px solid rgba(148,163,184,0.3)",
         borderRadius:12, padding:"28px 24px", maxWidth:420, width:"100%",
       }}>
         <div style={{display:"flex",alignItems:"center",gap:10,marginBottom:12}}>
           <span style={{fontSize:22}}>⚡</span>
           <span style={{fontSize:18,fontWeight:500}}>Nivel 1 — El camino del electrón</span>
         </div>
-        <p style={{fontSize:13,color:"#64748b",lineHeight:1.65,marginBottom:14}}>
+        <p style={{fontSize:13,color:"hsl(215, 20%, 70%)",lineHeight:1.65,marginBottom:14}}>
           La bombilla está apagada porque los electrones no tienen un camino completo. Tu misión: <strong style={{fontWeight:500}}>rotar los cables</strong> para unir la batería con la bombilla y cerrar el circuito.
         </p>
         <div style={{
           borderLeft:"2px solid #93c5fd", padding:"10px 14px",
-          fontSize:12, color:"#64748b", lineHeight:1.65,
-          background:"#eff6ff", borderRadius:"0 8px 8px 0", marginBottom:18, fontStyle:"italic",
+          fontSize:12, color:"hsl(215, 20%, 70%)", lineHeight:1.65,
+          background:"hsl(217, 91%, 20%)", borderRadius:"0 8px 8px 0", marginBottom:18, fontStyle:"italic",
         }}>
           "¡El foco está apagado porque los electrones no tienen un camino para volver a casa! Une los cables para cerrar el circuito."
         </div>
-        <p style={{fontSize:12,color:"#94a3b8",marginBottom:18}}>
+        <p style={{fontSize:12,color:"hsl(215, 20%, 65%)",marginBottom:18}}>
           💡 Clic en un cable resaltado para rotarlo 90° · Pulsa "Activar" para probar
         </p>
         <div style={{display:"flex",gap:8,justifyContent:"flex-end"}}>
           <button onClick={onBook} style={{
             display:"flex",alignItems:"center",gap:6,padding:"8px 16px",
-            borderRadius:8,border:"0.5px solid #cbd5e1",background:"#f8fafc",
-            fontSize:13,cursor:"pointer",color:"#475569",
+            borderRadius:8,border:"0.5px solid #cbd5e1",background:"hsl(217, 33%, 17%)",
+            fontSize:13,cursor:"pointer",color:"hsl(215, 20%, 75%)",
           }}>📖 Ver explicación</button>
           <button onClick={onPlay} style={{
             padding:"8px 20px",borderRadius:8,border:"0.5px solid #93c5fd",
-            background:"#eff6ff",fontSize:13,cursor:"pointer",color:"#1d4ed8",fontWeight:500,
+            background:"hsl(217, 91%, 20%)",fontSize:13,cursor:"pointer",color:"hsl(199, 89%, 70%)",fontWeight:500,
           }}>▶ ¡Jugar!</button>
         </div>
       </div>
@@ -190,33 +190,33 @@ function IntroModal({ onPlay, onBook }) {
 function BookModal({ onClose }) {
   return (
     <div style={{
-      position:"fixed", inset:0, background:"rgba(0,0,0,0.45)",
+      position:"fixed", inset:0, background:"rgba(0,0,0,0.7)",
       display:"flex", alignItems:"center", justifyContent:"center", zIndex:99, padding:16,
     }}>
       <div style={{
-        background:"var(--color-background-primary,#fff)",
-        border:"0.5px solid rgba(100,116,139,0.3)",
+        background:"hsl(222, 47%, 11%)",
+        border:"0.5px solid rgba(148,163,184,0.3)",
         borderRadius:12, padding:"28px 24px", maxWidth:460, width:"100%",
       }}>
         <div style={{display:"flex",alignItems:"center",justifyContent:"space-between",marginBottom:16}}>
           <span style={{fontSize:16,fontWeight:500}}>📚 Circuito cerrado vs abierto</span>
-          <button onClick={onClose} style={{background:"none",border:"none",cursor:"pointer",fontSize:18,color:"#94a3b8"}}>✕</button>
+          <button onClick={onClose} style={{background:"none",border:"none",cursor:"pointer",fontSize:18,color:"hsl(215, 20%, 65%)"}}>✕</button>
         </div>
-        <div style={{display:"flex",flexDirection:"column",gap:14,fontSize:13,color:"#64748b",lineHeight:1.7,marginBottom:20}}>
+        <div style={{display:"flex",flexDirection:"column",gap:14,fontSize:13,color:"hsl(215, 20%, 70%)",lineHeight:1.7,marginBottom:20}}>
           <div style={{display:"flex",gap:12,alignItems:"flex-start"}}>
-            <div style={{minWidth:32,height:32,borderRadius:"50%",background:"#f0fdf4",display:"flex",alignItems:"center",justifyContent:"center",marginTop:2,fontSize:16}}>✅</div>
-            <div><strong style={{fontWeight:500,color:"#1e293b"}}>Circuito cerrado</strong><br/>El camino está completo. Los electrones fluyen desde la batería, recorren todos los componentes y regresan. La bombilla enciende.</div>
+            <div style={{minWidth:32,height:32,borderRadius:"50%",background:"hsl(142, 70%, 14%)",display:"flex",alignItems:"center",justifyContent:"center",marginTop:2,fontSize:16}}>✅</div>
+            <div><strong style={{fontWeight:500,color:"hsl(210, 40%, 96%)"}}>Circuito cerrado</strong><br/>El camino está completo. Los electrones fluyen desde la batería, recorren todos los componentes y regresan. La bombilla enciende.</div>
           </div>
           <div style={{display:"flex",gap:12,alignItems:"flex-start"}}>
-            <div style={{minWidth:32,height:32,borderRadius:"50%",background:"#fef2f2",display:"flex",alignItems:"center",justifyContent:"center",marginTop:2,fontSize:16}}>❌</div>
-            <div><strong style={{fontWeight:500,color:"#1e293b"}}>Circuito abierto</strong><br/>Hay una ruptura en el camino. Los electrones no pueden circular. La bombilla permanece apagada sin importar la energía disponible.</div>
+            <div style={{minWidth:32,height:32,borderRadius:"50%",background:"hsl(0, 70%, 18%)",display:"flex",alignItems:"center",justifyContent:"center",marginTop:2,fontSize:16}}>❌</div>
+            <div><strong style={{fontWeight:500,color:"hsl(210, 40%, 96%)"}}>Circuito abierto</strong><br/>Hay una ruptura en el camino. Los electrones no pueden circular. La bombilla permanece apagada sin importar la energía disponible.</div>
           </div>
-          <div style={{background:"#f8fafc",borderRadius:8,padding:"10px 14px",fontSize:12}}>
-            <strong style={{fontWeight:500,color:"#1e293b"}}>Analogía:</strong> Imagina que los electrones son agua en una tubería. Si hay un hueco, el agua se derrama y nunca llega al destino.
+          <div style={{background:"hsl(217, 33%, 17%)",borderRadius:8,padding:"10px 14px",fontSize:12}}>
+            <strong style={{fontWeight:500,color:"hsl(210, 40%, 96%)"}}>Analogía:</strong> Imagina que los electrones son agua en una tubería. Si hay un hueco, el agua se derrama y nunca llega al destino.
           </div>
         </div>
         <div style={{display:"flex",justifyContent:"flex-end"}}>
-          <button onClick={onClose} style={{padding:"8px 20px",borderRadius:8,border:"0.5px solid #93c5fd",background:"#eff6ff",fontSize:13,cursor:"pointer",color:"#1d4ed8",fontWeight:500}}>
+          <button onClick={onClose} style={{padding:"8px 20px",borderRadius:8,border:"0.5px solid #93c5fd",background:"hsl(217, 91%, 20%)",fontSize:13,cursor:"pointer",color:"hsl(199, 89%, 70%)",fontWeight:500}}>
             Entendido — ¡a jugar!
           </button>
         </div>
@@ -286,7 +286,7 @@ export default function Level1() {
     setMsg({ type:"info", text:"Rota los cables para trazar un camino continuo desde la batería hasta la bombilla." });
   };
 
-  const msgColors = { ok:{bg:"#f0fdf4",border:"#86efac",text:"#15803d"}, err:{bg:"#fef2f2",border:"#fca5a5",text:"#dc2626"}, info:{bg:"#f8fafc",border:"rgba(100,116,139,0.2)",text:"#475569"} };
+  const msgColors = { ok:{bg:"hsl(142, 70%, 14%)",border:"hsl(142, 71%, 45%)",text:"hsl(142, 71%, 70%)"}, err:{bg:"hsl(0, 70%, 18%)",border:"hsl(0, 84%, 60%)",text:"hsl(0, 84%, 75%)"}, info:{bg:"hsl(217, 33%, 17%)",border:"rgba(148,163,184,0.25)",text:"hsl(215, 20%, 75%)"} };
   const mc = msgColors[msg.type];
   const donePct = (completed.filter(Boolean).length/3*100);
 
@@ -300,20 +300,20 @@ export default function Level1() {
         <div style={{display:"flex",alignItems:"center",gap:8}}>
           <span style={{fontSize:18}}>⚡</span>
           <span style={{fontSize:15,fontWeight:500}}>Nivel 1</span>
-          <span style={{fontSize:12,color:"#94a3b8",background:"#f1f5f9",border:"0.5px solid #e2e8f0",borderRadius:8,padding:"3px 10px"}}>El camino del electrón</span>
+          <span style={{fontSize:12,color:"hsl(215, 20%, 65%)",background:"hsl(217, 33%, 20%)",border:"0.5px solid #e2e8f0",borderRadius:8,padding:"3px 10px"}}>El camino del electrón</span>
         </div>
-        <button onClick={()=>setShowBook(true)} style={{display:"flex",alignItems:"center",gap:5,fontSize:12,color:"#64748b",background:"#f8fafc",border:"0.5px solid #e2e8f0",borderRadius:8,padding:"5px 12px",cursor:"pointer"}}>
+        <button onClick={()=>setShowBook(true)} style={{display:"flex",alignItems:"center",gap:5,fontSize:12,color:"hsl(215, 20%, 70%)",background:"hsl(217, 33%, 17%)",border:"0.5px solid #e2e8f0",borderRadius:8,padding:"5px 12px",cursor:"pointer"}}>
           📖 Explicación
         </button>
       </div>
 
       {/* Progress */}
       <div style={{display:"flex",alignItems:"center",gap:10,marginBottom:16}}>
-        <span style={{fontSize:12,color:"#94a3b8",whiteSpace:"nowrap"}}>Progreso</span>
-        <div style={{flex:1,height:6,background:"#f1f5f9",borderRadius:99,overflow:"hidden"}}>
+        <span style={{fontSize:12,color:"hsl(215, 20%, 65%)",whiteSpace:"nowrap"}}>Progreso</span>
+        <div style={{flex:1,height:6,background:"hsl(217, 33%, 20%)",borderRadius:99,overflow:"hidden"}}>
           <div style={{height:"100%",width:`${donePct}%`,background:"#3b82f6",borderRadius:99,transition:"width .5s ease"}}/>
         </div>
-        <span style={{fontSize:12,color:"#94a3b8"}}>{completed.filter(Boolean).length} / 3</span>
+        <span style={{fontSize:12,color:"hsl(215, 20%, 65%)"}}>{completed.filter(Boolean).length} / 3</span>
       </div>
 
       {/* Step chips */}
@@ -321,9 +321,9 @@ export default function Level1() {
         {PUZZLES.map((p,i)=>(
           <div key={i} style={{
             fontSize:11,padding:"3px 10px",borderRadius:99,
-            background:completed[i]?"#f0fdf4":i===currentPuzzle?"#eff6ff":"#f8fafc",
-            border:`0.5px solid ${completed[i]?"#86efac":i===currentPuzzle?"#93c5fd":"#e2e8f0"}`,
-            color:completed[i]?"#16a34a":i===currentPuzzle?"#1d4ed8":"#94a3b8",
+            background:completed[i]?"hsl(142, 70%, 14%)":i===currentPuzzle?"hsl(217, 91%, 20%)":"hsl(217, 33%, 17%)",
+            border:`0.5px solid ${completed[i]?"hsl(142, 71%, 45%)":i===currentPuzzle?"hsl(199, 89%, 55%)":"hsl(217, 33%, 28%)"}`,
+            color:completed[i]?"hsl(142, 71%, 65%)":i===currentPuzzle?"hsl(199, 89%, 70%)":"hsl(215, 20%, 65%)",
             fontWeight:i===currentPuzzle?500:400,
           }}>{p.label}</div>
         ))}
@@ -331,7 +331,7 @@ export default function Level1() {
 
       {/* Board */}
       <div style={{
-        background:"#f8fafc",border:"0.5px solid #e2e8f0",borderRadius:12,
+        background:"hsl(217, 33%, 17%)",border:"0.5px solid #e2e8f0",borderRadius:12,
         padding:16,marginBottom:12,
         animation:flash?"flash .5s linear 2":"none",
       }}>
@@ -355,13 +355,13 @@ export default function Level1() {
 
       {/* Actions */}
       <div style={{display:"flex",gap:8,justifyContent:"center",flexWrap:"wrap"}}>
-        <button onClick={reset} style={{padding:"8px 18px",borderRadius:8,border:"0.5px solid #e2e8f0",background:"#f8fafc",fontSize:13,cursor:"pointer",color:"#475569"}}>
+        <button onClick={reset} style={{padding:"8px 18px",borderRadius:8,border:"0.5px solid #e2e8f0",background:"hsl(217, 33%, 17%)",fontSize:13,cursor:"pointer",color:"hsl(215, 20%, 75%)"}}>
           🔄 Reiniciar
         </button>
-        <button onClick={giveHint} style={{padding:"8px 18px",borderRadius:8,border:"0.5px solid #e2e8f0",background:"#f8fafc",fontSize:13,cursor:"pointer",color:"#475569"}}>
+        <button onClick={giveHint} style={{padding:"8px 18px",borderRadius:8,border:"0.5px solid #e2e8f0",background:"hsl(217, 33%, 17%)",fontSize:13,cursor:"pointer",color:"hsl(215, 20%, 75%)"}}>
           💡 Pista
         </button>
-        <button onClick={activate} style={{padding:"8px 22px",borderRadius:8,border:"0.5px solid #93c5fd",background:"#eff6ff",fontSize:13,cursor:"pointer",color:"#1d4ed8",fontWeight:500}}>
+        <button onClick={activate} style={{padding:"8px 22px",borderRadius:8,border:"0.5px solid #93c5fd",background:"hsl(217, 91%, 20%)",fontSize:13,cursor:"pointer",color:"hsl(199, 89%, 70%)",fontWeight:500}}>
           ⚡ Activar circuito
         </button>
       </div>
