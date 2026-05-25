@@ -57,12 +57,12 @@ const MODULES_DATA: Module[] = [
     colorDim: 'rgba(245,158,11,0.1)',
     colorBorder: 'rgba(245,158,11,0.3)',
     colorGlow: 'rgba(245,158,11,0.15)',
-    unlocked: false,
+    unlocked: true,
     currentLevel: 0,
     totalLevels: 6,
     xpReward: 1200,
     lessons: [
-      { id: 1, title: 'Diodos y LEDs', icon: '💡', done: false, xp: 100 },
+      { id: 1, title: 'Nivel 1: Código de colores', icon: '🎨', done: false, xp: 100 },
       { id: 2, title: 'Transistores NPN', icon: '🔌', done: false, xp: 125 },
       { id: 3, title: 'Amplificación de señal', icon: '📡', done: false, xp: 150 },
       { id: 4, title: 'Circuitos RC', icon: '⏱', done: false, xp: 175 },
@@ -350,6 +350,8 @@ function LessonsDrawer({ mod, onClose, isLight }: { mod: Module | null; onClose:
     if (isLocked) return;
     if (mod.id === 'basico' && lesson.id === 1) {
       navigate('/dashboard/level1');
+    } else if (mod.id === 'medio' && lesson.id === 1) {
+      navigate('/dashboard/level1-medio');
     } else {
       toast('Próximamente', { description: 'Este nivel aún no está disponible.' });
     }
