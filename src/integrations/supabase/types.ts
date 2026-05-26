@@ -86,6 +86,36 @@ export type Database = {
         }
         Relationships: []
       }
+      questions: {
+        Row: {
+          content: Json
+          created_at: string
+          difficulty: string | null
+          id: string
+          is_active: boolean
+          type: string
+          updated_at: string
+        }
+        Insert: {
+          content: Json
+          created_at?: string
+          difficulty?: string | null
+          id?: string
+          is_active?: boolean
+          type: string
+          updated_at?: string
+        }
+        Update: {
+          content?: Json
+          created_at?: string
+          difficulty?: string | null
+          id?: string
+          is_active?: boolean
+          type?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       user_achievements: {
         Row: {
           achievement_id: string
