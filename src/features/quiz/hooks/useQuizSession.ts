@@ -111,7 +111,6 @@ function reducer(state: State, action: Action): State {
 export function useQuizSession({
   totalQuestions = 20,
   totalSeconds = 180,
-  autoStart = true,
 }: UseQuizSessionOptions = {}) {
   const [state, dispatch] = useReducer(reducer, totalSeconds, buildInitial);
   const totalSecondsRef = useRef(totalSeconds);
