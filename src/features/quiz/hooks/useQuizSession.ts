@@ -6,7 +6,7 @@ import type {
   QuizStatus,
   UserAnswer,
 } from '../types';
-import { pickRandom } from '../lib/shuffle';
+import { pickRandom, shuffle } from '../lib/shuffle';
 import { SCORING, calculatePoints, isAnswerCorrect } from '../lib/scoring';
 
 interface UseQuizSessionOptions {
