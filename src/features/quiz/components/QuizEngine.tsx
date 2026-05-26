@@ -33,15 +33,12 @@ export function QuizEngine({
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) return;
       const { data, error } = await supabase.rpc('update_user_score', { p_score: session.score });
-      if (error) {
-        toast.error('No se pudo guardar tu puntaje');
-        return;
-      }
+      if (error) return;
       const row = Array.isArray(data) ? data[0] : data;
-      if (row?.in_top) {
-        toast.success(`¡Top 100! Tu mejor puntaje: ${row.new_best}`);
-      } else {
-        toast.success(`Mejor puntaje guardado: ${row?.new_best ?? session.score}`);
+      if (row?.entered_top) {
+        toast.success(`¡Entraste al Top 100! Puntaje: ${row.new_best}`);
+      } else if (row?.improved) {
+        toast.success(`¡Mejoraste tu puntaje! Nuevo mejor: ${row.new_best}`);
       }
     })();
   }, [session.status, session.score]);

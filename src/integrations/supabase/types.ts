@@ -229,6 +229,8 @@ export type Database = {
       update_user_score: {
         Args: { p_score: number }
         Returns: {
+          entered_top: boolean
+          improved: boolean
           in_top: boolean
           new_best: number
         }[]
