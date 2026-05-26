@@ -118,18 +118,16 @@ export function useQuizSession({
   const start = useCallback(async () => {
     dispatch({ type: 'LOAD' });
     try {
-      const { data, error } = await supabase
-        .from('questions')
-        .select('id, type, difficulty, content')
-        .eq('is_active', true);
+      const { data, error } = await supabase.rpc('get_quiz_questions', {
+        p_limit: totalQuestions,
+      });
       if (error) throw error;
       const rows = (data ?? []) as unknown as Question[];
       if (rows.length === 0) {
         dispatch({ type: 'ERROR', error: 'No hay preguntas disponibles aún.' });
         return;
       }
-      const selected = pickRandom(rows, totalQuestions);
-      const randomized = selected.map((q): Question => {
+      const randomized = rows.map((q): Question => {
         if (q.type === 'multiple_choice') {
           const content = q.content as Question<'multiple_choice'>['content'];
           return {
@@ -158,16 +156,22 @@ export function useQuizSession({
   }, [totalQuestions]);
 
   const submitAnswer = useCallback(
-    (answer: UserAnswer) => {
+    async (answer: UserAnswer) => {
       const q = state.questions[state.currentIndex];
       if (!q) return;
-      const correct = isAnswerCorrect(q, answer);
+      const { data, error } = await supabase.rpc('check_quiz_answer', {
+        p_question_id: q.id,
+        p_answer: answer as unknown as never,
+      });
+      if (error) return;
+      const row = Array.isArray(data) ? data[0] : data;
+      const correct = !!row?.correct;
+      const explanation = row?.explanation ?? undefined;
       const questionsLeft = state.questions.length - state.currentIndex;
       const points = calculatePoints(correct, state.timeLeft, questionsLeft);
       const timeDelta = correct
         ? SCORING.timeBonusOnCorrect
         : -SCORING.timePenaltyOnWrong;
-      const explanation = (q.content as { explanation?: string }).explanation;
       dispatch({
         type: 'ANSWER',
         result: { correct, explanation, pointsAwarded: points },
