@@ -36,7 +36,11 @@ function normalize(raw) {
   if (type === 'multiple_choice' || type === 'image_identification') {
     const options = c.options ?? [];
     let correct = c.correct_answer;
-    if (typeof correct === 'string') correct = options.indexOf(correct);
+    // Normalizamos a TEXTO exacto de la opción correcta
+    if (typeof correct === 'number') correct = options[correct];
+    if (typeof correct !== 'string' || !options.includes(correct)) {
+      throw new Error(`correct_answer inválido para "${questionText}": debe ser el texto exacto de una opción.`);
+    }
     content = {
       question_text: questionText,
       options,
