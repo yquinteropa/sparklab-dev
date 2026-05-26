@@ -7,21 +7,22 @@ export const SCORING = {
 };
 
 export function isAnswerCorrect(question: Question, answer: UserAnswer): boolean {
-  switch (question.type) {
-    case 'multiple_choice':
-    case 'image_identification':
-      return typeof answer === 'number' && answer === question.content.correct_answer;
-    case 'true_false':
-      return typeof answer === 'boolean' && answer === question.content.correct_answer;
-    case 'matching': {
-      if (typeof answer !== 'object' || answer === null) return false;
-      const pairs = question.content.pairs;
-      // El usuario asocia índice izq → índice der. Correcto si cada izq apunta a su mismo índice (par original).
-      return pairs.every((_, i) => (answer as Record<number, number>)[i] === i);
-    }
-    default:
-      return false;
+  if (question.type === 'multiple_choice' || question.type === 'image_identification') {
+    const q = question as Question<'multiple_choice'>;
+    return typeof answer === 'number' && answer === q.content.correct_answer;
   }
+  if (question.type === 'true_false') {
+    const q = question as Question<'true_false'>;
+    return typeof answer === 'boolean' && answer === q.content.correct_answer;
+  }
+  if (question.type === 'matching') {
+    const q = question as Question<'matching'>;
+    if (typeof answer !== 'object' || answer === null) return false;
+    return q.content.pairs.every(
+      (_, i) => (answer as Record<number, number>)[i] === i,
+    );
+  }
+  return false;
 }
 
 export function calculatePoints(
