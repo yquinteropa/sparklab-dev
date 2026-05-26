@@ -117,9 +117,22 @@ export default function Leaderboard() {
         >
           <Trophy className="h-6 w-6 text-primary" /> {t('leaderboard.title')}
         </motion.h1>
-        <p className="mb-8 text-sm text-muted-foreground">
+        <p className="mb-3 text-sm text-muted-foreground">
           Top 100 mundial · Mejor puntaje histórico de cada jugador
         </p>
+
+        <motion.div
+          initial={{ opacity: 0, y: -6 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.15 }}
+          className="mb-8 inline-flex items-center gap-2 rounded-xl border border-primary/30 bg-primary/10 px-4 py-2 text-sm font-medium text-primary backdrop-blur"
+        >
+          <Timer className="h-4 w-4" />
+          <span>Reinicio del ranking en:</span>
+          <span className="font-mono font-bold tracking-wider">
+            {formatCountdown(countdownMs)}
+          </span>
+        </motion.div>
 
         {loading ? (
           <div className="flex min-h-[200px] items-center justify-center text-muted-foreground">
