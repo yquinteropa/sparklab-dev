@@ -80,6 +80,7 @@ export default function Leaderboard() {
   const [rows, setRows] = useState<LeaderboardRow[]>([]);
   const [loading, setLoading] = useState(true);
   const [currentUserId, setCurrentUserId] = useState<string | null>(null);
+  const countdownMs = useCountdown();
 
   useEffect(() => {
     let alive = true;
