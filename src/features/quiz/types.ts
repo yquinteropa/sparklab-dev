@@ -34,7 +34,8 @@ export interface ImageIdentificationContent {
   question_text: string;
   media_url: string;
   options: string[];
-  correct_answer: number;
+  /** Texto exacto de la opción correcta. */
+  correct_answer: string;
   explanation?: string;
 }
 
