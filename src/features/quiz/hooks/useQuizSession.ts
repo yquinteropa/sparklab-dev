@@ -6,7 +6,7 @@ import type {
   QuizStatus,
   UserAnswer,
 } from '../types';
-import { pickRandom } from '../lib/shuffle';
+import { pickRandom, shuffle } from '../lib/shuffle';
 import { SCORING, calculatePoints, isAnswerCorrect } from '../lib/scoring';
 
 interface UseQuizSessionOptions {
@@ -129,9 +129,26 @@ export function useQuizSession({
         return;
       }
       const selected = pickRandom(rows, totalQuestions);
+      const randomized = selected.map((q): Question => {
+        if (q.type === 'multiple_choice') {
+          const content = q.content as Question<'multiple_choice'>['content'];
+          return {
+            ...q,
+            content: { ...content, options: shuffle(content.options) },
+          } as Question;
+        }
+        if (q.type === 'image_identification') {
+          const content = q.content as Question<'image_identification'>['content'];
+          return {
+            ...q,
+            content: { ...content, options: shuffle(content.options) },
+          } as Question;
+        }
+        return q;
+      });
       dispatch({
         type: 'LOADED',
-        questions: selected,
+        questions: randomized,
         totalSeconds: totalSecondsRef.current,
       });
     } catch (e) {
