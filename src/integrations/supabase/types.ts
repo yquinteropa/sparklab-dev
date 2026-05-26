@@ -175,12 +175,64 @@ export type Database = {
         }
         Relationships: []
       }
+      user_scores: {
+        Row: {
+          score: number
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          score?: number
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          score?: number
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      weekly_leaderboard: {
+        Row: {
+          avatar_url: string | null
+          display_name: string | null
+          rank: number
+          refreshed_at: string
+          score: number
+          user_id: string
+        }
+        Insert: {
+          avatar_url?: string | null
+          display_name?: string | null
+          rank: number
+          refreshed_at?: string
+          score: number
+          user_id: string
+        }
+        Update: {
+          avatar_url?: string | null
+          display_name?: string | null
+          rank?: number
+          refreshed_at?: string
+          score?: number
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      refresh_weekly_leaderboard: { Args: never; Returns: undefined }
+      update_user_score: {
+        Args: { p_score: number }
+        Returns: {
+          in_top: boolean
+          new_best: number
+        }[]
+      }
     }
     Enums: {
       [_ in never]: never
