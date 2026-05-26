@@ -119,7 +119,7 @@ export function useQuizSession({
   totalSecondsRef.current = totalSeconds;
 
   const start = useCallback(async () => {
-    dispatch({ type: 'LOAD' });
+    dispatch({ type: 'START' });
     try {
       const { data, error } = await supabase.rpc('get_quiz_questions', {
         p_limit: totalQuestions,
