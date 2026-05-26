@@ -225,6 +225,22 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      check_quiz_answer: {
+        Args: { p_answer: Json; p_question_id: string }
+        Returns: {
+          correct: boolean
+          explanation: string
+        }[]
+      }
+      get_quiz_questions: {
+        Args: { p_limit?: number }
+        Returns: {
+          content: Json
+          difficulty: string
+          id: string
+          type: string
+        }[]
+      }
       refresh_weekly_leaderboard: { Args: never; Returns: undefined }
       update_user_score: {
         Args: { p_score: number }
