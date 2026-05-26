@@ -129,9 +129,21 @@ export function useQuizSession({
         return;
       }
       const selected = pickRandom(rows, totalQuestions);
+      const randomized = selected.map((q) => {
+        if (q.type === 'multiple_choice' || q.type === 'image_identification') {
+          return {
+            ...q,
+            content: {
+              ...q.content,
+              options: shuffle(q.content.options),
+            },
+          };
+        }
+        return q;
+      });
       dispatch({
         type: 'LOADED',
-        questions: selected,
+        questions: randomized,
         totalSeconds: totalSecondsRef.current,
       });
     } catch (e) {
