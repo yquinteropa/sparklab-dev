@@ -187,3 +187,25 @@ export function QuizEngine({
     </div>
   );
 }
+
+function InfoCard({
+  icon,
+  label,
+  value,
+}: {
+  icon: React.ReactNode;
+  label: string;
+  value: string;
+}) {
+  return (
+    <div className="flex items-center gap-3 rounded-xl border border-border bg-secondary/40 p-4">
+      <div className="flex size-10 items-center justify-center rounded-lg bg-primary/10 shrink-0">
+        {icon}
+      </div>
+      <div>
+        <div className="text-xs text-muted-foreground">{label}</div>
+        <div className="text-sm font-semibold text-foreground">{value}</div>
+      </div>
+    </div>
+  );
+}
