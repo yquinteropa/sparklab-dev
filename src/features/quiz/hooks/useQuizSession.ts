@@ -129,15 +129,20 @@ export function useQuizSession({
         return;
       }
       const selected = pickRandom(rows, totalQuestions);
-      const randomized = selected.map((q) => {
-        if (q.type === 'multiple_choice' || q.type === 'image_identification') {
+      const randomized = selected.map((q): Question => {
+        if (q.type === 'multiple_choice') {
+          const content = q.content as Question<'multiple_choice'>['content'];
           return {
             ...q,
-            content: {
-              ...q.content,
-              options: shuffle(q.content.options),
-            },
-          };
+            content: { ...content, options: shuffle(content.options) },
+          } as Question;
+        }
+        if (q.type === 'image_identification') {
+          const content = q.content as Question<'image_identification'>['content'];
+          return {
+            ...q,
+            content: { ...content, options: shuffle(content.options) },
+          } as Question;
         }
         return q;
       });
