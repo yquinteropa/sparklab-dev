@@ -1,10 +1,41 @@
 import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Trophy, Medal, Crown, Zap, Loader2 } from 'lucide-react';
+import { Trophy, Medal, Crown, Zap, Loader2, Timer } from 'lucide-react';
 import { DashboardNav } from '@/components/DashboardNav';
 import { supabase } from '@/integrations/supabase/client';
 import { useTranslation } from 'react-i18next';
 import { cn } from '@/lib/utils';
+
+function getTimeUntilNextReset() {
+  const now = new Date();
+  const next = new Date(now);
+  next.setUTCDate(now.getUTCDate() + ((7 - now.getUTCDay()) % 7 || 7));
+  next.setUTCHours(0, 0, 0, 0);
+  if (next.getTime() <= now.getTime()) {
+    next.setUTCDate(next.getUTCDate() + 7);
+  }
+  return next.getTime() - now.getTime();
+}
+
+function formatCountdown(ms: number) {
+  const s = Math.max(0, Math.floor(ms / 1000));
+  const days = Math.floor(s / 86400);
+  const hours = Math.floor((s % 86400) / 3600);
+  const minutes = Math.floor((s % 3600) / 60);
+  const seconds = s % 60;
+  const pad = (n: number) => String(n).padStart(2, '0');
+  if (days > 0) return `${days}d ${pad(hours)}:${pad(minutes)}:${pad(seconds)}`;
+  return `${pad(hours)}:${pad(minutes)}:${pad(seconds)}`;
+}
+
+function useCountdown() {
+  const [ms, setMs] = useState(getTimeUntilNextReset());
+  useEffect(() => {
+    const id = window.setInterval(() => setMs(getTimeUntilNextReset()), 1000);
+    return () => window.clearInterval(id);
+  }, []);
+  return ms;
+}
 
 interface LeaderboardRow {
   rank: number;
