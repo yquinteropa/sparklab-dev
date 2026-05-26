@@ -8,7 +8,8 @@ export type QuestionType =
 export interface MultipleChoiceContent {
   question_text: string;
   options: string[];
-  correct_answer: number; // índice
+  /** Texto exacto de la opción correcta (debe coincidir con un valor de `options`). */
+  correct_answer: string;
   explanation?: string;
 }
 
