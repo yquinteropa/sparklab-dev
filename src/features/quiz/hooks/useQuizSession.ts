@@ -6,8 +6,8 @@ import type {
   QuizStatus,
   UserAnswer,
 } from '../types';
-import { pickRandom, shuffle } from '../lib/shuffle';
-import { SCORING, calculatePoints, isAnswerCorrect } from '../lib/scoring';
+import { shuffle } from '../lib/shuffle';
+import { SCORING, calculatePoints } from '../lib/scoring';
 
 interface UseQuizSessionOptions {
   totalQuestions?: number;
