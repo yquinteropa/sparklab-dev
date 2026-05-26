@@ -28,6 +28,7 @@ interface State {
 }
 
 type Action =
+  | { type: 'START' }
   | { type: 'LOAD' }
   | { type: 'LOADED'; questions: Question[]; totalSeconds: number }
   | { type: 'ERROR'; error: string }
