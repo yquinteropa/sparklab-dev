@@ -187,12 +187,6 @@ export function useQuizSession({
     dispatch({ type: 'RESET' });
   }, []);
 
-  // Auto-start
-  useEffect(() => {
-    if (autoStart) start();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
   // Timer global: solo corre mientras playing
   useEffect(() => {
     if (state.status !== 'playing') return;
