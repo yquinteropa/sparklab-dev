@@ -51,6 +51,8 @@ const buildInitial = (totalSeconds: number): State => ({
 
 function reducer(state: State, action: Action): State {
   switch (action.type) {
+    case 'START':
+      return { ...state, status: 'loading', error: null };
     case 'LOAD':
       return { ...state, status: 'loading', error: null };
     case 'LOADED':
