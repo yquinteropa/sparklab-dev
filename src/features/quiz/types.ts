@@ -8,7 +8,8 @@ export type QuestionType =
 export interface MultipleChoiceContent {
   question_text: string;
   options: string[];
-  correct_answer: number; // índice
+  /** Texto exacto de la opción correcta (debe coincidir con un valor de `options`). */
+  correct_answer: string;
   explanation?: string;
 }
 
@@ -33,7 +34,8 @@ export interface ImageIdentificationContent {
   question_text: string;
   media_url: string;
   options: string[];
-  correct_answer: number;
+  /** Texto exacto de la opción correcta. */
+  correct_answer: string;
   explanation?: string;
 }
 
@@ -52,10 +54,11 @@ export type Question<T extends QuestionType = QuestionType> = {
 };
 
 // Respuesta del usuario (genérica): cada renderer la define según su tipo
-// - multiple_choice / image_identification: number (índice)
+// Respuesta del usuario (genérica): cada renderer la define según su tipo
+// - multiple_choice / image_identification: string (texto de la opción)
 // - true_false: boolean
 // - matching: Record<leftIndex, rightIndex>
-export type UserAnswer = number | boolean | Record<number, number>;
+export type UserAnswer = string | boolean | Record<number, number>;
 
 export interface RendererProps<T extends QuestionType = QuestionType> {
   question: Question<T>;

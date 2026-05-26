@@ -19,7 +19,7 @@ export function MultipleChoiceRenderer({
             whileTap={{ scale: 0.97 }}
             whileHover={{ y: -2 }}
             disabled={disabled}
-            onClick={() => onAnswer(i)}
+            onClick={() => onAnswer(opt)}
             className="min-h-[56px] rounded-xl border border-border bg-card px-4 py-3 text-left text-sm sm:text-base text-foreground transition-colors hover:border-primary/60 hover:bg-primary/5 hover:shadow-[0_0_20px_hsl(var(--primary)/0.25)] disabled:cursor-not-allowed disabled:opacity-60"
           >
             <span className="mr-2 font-bold text-primary">{String.fromCharCode(65 + i)}.</span>

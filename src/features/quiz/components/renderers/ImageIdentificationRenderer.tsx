@@ -41,7 +41,7 @@ export function ImageIdentificationRenderer({
             whileTap={{ scale: 0.96 }}
             whileHover={{ y: -2 }}
             disabled={disabled}
-            onClick={() => onAnswer(i)}
+            onClick={() => onAnswer(opt)}
             className="min-h-[56px] rounded-xl border border-border bg-card px-3 py-2 text-sm font-medium text-foreground transition-colors hover:border-primary/60 hover:bg-primary/5 hover:shadow-[0_0_20px_hsl(var(--primary)/0.25)] disabled:cursor-not-allowed disabled:opacity-60"
           >
             {opt}
