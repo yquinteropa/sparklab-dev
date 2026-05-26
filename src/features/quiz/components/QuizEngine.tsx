@@ -20,6 +20,31 @@ export function QuizEngine({
   totalSeconds = 180,
 }: QuizEngineProps) {
   const session = useQuizSession({ totalQuestions, totalSeconds });
+  const submittedRef = useRef(false);
+
+  useEffect(() => {
+    if (session.status !== 'finished') {
+      submittedRef.current = false;
+      return;
+    }
+    if (submittedRef.current) return;
+    submittedRef.current = true;
+    (async () => {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) return;
+      const { data, error } = await supabase.rpc('update_user_score', { p_score: session.score });
+      if (error) {
+        toast.error('No se pudo guardar tu puntaje');
+        return;
+      }
+      const row = Array.isArray(data) ? data[0] : data;
+      if (row?.in_top) {
+        toast.success(`¡Top 100! Tu mejor puntaje: ${row.new_best}`);
+      } else {
+        toast.success(`Mejor puntaje guardado: ${row?.new_best ?? session.score}`);
+      }
+    })();
+  }, [session.status, session.score]);
 
   if (session.status === 'loading') {
     return (
