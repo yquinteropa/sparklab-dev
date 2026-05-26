@@ -1,5 +1,5 @@
 import { AnimatePresence, motion } from 'framer-motion';
-import { Loader2 } from 'lucide-react';
+import { Loader2, Timer, Zap, Trophy, AlertCircle, CheckCircle2, BrainCircuit } from 'lucide-react';
 import { useEffect, useRef } from 'react';
 import { toast } from 'sonner';
 import { Button } from '@/components/ui/button';
@@ -64,6 +64,80 @@ export function QuizEngine({
     );
   }
 
+  if (session.status === 'ready') {
+    return (
+      <motion.div
+        initial={{ opacity: 0, y: 16 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="mx-auto w-full max-w-2xl"
+      >
+        <div className="rounded-2xl border border-primary/20 bg-card/70 p-6 sm:p-8 text-center shadow-[0_0_40px_hsl(var(--primary)/0.12)] backdrop-blur">
+          <div className="mx-auto mb-4 flex size-16 items-center justify-center rounded-full bg-primary/15 text-primary">
+            <BrainCircuit className="size-8" />
+          </div>
+          <h2 className="text-2xl sm:text-3xl font-bold">
+            Modo <span className="text-primary">Preguntas Rápidas</span>
+          </h2>
+          <p className="mt-2 text-sm text-muted-foreground max-w-md mx-auto">
+            Pon a prueba tus conocimientos de circuitos eléctricos contra el reloj. Responde con precisión y rapidez para maximizar tu puntuación.
+          </p>
+
+          <div className="mt-8 grid grid-cols-1 sm:grid-cols-3 gap-4 text-left">
+            <InfoCard
+              icon={<Timer className="size-5 text-primary" />}
+              label="Tiempo límite"
+              value={`${totalSeconds} segundos`}
+            />
+            <InfoCard
+              icon={<Zap className="size-5 text-primary" />}
+              label="Preguntas"
+              value={`${totalQuestions}`}
+            />
+            <InfoCard
+              icon={<Trophy className="size-5 text-primary" />}
+              label="Puntos base"
+              value="100 pts"
+            />
+          </div>
+
+          <div className="mt-8 rounded-xl border border-border bg-secondary/40 p-5 text-left space-y-3">
+            <h3 className="text-sm font-semibold text-foreground flex items-center gap-2">
+              <AlertCircle className="size-4 text-primary" />
+              Indicaciones
+            </h3>
+            <ul className="space-y-2 text-sm text-muted-foreground">
+              <li className="flex items-start gap-2">
+                <CheckCircle2 className="size-4 mt-0.5 text-primary shrink-0" />
+                Tienes un tiempo global para responder todas las preguntas.
+              </li>
+              <li className="flex items-start gap-2">
+                <CheckCircle2 className="size-4 mt-0.5 text-primary shrink-0" />
+                Cada acierto suma puntos base + bonificación por tiempo restante.
+              </li>
+              <li className="flex items-start gap-2">
+                <CheckCircle2 className="size-4 mt-0.5 text-primary shrink-0" />
+                Al acertar ganas 3 segundos extra; al fallar pierdes 5 segundos.
+              </li>
+              <li className="flex items-start gap-2">
+                <CheckCircle2 className="size-4 mt-0.5 text-primary shrink-0" />
+                Las opciones aparecen en orden aleatorio en cada intento.
+              </li>
+              <li className="flex items-start gap-2">
+                <CheckCircle2 className="size-4 mt-0.5 text-primary shrink-0" />
+                Solo se notifica si entras al Top 100 o mejoras tu marca personal.
+              </li>
+            </ul>
+          </div>
+
+          <Button onClick={session.start} className="mt-8 w-full sm:w-auto" size="lg">
+            <Zap className="mr-2 size-4" />
+            Comenzar intento
+          </Button>
+        </div>
+      </motion.div>
+    );
+  }
+
   if (session.status === 'finished') {
     return (
       <QuizResults
@@ -110,6 +184,28 @@ export function QuizEngine({
       </div>
 
       <QuizFeedback result={session.lastResult} onContinue={session.next} />
+    </div>
+  );
+}
+
+function InfoCard({
+  icon,
+  label,
+  value,
+}: {
+  icon: React.ReactNode;
+  label: string;
+  value: string;
+}) {
+  return (
+    <div className="flex items-center gap-3 rounded-xl border border-border bg-secondary/40 p-4">
+      <div className="flex size-10 items-center justify-center rounded-lg bg-primary/10 shrink-0">
+        {icon}
+      </div>
+      <div>
+        <div className="text-xs text-muted-foreground">{label}</div>
+        <div className="text-sm font-semibold text-foreground">{value}</div>
+      </div>
     </div>
   );
 }

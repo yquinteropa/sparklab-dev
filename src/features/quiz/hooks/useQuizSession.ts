@@ -12,7 +12,6 @@ import { SCORING, calculatePoints } from '../lib/scoring';
 interface UseQuizSessionOptions {
   totalQuestions?: number;
   totalSeconds?: number;
-  autoStart?: boolean;
 }
 
 interface State {
@@ -28,6 +27,7 @@ interface State {
 }
 
 type Action =
+  | { type: 'START' }
   | { type: 'LOAD' }
   | { type: 'LOADED'; questions: Question[]; totalSeconds: number }
   | { type: 'ERROR'; error: string }
@@ -38,7 +38,7 @@ type Action =
   | { type: 'RESET' };
 
 const buildInitial = (totalSeconds: number): State => ({
-  status: 'loading',
+  status: 'ready',
   questions: [],
   currentIndex: 0,
   score: 0,
@@ -51,6 +51,8 @@ const buildInitial = (totalSeconds: number): State => ({
 
 function reducer(state: State, action: Action): State {
   switch (action.type) {
+    case 'START':
+      return { ...state, status: 'loading', error: null };
     case 'LOAD':
       return { ...state, status: 'loading', error: null };
     case 'LOADED':
@@ -109,14 +111,13 @@ function reducer(state: State, action: Action): State {
 export function useQuizSession({
   totalQuestions = 20,
   totalSeconds = 180,
-  autoStart = true,
 }: UseQuizSessionOptions = {}) {
   const [state, dispatch] = useReducer(reducer, totalSeconds, buildInitial);
   const totalSecondsRef = useRef(totalSeconds);
   totalSecondsRef.current = totalSeconds;
 
   const start = useCallback(async () => {
-    dispatch({ type: 'LOAD' });
+    dispatch({ type: 'START' });
     try {
       const { data, error } = await supabase.rpc('get_quiz_questions', {
         p_limit: totalQuestions,
@@ -184,12 +185,6 @@ export function useQuizSession({
   const next = useCallback(() => dispatch({ type: 'NEXT' }), []);
   const reset = useCallback(() => {
     dispatch({ type: 'RESET' });
-  }, []);
-
-  // Auto-start
-  useEffect(() => {
-    if (autoStart) start();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // Timer global: solo corre mientras playing
