@@ -9,7 +9,7 @@ export const SCORING = {
 export function isAnswerCorrect(question: Question, answer: UserAnswer): boolean {
   if (question.type === 'multiple_choice' || question.type === 'image_identification') {
     const q = question as Question<'multiple_choice'>;
-    return typeof answer === 'number' && answer === q.content.correct_answer;
+    return typeof answer === 'string' && answer === q.content.correct_answer;
   }
   if (question.type === 'true_false') {
     const q = question as Question<'true_false'>;
