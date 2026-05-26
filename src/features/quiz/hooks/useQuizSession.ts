@@ -38,7 +38,7 @@ type Action =
   | { type: 'RESET' };
 
 const buildInitial = (totalSeconds: number): State => ({
-  status: 'loading',
+  status: 'ready',
   questions: [],
   currentIndex: 0,
   score: 0,
