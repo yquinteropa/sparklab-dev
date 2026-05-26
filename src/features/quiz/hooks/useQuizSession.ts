@@ -12,7 +12,6 @@ import { SCORING, calculatePoints } from '../lib/scoring';
 interface UseQuizSessionOptions {
   totalQuestions?: number;
   totalSeconds?: number;
-  autoStart?: boolean;
 }
 
 interface State {
