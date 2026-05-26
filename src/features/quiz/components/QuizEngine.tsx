@@ -1,6 +1,9 @@
 import { AnimatePresence, motion } from 'framer-motion';
 import { Loader2 } from 'lucide-react';
+import { useEffect, useRef } from 'react';
+import { toast } from 'sonner';
 import { Button } from '@/components/ui/button';
+import { supabase } from '@/integrations/supabase/client';
 import { useQuizSession } from '../hooks/useQuizSession';
 import { RENDERERS } from './renderers';
 import { QuizHeader } from './QuizHeader';
