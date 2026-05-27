@@ -86,7 +86,11 @@ export default function Leaderboard() {
     (async () => {
       const { data, error } = await supabase.rpc('get_weekly_leaderboard');
       if (!alive) return;
-      if (!error && data) setRows(data as LeaderboardRow[]);
+      if (error) {
+        console.error('[Leaderboard] RPC error:', error);
+      } else if (data) {
+        setRows(data as LeaderboardRow[]);
+      }
       setLoading(false);
     })();
     return () => {
