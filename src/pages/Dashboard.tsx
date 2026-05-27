@@ -94,7 +94,7 @@ function ModeCard({ icon, title, desc, tag, tagColor, badge, href }: ModeCardPro
           fontSize: 9, fontWeight: 700, padding: '2px 8px', borderRadius: 20,
           background: 'rgba(52,211,153,0.15)', color: '#34d399',
           border: '1px solid rgba(52,211,153,0.35)',
-          fontFamily: "'Courier New',monospace", letterSpacing: '0.1em', textTransform: 'uppercase',
+          fontFamily: "var(--font-display)", letterSpacing: '0.1em', textTransform: 'uppercase',
         }}>{badge}</div>
       )}
       <div style={{ fontSize: 36 }}>{icon}</div>
