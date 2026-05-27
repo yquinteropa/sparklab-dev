@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useNavigate }  from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { DashboardNav } from '@/components/DashboardNav';
 import { SiteFooter } from '@/components/SiteFooter';
 import { useAccessibility } from '@/contexts/AccessibilityContext';
@@ -23,77 +24,80 @@ type Module = {
   lessons: Lesson[];
 };
 
-const MODULES_DATA: Module[] = [
-  {
-    id: 'basico',
-    tier: 'BÁSICO',
-    title: 'Módulo de Aprendizaje Básico',
-    subtitle: 'El punto de partida',
-    icon: '⚡',
-    color: '#22d3ee',
-    colorDim: 'rgba(34,211,238,0.12)',
-    colorBorder: 'rgba(34,211,238,0.35)',
-    colorGlow: 'rgba(34,211,238,0.18)',
-    unlocked: true,
-    currentLevel: 0,
-    totalLevels: 6,
-    xpReward: 600,
-    lessons: [
-      { id: 1, title: 'nivel 1: ¿Qué es la electricidad?', icon: '⚡', done: false, xp: 50 },
-      { id: 2, title: 'Voltaje y corriente', icon: '🔋', done: false, xp: 75 },
-      { id: 3, title: 'La Ley de Ohm', icon: '📐', done: false, xp: 100 },
-      { id: 4, title: 'Resistencias en serie', icon: '▬', done: false, xp: 100 },
-      { id: 5, title: 'Resistencias en paralelo', icon: '🔗', done: false, xp: 125 },
-      { id: 6, title: 'Circuito básico completo', icon: '🔬', done: false, xp: 150 },
-    ],
-  },
-  {
-    id: 'medio',
-    tier: 'INTERMEDIO',
-    title: 'Módulo de Aprendizaje Medio',
-    subtitle: 'Lleva tus circuitos al siguiente nivel',
-    icon: '💡',
-    color: '#f59e0b',
-    colorDim: 'rgba(245,158,11,0.1)',
-    colorBorder: 'rgba(245,158,11,0.3)',
-    colorGlow: 'rgba(245,158,11,0.15)',
-    unlocked: true,
-    currentLevel: 0,
-    totalLevels: 6,
-    xpReward: 1200,
-    lessons: [
-      { id: 1, title: 'Nivel 1: Código de colores', icon: '🎨', done: false, xp: 100 },
-      { id: 2, title: 'Transistores NPN', icon: '🔌', done: false, xp: 125 },
-      { id: 3, title: 'Amplificación de señal', icon: '📡', done: false, xp: 150 },
-      { id: 4, title: 'Circuitos RC', icon: '⏱', done: false, xp: 175 },
-      { id: 5, title: 'Filtros eléctricos', icon: '🎛', done: false, xp: 200 },
-      { id: 6, title: 'Proyecto integrador', icon: '🏆', done: false, xp: 450 },
-    ],
-  },
-  {
-    id: 'avanzado',
-    tier: 'AVANZADO',
-    title: 'Módulo de Aprendizaje Avanzado',
-    subtitle: 'El dominio del ingeniero',
-    icon: '🛠️',
-    color: '#a78bfa',
-    colorDim: 'rgba(167,139,250,0.1)',
-    colorBorder: 'rgba(167,139,250,0.3)',
-    colorGlow: 'rgba(167,139,250,0.15)',
-    unlocked: false,
-    currentLevel: 0,
-    totalLevels: 6,
-    xpReward: 2400,
-    lessons: [
-      { id: 1, title: 'Lógica binaria', icon: '0️⃣', done: false, xp: 150 },
-      { id: 2, title: 'Compuertas lógicas', icon: '🔣', done: false, xp: 200 },
-      { id: 3, title: 'Circuitos combinacionales', icon: '🧩', done: false, xp: 250 },
-      { id: 4, title: 'Flip-Flops y memorias', icon: '💾', done: false, xp: 300 },
-      { id: 5, title: 'Microcontroladores', icon: '🤖', done: false, xp: 400 },
-      { id: 6, title: 'Proyecto final SparkLab', icon: '🚀', done: false, xp: 1100 },
-    ],
-  },
-];
+function buildModulesData(t: (k: string) => string): Module[] {
+  return [
+    {
+      id: 'basico',
+      tier: t('modules.tierBasic'),
+      title: t('modules.basic.title'),
+      subtitle: t('modules.basic.subtitle'),
+      icon: '⚡',
+      color: '#22d3ee',
+      colorDim: 'rgba(34,211,238,0.12)',
+      colorBorder: 'rgba(34,211,238,0.35)',
+      colorGlow: 'rgba(34,211,238,0.18)',
+      unlocked: true,
+      currentLevel: 0,
+      totalLevels: 6,
+      xpReward: 600,
+      lessons: [
+        { id: 1, title: t('modules.basic.l1'), icon: '⚡', done: false, xp: 50 },
+        { id: 2, title: t('modules.basic.l2'), icon: '🔋', done: false, xp: 75 },
+        { id: 3, title: t('modules.basic.l3'), icon: '📐', done: false, xp: 100 },
+        { id: 4, title: t('modules.basic.l4'), icon: '▬', done: false, xp: 100 },
+        { id: 5, title: t('modules.basic.l5'), icon: '🔗', done: false, xp: 125 },
+        { id: 6, title: t('modules.basic.l6'), icon: '🔬', done: false, xp: 150 },
+      ],
+    },
+    {
+      id: 'medio',
+      tier: t('modules.tierIntermediate'),
+      title: t('modules.medium.title'),
+      subtitle: t('modules.medium.subtitle'),
+      icon: '💡',
+      color: '#f59e0b',
+      colorDim: 'rgba(245,158,11,0.1)',
+      colorBorder: 'rgba(245,158,11,0.3)',
+      colorGlow: 'rgba(245,158,11,0.15)',
+      unlocked: true,
+      currentLevel: 0,
+      totalLevels: 6,
+      xpReward: 1200,
+      lessons: [
+        { id: 1, title: t('modules.medium.l1'), icon: '🎨', done: false, xp: 100 },
+        { id: 2, title: t('modules.medium.l2'), icon: '🔌', done: false, xp: 125 },
+        { id: 3, title: t('modules.medium.l3'), icon: '📡', done: false, xp: 150 },
+        { id: 4, title: t('modules.medium.l4'), icon: '⏱', done: false, xp: 175 },
+        { id: 5, title: t('modules.medium.l5'), icon: '🎛', done: false, xp: 200 },
+        { id: 6, title: t('modules.medium.l6'), icon: '🏆', done: false, xp: 450 },
+      ],
+    },
+    {
+      id: 'avanzado',
+      tier: t('modules.tierAdvanced'),
+      title: t('modules.advanced.title'),
+      subtitle: t('modules.advanced.subtitle'),
+      icon: '🛠️',
+      color: '#a78bfa',
+      colorDim: 'rgba(167,139,250,0.1)',
+      colorBorder: 'rgba(167,139,250,0.3)',
+      colorGlow: 'rgba(167,139,250,0.15)',
+      unlocked: false,
+      currentLevel: 0,
+      totalLevels: 6,
+      xpReward: 2400,
+      lessons: [
+        { id: 1, title: t('modules.advanced.l1'), icon: '0️⃣', done: false, xp: 150 },
+        { id: 2, title: t('modules.advanced.l2'), icon: '🔣', done: false, xp: 200 },
+        { id: 3, title: t('modules.advanced.l3'), icon: '🧩', done: false, xp: 250 },
+        { id: 4, title: t('modules.advanced.l4'), icon: '💾', done: false, xp: 300 },
+        { id: 5, title: t('modules.advanced.l5'), icon: '🤖', done: false, xp: 400 },
+        { id: 6, title: t('modules.advanced.l6'), icon: '🚀', done: false, xp: 1100 },
+      ],
+    },
+  ];
+}
+
 
 function CircuitLines({ isLight }: { isLight: boolean }) {
   const stroke = isLight ? '#0ea5e9' : '#22d3ee';
