@@ -442,10 +442,11 @@ function LessonsDrawer({ mod, onClose, isLight }: { mod: Module | null; onClose:
           <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
             <div style={{ flex: 1 }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 5 }}>
-                <span style={{ fontSize: 10, color: subColor }}>Progreso del módulo</span>
+                <span style={{ fontSize: 10, color: subColor }}>{t('modules.moduleProgress')}</span>
                 <span style={{ fontSize: 10, color: mod.color, fontWeight: 700 }}>
-                  {completedCount}/{mod.totalLevels} lecciones
+                  {t('modules.lessonsOf', { done: completedCount, total: mod.totalLevels })}
                 </span>
+
               </div>
               <div style={{ height: 5, background: isLight ? 'rgba(15,23,42,0.08)' : 'rgba(255,255,255,0.06)', borderRadius: 99, overflow: 'hidden' }}>
                 <div style={{ height: '100%', width: `${Math.round((completedCount / mod.totalLevels) * 100)}%`, background: `linear-gradient(90deg,${mod.color}99,${mod.color})`, borderRadius: 99 }} />
@@ -456,7 +457,7 @@ function LessonsDrawer({ mod, onClose, isLight }: { mod: Module | null; onClose:
         </div>
 
         <div style={{ padding: '16px 24px', display: 'flex', flexDirection: 'column', gap: 8 }}>
-          <div style={{ fontSize: 10, color: subColor, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.15em', marginBottom: 4 }}>Lecciones</div>
+          <div style={{ fontSize: 10, color: subColor, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.15em', marginBottom: 4 }}>{t('modules.lessonsHeader')}</div>
 
           {mod.lessons.map((lesson, i) => {
             const prevDone = i === 0 || mod.lessons[i - 1].done;
@@ -524,7 +525,7 @@ function LessonsDrawer({ mod, onClose, isLight }: { mod: Module | null; onClose:
                   >
                     {lesson.title}
                   </div>
-                  <div style={{ fontSize: 10, color: lesson.done ? mod.color : subColor }}>{lesson.done ? '✓ Completado' : isAvailable ? '📖 Disponible' : '🔒 Bloqueado'}</div>
+                  <div style={{ fontSize: 10, color: lesson.done ? mod.color : subColor }}>{lesson.done ? t('modules.lessonCompleted') : isAvailable ? t('modules.lessonAvailable') : t('modules.lessonLocked')}</div>
                 </div>
 
                 <div style={{ fontSize: 11, fontWeight: 900, color: lesson.done ? mod.color : subColor, fontFamily: "'Courier New',monospace" }}>+{lesson.xp}</div>
@@ -551,7 +552,7 @@ function LessonsDrawer({ mod, onClose, isLight }: { mod: Module | null; onClose:
               transition: 'all 0.2s',
             }}
           >
-            {mod.currentLevel === 0 ? `${mod.icon} Comenzar módulo` : `${mod.icon} Continuar en nivel ${mod.currentLevel + 1}`}
+            {mod.currentLevel === 0 ? `${mod.icon} ${t('modules.beginModule')}` : `${mod.icon} ${t('modules.continueLevel', { n: mod.currentLevel + 1 })}`}
           </button>
         </div>
       </div>
