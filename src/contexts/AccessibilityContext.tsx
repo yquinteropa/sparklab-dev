@@ -25,11 +25,41 @@ const AccessibilityContext = createContext<AccessibilityContextType>({
 
 export const useAccessibility = () => useContext(AccessibilityContext);
 
+const THEME_KEY = 'sparklab-theme';
+const FONT_SIZE_KEY = 'sparklab-font-size';
+
+const isThemeMode = (v: unknown): v is ThemeMode =>
+  v === 'light' || v === 'dark' || v === 'high-contrast';
+const isFontSize = (v: unknown): v is FontSize =>
+  v === 'small' || v === 'normal' || v === 'large';
+
+const readStoredTheme = (): ThemeMode => {
+  if (typeof window === 'undefined') return 'dark';
+  const stored = window.localStorage.getItem(THEME_KEY);
+  return isThemeMode(stored) ? stored : 'dark';
+};
+
+const readStoredFontSize = (): FontSize => {
+  if (typeof window === 'undefined') return 'normal';
+  const stored = window.localStorage.getItem(FONT_SIZE_KEY);
+  return isFontSize(stored) ? stored : 'normal';
+};
+
 export function AccessibilityProvider({ children }: { children: ReactNode }) {
   const { i18n } = useTranslation();
-  const [fontSize, setFontSize] = useState<FontSize>('normal');
-  const [themeMode, setThemeMode] = useState<ThemeMode>('dark');
+  const [fontSize, setFontSizeState] = useState<FontSize>(readStoredFontSize);
+  const [themeMode, setThemeModeState] = useState<ThemeMode>(readStoredTheme);
   const [language, setLanguageState] = useState(i18n.language?.substring(0, 2) || 'es');
+
+  const setThemeMode = (m: ThemeMode) => {
+    setThemeModeState(m);
+    try { localStorage.setItem(THEME_KEY, m); } catch {}
+  };
+
+  const setFontSize = (s: FontSize) => {
+    setFontSizeState(s);
+    try { localStorage.setItem(FONT_SIZE_KEY, s); } catch {}
+  };
 
   // Load user's language from profile on auth
   useEffect(() => {
