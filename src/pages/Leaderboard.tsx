@@ -39,10 +39,10 @@ function useCountdown() {
 
 interface LeaderboardRow {
   rank: number;
-  user_id: string;
   score: number;
   display_name: string | null;
   avatar_url: string | null;
+  is_me: boolean;
 }
 
 const podiumStyles = [
@@ -79,22 +79,13 @@ export default function Leaderboard() {
   const { t } = useTranslation();
   const [rows, setRows] = useState<LeaderboardRow[]>([]);
   const [loading, setLoading] = useState(true);
-  const [currentUserId, setCurrentUserId] = useState<string | null>(null);
   const countdownMs = useCountdown();
 
   useEffect(() => {
     let alive = true;
     (async () => {
-      const [{ data: userData }, { data, error }] = await Promise.all([
-        supabase.auth.getUser(),
-        supabase
-          .from('weekly_leaderboard')
-          .select('rank, user_id, score, display_name, avatar_url')
-          .order('rank', { ascending: true })
-          .limit(100),
-      ]);
+      const { data, error } = await supabase.rpc('get_weekly_leaderboard');
       if (!alive) return;
-      setCurrentUserId(userData.user?.id ?? null);
       if (!error && data) setRows(data as LeaderboardRow[]);
       setLoading(false);
     })();
@@ -152,7 +143,7 @@ export default function Leaderboard() {
                 const Icon = s.icon;
                 return (
                   <motion.div
-                    key={p.user_id}
+                    key={p.rank}
                     initial={{ opacity: 0, y: 30, scale: 0.9 }}
                     animate={{ opacity: 1, y: 0, scale: 1 }}
                     transition={{ delay: i * 0.12, type: 'spring', stiffness: 120 }}
@@ -162,7 +153,7 @@ export default function Leaderboard() {
                       s.glow,
                       s.height,
                       s.order,
-                      p.user_id === currentUserId && 'outline outline-2 outline-primary/60',
+                      p.is_me && 'outline outline-2 outline-primary/60',
                     )}
                   >
                     <div className={cn('absolute -top-4 flex h-9 w-9 items-center justify-center rounded-full', s.badge)}>
@@ -189,7 +180,7 @@ export default function Leaderboard() {
               <AnimatePresence initial={false}>
                 {rest.map((p, idx) => (
                   <motion.div
-                    key={p.user_id}
+                    key={p.rank}
                     layout
                     initial={{ opacity: 0, x: -16 }}
                     animate={{ opacity: 1, x: 0 }}
@@ -197,7 +188,7 @@ export default function Leaderboard() {
                     transition={{ delay: Math.min(idx * 0.015, 0.4), duration: 0.25 }}
                     className={cn(
                       'flex items-center gap-3 rounded-xl border border-border bg-card/60 p-3 backdrop-blur transition-colors hover:border-primary/40',
-                      p.user_id === currentUserId && 'border-primary bg-primary/5',
+                      p.is_me && 'border-primary bg-primary/5',
                     )}
                   >
                     <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-muted font-display text-xs font-bold text-muted-foreground">
@@ -205,7 +196,7 @@ export default function Leaderboard() {
                     </span>
                     <span className="flex-1 truncate text-sm font-medium text-card-foreground">
                       {p.display_name || t('leaderboard.player')}
-                      {p.user_id === currentUserId && (
+                      {p.is_me && (
                         <span className="ml-2 rounded-full bg-primary/20 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-primary">
                           Tú
                         </span>

@@ -241,6 +241,16 @@ export type Database = {
           type: string
         }[]
       }
+      get_weekly_leaderboard: {
+        Args: never
+        Returns: {
+          avatar_url: string
+          display_name: string
+          is_me: boolean
+          rank: number
+          score: number
+        }[]
+      }
       refresh_weekly_leaderboard: { Args: never; Returns: undefined }
       update_user_score: {
         Args: { p_score: number }
