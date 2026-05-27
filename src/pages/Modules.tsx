@@ -563,9 +563,12 @@ function LessonsDrawer({ mod, onClose, isLight }: { mod: Module | null; onClose:
 export default function Modules() {
   const [openMod, setOpenMod] = useState<Module | null>(null);
   const { themeMode } = useAccessibility();
+  const { t } = useTranslation();
   const isLight = themeMode === 'light';
   const totalXP = 125;
   const userLevel = 2;
+  const MODULES_DATA = buildModulesData(t);
+
 
   const pageBg = isLight
     ? 'radial-gradient(ellipse at 30% 10%, #f1f5f9 0%, #ffffff 45%, #f8fafc 100%)'
@@ -638,11 +641,11 @@ export default function Modules() {
                 >
                   ⚡
                 </div>
-                <span style={{ fontSize: 11, color: '#0891b2', fontWeight: 700 }}>Nivel {userLevel}</span>
+                <span style={{ fontSize: 11, color: '#0891b2', fontWeight: 700 }}>{t('modules.headerLevel', { n: userLevel })}</span>
               </div>
               <div style={{ width: 1, height: 14, background: isLight ? 'rgba(15,23,42,0.12)' : 'rgba(255,255,255,0.1)' }} />
               <span style={{ fontSize: 11, color: mutedText }}>
-                <span style={{ color: '#f59e0b', fontWeight: 700 }}>{totalXP} XP</span> acumulados
+                <span style={{ color: '#f59e0b', fontWeight: 700 }}>{t('modules.headerXp', { n: totalXP })}</span> {t('modules.headerAccumulated')}
               </span>
             </div>
 
@@ -656,7 +659,7 @@ export default function Modules() {
                   WebkitTextFillColor: 'transparent',
                 }}
               >
-                Ruta de
+                {t('modules.pathTitle1')}
               </span>
               <br />
               <span
@@ -666,13 +669,14 @@ export default function Modules() {
                   WebkitTextFillColor: 'transparent',
                 }}
               >
-                Aprendizaje
+                {t('modules.pathTitle2')}
               </span>
             </h1>
             <p style={{ fontSize: 14, color: mutedText, maxWidth: 400, margin: '0 auto', lineHeight: 1.75 }}>
-              Domina la electrónica módulo a módulo. Completa cada etapa para desbloquear la siguiente.
+              {t('modules.pathDesc')}
             </p>
           </div>
+
 
           {/* PATH CONNECTOR */}
           <div style={{ position: 'relative', marginBottom: 8 }}>
@@ -693,16 +697,16 @@ export default function Modules() {
           <div style={{ background: bannerBg, border: `1px solid ${bannerBorder}`, borderRadius: 16, padding: '18px 24px', display: 'flex', alignItems: 'center', gap: 16, flexWrap: 'wrap' }}>
             <div style={{ fontSize: 20 }}>💡</div>
             <div style={{ flex: 1, minWidth: 200 }}>
-              <div style={{ fontSize: 13, fontWeight: 700, color: isLight ? '#334155' : '#94a3b8', marginBottom: 3 }}>¿Cómo avanzar?</div>
+              <div style={{ fontSize: 13, fontWeight: 700, color: isLight ? '#334155' : '#94a3b8', marginBottom: 3 }}>{t('modules.howAdvance')}</div>
               <div style={{ fontSize: 11, color: mutedText, lineHeight: 1.6 }}>
-                Completa todas las lecciones de un módulo para desbloquear el siguiente. Cada lección desbloquea la siguiente dentro del módulo.
+                {t('modules.howAdvanceDesc')}
               </div>
             </div>
             <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
               {[
-                { icon: '🟢', label: 'Completado', color: '#34d399' },
-                { icon: '🔵', label: 'En progreso', color: '#0891b2' },
-                { icon: '🔒', label: 'Bloqueado', color: mutedText },
+                { icon: '🟢', label: t('modules.statusCompleted'), color: '#34d399' },
+                { icon: '🔵', label: t('modules.statusInProgress'), color: '#0891b2' },
+                { icon: '🔒', label: t('modules.statusLocked'), color: mutedText },
               ].map((s) => (
                 <div key={s.label} style={{ display: 'flex', alignItems: 'center', gap: 5, fontSize: 10, color: s.color }}>
                   <span>{s.icon}</span>
@@ -710,6 +714,7 @@ export default function Modules() {
                 </div>
               ))}
             </div>
+
           </div>
 
           <div style={{ display: 'flex', justifyContent: 'center', gap: 32, marginTop: 32, opacity: 0.18 }}>
