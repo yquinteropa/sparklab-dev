@@ -170,7 +170,7 @@ export default function Leaderboard() {
                     </div>
                     <div className="mt-2 text-center">
                       <div className="truncate font-display text-base font-semibold text-card-foreground">
-                        {p.display_name || 'Jugador'}
+                        {p.display_name || t('leaderboard.player')}
                       </div>
                       <div className="mt-1 flex items-center justify-center gap-1 text-sm font-bold text-primary">
                         <Zap className="h-3.5 w-3.5" /> {p.score.toLocaleString()}
@@ -204,7 +204,7 @@ export default function Leaderboard() {
                       {p.rank}
                     </span>
                     <span className="flex-1 truncate text-sm font-medium text-card-foreground">
-                      {p.display_name || 'Jugador'}
+                      {p.display_name || t('leaderboard.player')}
                       {p.user_id === currentUserId && (
                         <span className="ml-2 rounded-full bg-primary/20 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-primary">
                           Tú
