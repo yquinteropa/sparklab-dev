@@ -1,5 +1,6 @@
 import { Timer, Trophy, Zap } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 import { Progress } from '@/components/ui/progress';
 
 interface QuizHeaderProps {
@@ -17,6 +18,7 @@ export function QuizHeader({
   timeLeft,
   totalSeconds,
 }: QuizHeaderProps) {
+  const { t } = useTranslation();
   const progress = totalQuestions > 0 ? ((currentIndex) / totalQuestions) * 100 : 0;
   const timePct = totalSeconds > 0 ? (timeLeft / totalSeconds) * 100 : 0;
   const lowTime = timeLeft < 30;
@@ -27,7 +29,7 @@ export function QuizHeader({
         <div className="flex items-center gap-2 text-muted-foreground">
           <Zap className="size-4 text-primary" />
           <span>
-            Pregunta <span className="font-semibold text-foreground">{Math.min(currentIndex + 1, totalQuestions)}</span> / {totalQuestions}
+            {t('quiz.questionOf')} <span className="font-semibold text-foreground">{Math.min(currentIndex + 1, totalQuestions)}</span> / {totalQuestions}
           </span>
         </div>
         <div className="flex items-center gap-2">
@@ -38,7 +40,7 @@ export function QuizHeader({
             animate={{ scale: 1, color: 'hsl(var(--foreground))' }}
             className="font-bold tabular-nums"
           >
-            {score} pts
+            {score} {t('quiz.pts')}
           </motion.span>
         </div>
         <div

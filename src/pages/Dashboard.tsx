@@ -139,10 +139,10 @@ export default function Dashboard() {
   const [charIndex, setCharIndex] = useState(0);
 
   const messages = [
-    `¡Bienvenido de nuevo, ${displayName}! ⚡ ¿Listo para practicar hoy?`,
-    'Tip: Una resistencia protege el LED de quemarse. ¡Úsala siempre!',
-    'Reto del día: Construye un circuito que encienda 2 LEDs. 💡',
-    '¿Sabías que la corriente fluye del + al −? ¡Compruébalo en el lab!',
+    t('dashboard.typingWelcome', { name: displayName }),
+    t('dashboard.typingTip1'),
+    t('dashboard.typingTip2'),
+    t('dashboard.typingTip3'),
   ];
 
   useEffect(() => {
@@ -192,26 +192,26 @@ export default function Dashboard() {
   const modes: ModeCardProps[] = [
     {
       icon: '📖',
-      title: 'Módulos de Teoría',
-      desc: 'Aprende los fundamentos: voltaje, corriente, resistencia y la Ley de Ohm. Lecciones cortas con ejemplos visuales y quizzes al final de cada tema.',
-      tag: 'Teoría · 6 módulos',
+      title: t('dashboard.modeTheoryTitle'),
+      desc: t('dashboard.modeTheoryDesc'),
+      tag: t('dashboard.modeTheoryTag'),
       tagColor: '#a78bfa',
       href: '/dashboard/modules',
     },
     {
       icon: '⚡',
-      title: 'Preguntas Rápidas',
-      desc: 'Quiz cronometrado al estilo Duolingo: V/F, opción múltiple y emparejar. Responde rápido para sumar más puntos y mantener tu racha.',
-      tag: 'Cronometrado · 15s',
+      title: t('dashboard.modeQuickTitle'),
+      desc: t('dashboard.modeQuickDesc'),
+      tag: t('dashboard.modeQuickTag'),
       tagColor: '#f59e0b',
-      badge: 'Nuevo',
+      badge: t('dashboard.modeQuickBadge'),
       href: '/dashboard/quiz',
     },
     {
       icon: '🏆',
-      title: 'Ranking de la Clase',
-      desc: 'Compite con tus compañeros. Gana XP resolviendo retos, sube de nivel y escala posiciones en el ranking global de SparkLab.',
-      tag: 'Competitivo',
+      title: t('dashboard.modeRankingTitle'),
+      desc: t('dashboard.modeRankingDesc'),
+      tag: t('dashboard.modeRankingTag'),
       tagColor: '#34d399',
       href: '/dashboard/leaderboard',
     },
@@ -250,10 +250,10 @@ export default function Dashboard() {
               background: 'linear-gradient(135deg,#ffffff 0%,#22d3ee 55%,#0ea5e9 100%)',
               WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent',
             }}>
-              ¡Bienvenido a SparkLab, {displayName}!
+              {t('dashboard.welcomeFull', { name: displayName })}
             </h1>
             <p style={{ fontSize: 14, color: '#64748b', maxWidth: 440, lineHeight: 1.75, marginBottom: 36 }}>
-              Aprende electrónica construyendo circuitos reales en un laboratorio virtual gamificado. Desde cero hasta experto.
+              {t('dashboard.tagline')}
             </p>
 
             <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', justifyContent: 'center' }}>
@@ -265,7 +265,7 @@ export default function Dashboard() {
                   fontSize: 12, textDecoration: 'none', letterSpacing: '0.12em',
                   textTransform: 'uppercase', transition: 'all 0.2s',
                 }}
-              >⚡ Ir al Laboratorio</Link>
+              >{t('dashboard.goToLab')}</Link>
               <a href="#modos"
                 style={{
                   padding: '12px 30px', borderRadius: 10,
@@ -274,7 +274,7 @@ export default function Dashboard() {
                   fontSize: 12, textDecoration: 'none', letterSpacing: '0.12em',
                   textTransform: 'uppercase', transition: 'all 0.2s',
                 }}
-              >Ver modos</a>
+              >{t('dashboard.viewModes')}</a>
             </div>
           </div>
 
@@ -287,12 +287,12 @@ export default function Dashboard() {
                 display: 'inline-block', fontSize: 9, fontWeight: 700, letterSpacing: '0.18em',
                 textTransform: 'uppercase', color: '#22d3ee', marginBottom: 12,
                 padding: '3px 14px', border: '1px solid rgba(34,211,238,0.25)', borderRadius: 20,
-              }}>Modos de juego</div>
+              }}>{t('dashboard.gameModes')}</div>
               <h2 style={{ fontSize: 'clamp(20px,4vw,32px)', fontWeight: 900, color: '#f1f5f9', marginBottom: 10 }}>
-                Elige cómo aprender hoy
+                {t('dashboard.chooseHow')}
               </h2>
               <p style={{ fontSize: 13, color: '#475569', maxWidth: 400, margin: '0 auto', lineHeight: 1.7 }}>
-                Tres caminos distintos según tu estilo. Teoría, práctica guiada o competencia con tus compañeros.
+                {t('dashboard.threePaths')}
               </p>
             </div>
 
@@ -307,15 +307,19 @@ export default function Dashboard() {
             }}>
               <div style={{ flex: 1, minWidth: 180 }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 8 }}>
-                  <span style={{ fontSize: 11, color: '#94a3b8', fontWeight: 700 }}>Tu progreso general</span>
-                  <span style={{ fontSize: 11, color: '#22d3ee', fontWeight: 900 }}>0 / 6 módulos</span>
+                  <span style={{ fontSize: 11, color: '#94a3b8', fontWeight: 700 }}>{t('dashboard.overallProgress')}</span>
+                  <span style={{ fontSize: 11, color: '#22d3ee', fontWeight: 900 }}>{t('dashboard.modulesCount', { done: 0, total: 6 })}</span>
                 </div>
                 <div style={{ height: 6, background: 'rgba(255,255,255,0.06)', borderRadius: 99, overflow: 'hidden' }}>
                   <div style={{ height: '100%', width: '0%', background: 'linear-gradient(90deg,#22d3ee,#0ea5e9)', borderRadius: 99, transition: 'width 1s ease' }} />
                 </div>
               </div>
               <div style={{ display: 'flex', gap: 16, flexWrap: 'wrap' }}>
-                {[{ v: '0', l: 'XP', i: '⭐' }, { v: '0', l: 'Retos', i: '🎯' }, { v: 'Bronce', l: 'Rango', i: '🏅' }].map((s) => (
+                {[
+                  { v: '0', l: t('dashboard.xpLabel'), i: '⭐' },
+                  { v: '0', l: t('dashboard.challenges'), i: '🎯' },
+                  { v: t('dashboard.bronze'), l: t('dashboard.rankLabel'), i: '🏅' },
+                ].map((s) => (
                   <div key={s.l} style={{ textAlign: 'center' }}>
                     <div style={{ fontSize: 10, marginBottom: 3 }}>{s.i}</div>
                     <div style={{ fontWeight: 900, color: '#22d3ee', fontSize: 15 }}>{s.v}</div>
@@ -335,37 +339,37 @@ export default function Dashboard() {
                 fontSize: 9, fontWeight: 700, letterSpacing: '0.18em', textTransform: 'uppercase',
                 color: '#34d399', padding: '3px 14px',
                 border: '1px solid rgba(52,211,153,0.25)', borderRadius: 20,
-              }}>Laboratorio Virtual</div>
+              }}>{t('dashboard.labBadge')}</div>
               <div style={{
                 fontSize: 9, fontWeight: 700, letterSpacing: '0.14em', textTransform: 'uppercase',
                 color: '#f59e0b', padding: '3px 10px',
                 border: '1px solid rgba(245,158,11,0.35)', borderRadius: 20,
                 background: 'rgba(245,158,11,0.08)',
-              }}>BETA</div>
+              }}>{t('dashboard.beta')}</div>
             </div>
 
             <h2 style={{ fontSize: 'clamp(22px,4vw,38px)', fontWeight: 900, color: '#f1f5f9', lineHeight: 1.2 }}>
-              Arma circuitos reales<br />
-              <span style={{ color: '#22d3ee' }}>en tiempo real</span>
+              {t('dashboard.buildReal')}<br />
+              <span style={{ color: '#22d3ee' }}>{t('dashboard.inRealTime')}</span>
             </h2>
 
             <p style={{ fontSize: 13, color: '#475569', maxWidth: 480, lineHeight: 1.8 }}>
-              Coloca componentes sobre una protoboard virtual 2D. Conecta baterías, resistencias y LEDs — el simulador detecta al instante si tu circuito funciona o tiene errores.
+              {t('dashboard.buildDesc')}
             </p>
 
             <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', justifyContent: 'center', margin: '8px 0 4px' }}>
-              <CompCard icon="🔋" label="Batería" />
-              <CompCard icon="▬" label="Resistencia" />
-              <CompCard icon="💡" label="LED" />
-              <CompCard icon="〰️" label="Cables" />
+              <CompCard icon="🔋" label={t('dashboard.compBattery')} />
+              <CompCard icon="▬" label={t('dashboard.compResistor')} />
+              <CompCard icon="💡" label={t('dashboard.compLed')} />
+              <CompCard icon="〰️" label={t('dashboard.compWires')} />
             </div>
 
             <div style={{ display: 'flex', gap: 20, flexWrap: 'wrap', justifyContent: 'center', margin: '4px 0 12px' }}>
               {[
-                '✅ Detección de circuito cerrado',
-                '⚠️ Alerta de cortocircuito',
-                '💡 LEDs que se encienden',
-                '🗑️ Edición en tiempo real',
+                t('dashboard.featClosed'),
+                t('dashboard.featShort'),
+                t('dashboard.featLeds'),
+                t('dashboard.featRealtime'),
               ].map((f) => (
                 <span key={f} style={{ fontSize: 11, color: '#475569' }}>{f}</span>
               ))}
@@ -381,11 +385,11 @@ export default function Dashboard() {
                 transition: 'all 0.22s', display: 'inline-block',
               }}
             >
-              🔬 Abrir Laboratorio
+              {t('dashboard.openLab')}
             </Link>
 
             <p style={{ fontSize: 10, color: '#334155', marginTop: 4 }}>
-              Versión beta · Más componentes y funciones próximamente
+              {t('dashboard.betaNote')}
             </p>
           </div>
         </div>
