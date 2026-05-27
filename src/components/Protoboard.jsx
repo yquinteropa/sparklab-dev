@@ -123,6 +123,7 @@ export default function Protoboard({
   selectedComponent, previewWire,
   onPointClick, onPointHover, onComponentClick,
 }) {
+  const { t } = useTranslation();
   const canvasRef = useRef(null);
   const allRows = [0,1,2,3,4,5,6,7,8,9,10,11,12,13];
 
