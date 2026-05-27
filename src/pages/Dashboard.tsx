@@ -120,7 +120,7 @@ function CompCard({ icon, label }: { icon: string; label: string }) {
       borderRadius: 14, padding: '18px 20px', minWidth: 80,
     }}>
       <span style={{ fontSize: 28 }}>{icon}</span>
-      <span style={{ fontSize: 10, color: '#64748b', fontFamily: "'Courier New',monospace" }}>{label}</span>
+      <span style={{ fontSize: 10, color: '#94a3b8', fontFamily: "var(--font-display)", letterSpacing: '0.08em', textTransform: 'uppercase', fontWeight: 600 }}>{label}</span>
     </div>
   );
 }
