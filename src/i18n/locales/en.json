@@ -14,7 +14,8 @@
     "register": "Sign Up",
     "levels": "Levels",
     "ranking": "Ranking",
-    "information": "Information"
+    "information": "Information",
+    "settings": "Settings & Privacy"
   },
   "index": {
     "badge": "Gamified Educational Platform",
@@ -98,18 +99,79 @@
     "mission3Desc": "Distribute energy",
     "profileIncompleteTitle": "Complete your profile",
     "profileIncompleteDesc": "You have pending data to add to your profile (username, language, gender or country).",
-    "completeProfile": "Complete"
+    "completeProfile": "Complete",
+    "welcomeFull": "Welcome to SparkLab, {{name}}!",
+    "tagline": "Learn electronics by building real circuits in a gamified virtual lab. From zero to expert.",
+    "goToLab": "⚡ Go to Lab",
+    "viewModes": "View modes",
+    "gameModes": "Game modes",
+    "chooseHow": "Choose how to learn today",
+    "threePaths": "Three different paths to suit your style. Theory, guided practice, or competition with classmates.",
+    "modeTheoryTitle": "Theory Modules",
+    "modeTheoryDesc": "Learn the fundamentals: voltage, current, resistance, and Ohm's Law. Short lessons with visual examples and quizzes at the end of each topic.",
+    "modeTheoryTag": "Theory · 6 modules",
+    "modeQuickTitle": "Quick Questions",
+    "modeQuickDesc": "Duolingo-style timed quiz: T/F, multiple choice, and matching. Answer fast to score more points and keep your streak.",
+    "modeQuickTag": "Timed · 15s",
+    "modeQuickBadge": "New",
+    "modeRankingTitle": "Class Ranking",
+    "modeRankingDesc": "Compete with your classmates. Earn XP solving challenges, level up, and climb the SparkLab global ranking.",
+    "modeRankingTag": "Competitive",
+    "overallProgress": "Your overall progress",
+    "modulesCount": "{{done}} / {{total}} modules",
+    "xpLabel": "XP",
+    "challenges": "Challenges",
+    "rankLabel": "Rank",
+    "bronze": "Bronze",
+    "labBadge": "Virtual Lab",
+    "beta": "BETA",
+    "buildReal": "Build real circuits",
+    "inRealTime": "in real time",
+    "buildDesc": "Place components on a virtual 2D breadboard. Connect batteries, resistors, and LEDs — the simulator instantly detects whether your circuit works or has errors.",
+    "compBattery": "Battery",
+    "compResistor": "Resistor",
+    "compLed": "LED",
+    "compWires": "Wires",
+    "featClosed": "✅ Closed-circuit detection",
+    "featShort": "⚠️ Short-circuit alert",
+    "featLeds": "💡 LEDs that light up",
+    "featRealtime": "🗑️ Real-time editing",
+    "openLab": "🔬 Open Lab",
+    "betaNote": "Beta version · More components and features coming soon",
+    "typingWelcome": "Welcome back, {{name}}! ⚡ Ready to practice today?",
+    "typingTip1": "Tip: A resistor protects the LED from burning out. Always use one!",
+    "typingTip2": "Daily challenge: Build a circuit that lights up 2 LEDs. 💡",
+    "typingTip3": "Did you know current flows from + to −? Check it out in the lab!"
   },
   "simulator": {
     "components": "Components",
     "battery": "Battery 9V",
     "resistor": "Resistor",
     "led": "LED",
-    "ledOn": "ON"
+    "ledOn": "ON",
+    "labTitle": "LAB",
+    "labSubtitle": "Free practice · Build your circuit",
+    "componentOne": "component",
+    "componentMany": "components",
+    "howToBuild": "How to build a circuit:",
+    "step1": "1. Select a component",
+    "step2": "2. Click the starting point",
+    "step3": "3. Click the ending point",
+    "keysHint": "ESC = cancel · Del = delete",
+    "guideTitle": "🎓 Quick breadboard guide",
+    "guide1": "The red (+) and blue (−) rows are the power rails: each rail is connected end-to-end.",
+    "guide2": "In the central area, each column connects its 5 vertical holes (a–e top, f–j bottom).",
+    "guide3": "Use wires to bridge signals, resistors to limit current, and batteries to power the circuit. Practice freely."
   },
   "leaderboard": {
     "title": "Leaderboard",
-    "level": "Level {{level}}"
+    "level": "Level {{level}}",
+    "subtitle": "Global Top 100 · Each player's historic best score",
+    "resetIn": "Ranking resets in:",
+    "loading": "Loading ranking…",
+    "empty": "No scores yet. Be the first to play!",
+    "player": "Player",
+    "you": "You"
   },
   "profile": {
     "title": "Update Profile",
@@ -124,7 +186,76 @@
     "usernameInUse": "Username is already taken.",
     "updateError": "Error updating profile.",
     "updateSuccess": "Profile updated successfully!",
-    "loading": "Loading..."
+    "loading": "Loading...",
+    "tabProgress": "Progress",
+    "tabAchievements": "Achievements",
+    "moduleProgressTitle": "Progress by Module",
+    "myAchievements": "My Achievements",
+    "recentAchievements": "Recent Achievements",
+    "viewAllAchievements": "View all achievements",
+    "nextGoal": "Next Goal",
+    "nextGoalTitle": "Parallel Engineer",
+    "nextGoalDesc": "Complete the Parallel Circuits module",
+    "onlineLevel": "Online · Level {{level}}",
+    "totalXp": "Total XP",
+    "rank": "Rank",
+    "badges": "Badges",
+    "streak": "Streak",
+    "userFallback": "user",
+    "modules": {
+      "ohm": "Ohm's Law",
+      "series": "Series Circuits",
+      "parallel": "Parallel Circuits",
+      "kirchhoff": "Kirchhoff's Laws",
+      "capacitors": "Capacitors",
+      "inductors": "Inductors"
+    },
+    "stats": {
+      "levels": "Levels",
+      "accuracy": "Accuracy",
+      "circuits": "Circuits",
+      "time": "Time"
+    },
+    "ranks": {
+      "bronze": "BRONZE",
+      "silver": "SILVER",
+      "gold": "GOLD",
+      "diamond": "DIAMOND"
+    },
+    "achievements": {
+      "firstSpark": {
+        "title": "First Spark",
+        "desc": "Complete your first circuit"
+      },
+      "ohmMaster": {
+        "title": "Ohm Master",
+        "desc": "Master Ohm's Law"
+      },
+      "streak": {
+        "title": "Electric Streak",
+        "desc": "7-day streak"
+      },
+      "serial": {
+        "title": "Serial Builder",
+        "desc": "Series expert"
+      },
+      "parallel": {
+        "title": "Parallel Eng.",
+        "desc": "Master parallel circuits"
+      },
+      "kirchhoffNovice": {
+        "title": "Kirchhoff Novice",
+        "desc": "Start Kirchhoff"
+      },
+      "speedster": {
+        "title": "Speedster",
+        "desc": "Level in < 30s"
+      },
+      "perfectionist": {
+        "title": "Perfectionist",
+        "desc": "5 perfect levels"
+      }
+    }
   },
   "forgotPassword": {
     "title": "Recover Password",
@@ -211,32 +342,194 @@
     "title": "Terms and Conditions",
     "intro": "Welcome to SparkLab. By accessing and using our platform, you agree to these Terms and Conditions. Please read them carefully before using our services.",
     "sections": [
-      { "title": "Acceptance of Terms", "content": "By registering or using SparkLab you agree to be bound by these terms. If you do not agree, you must not use the platform." },
-      { "title": "Service Description", "content": "SparkLab is a gamified educational platform to learn electrical circuits through interactive simulations, missions, and competitions. The content is for educational purposes." },
-      { "title": "User Account", "content": "You are responsible for keeping your password confidential and for any activity under your account. You must provide accurate information when registering." },
-      { "title": "Acceptable Use", "content": "You must not use SparkLab for illegal purposes, infringe third-party rights, distribute malware, or attempt unauthorized access to systems related to the platform." },
-      { "title": "Intellectual Property", "content": "All content (text, graphics, code, marks) belongs to SparkLab or its licensors and is protected by intellectual property laws. You may not reproduce it without permission." },
-      { "title": "User Content", "content": "You keep ownership of the content you create, but grant us a license to display it within the platform for educational and service operation purposes." },
-      { "title": "Limitation of Liability", "content": "SparkLab is provided \"as is\". We do not guarantee uninterrupted availability or an error-free service. We are not liable for indirect damages arising from its use." },
-      { "title": "Service Modifications", "content": "We reserve the right to modify, suspend, or discontinue features of the platform at any time, notifying changes when possible." },
-      { "title": "Changes to the Terms", "content": "We may update these terms. Changes take effect when published on this page. Continued use implies acceptance of the new terms." },
-      { "title": "Contact", "content": "If you have questions about these terms, contact us at kdbermudezr@ufpso.edu.co." }
+      {
+        "title": "Acceptance of Terms",
+        "content": "By registering or using SparkLab you agree to be bound by these terms. If you do not agree, you must not use the platform."
+      },
+      {
+        "title": "Service Description",
+        "content": "SparkLab is a gamified educational platform to learn electrical circuits through interactive simulations, missions, and competitions. The content is for educational purposes."
+      },
+      {
+        "title": "User Account",
+        "content": "You are responsible for keeping your password confidential and for any activity under your account. You must provide accurate information when registering."
+      },
+      {
+        "title": "Acceptable Use",
+        "content": "You must not use SparkLab for illegal purposes, infringe third-party rights, distribute malware, or attempt unauthorized access to systems related to the platform."
+      },
+      {
+        "title": "Intellectual Property",
+        "content": "All content (text, graphics, code, marks) belongs to SparkLab or its licensors and is protected by intellectual property laws. You may not reproduce it without permission."
+      },
+      {
+        "title": "User Content",
+        "content": "You keep ownership of the content you create, but grant us a license to display it within the platform for educational and service operation purposes."
+      },
+      {
+        "title": "Limitation of Liability",
+        "content": "SparkLab is provided \"as is\". We do not guarantee uninterrupted availability or an error-free service. We are not liable for indirect damages arising from its use."
+      },
+      {
+        "title": "Service Modifications",
+        "content": "We reserve the right to modify, suspend, or discontinue features of the platform at any time, notifying changes when possible."
+      },
+      {
+        "title": "Changes to the Terms",
+        "content": "We may update these terms. Changes take effect when published on this page. Continued use implies acceptance of the new terms."
+      },
+      {
+        "title": "Contact",
+        "content": "If you have questions about these terms, contact us at kdbermudezr@ufpso.edu.co."
+      }
     ]
   },
   "privacy": {
     "title": "Privacy Policy",
     "intro": "Your privacy matters to SparkLab. This policy explains what data we collect, how we use it, and the rights you have over it.",
     "sections": [
-      { "title": "Information We Collect", "content": "We collect data you provide (name, email, username, language, gender, country) and data generated by your use of the platform (progress, XP, completed missions)." },
-      { "title": "Use of Information", "content": "We use your data to authenticate you, personalize your experience, display your progress and ranking position, and improve the platform." },
-      { "title": "Legal Basis", "content": "We process your data based on the performance of the service you requested upon registration and your consent, which you may withdraw at any time." },
-      { "title": "Data Sharing", "content": "We do not sell your data. We only share it with providers that help us run the service (authentication, database, email) under confidentiality agreements." },
-      { "title": "Cookies and Similar Technologies", "content": "We use cookies and local storage to keep your session and remember accessibility and language preferences. You may clear them from your browser." },
-      { "title": "Security", "content": "We apply reasonable technical and organizational measures (encryption in transit, RLS in the database, password hashing) to protect your information." },
-      { "title": "Data Retention", "content": "We keep your data while your account is active or as needed to provide the service. You may request its deletion by contacting us." },
-      { "title": "Your Rights", "content": "You have the right to access, rectify, delete, and port your data, as well as to object to its processing. To exercise them, write to kdbermudezr@ufpso.edu.co." },
-      { "title": "Minors", "content": "If you are a minor, you must have your parent or legal guardian's consent to use SparkLab." },
-      { "title": "Changes to this Policy", "content": "We may update this policy. We will publish the current version on this page, indicating the last update date." }
+      {
+        "title": "Information We Collect",
+        "content": "We collect data you provide (name, email, username, language, gender, country) and data generated by your use of the platform (progress, XP, completed missions)."
+      },
+      {
+        "title": "Use of Information",
+        "content": "We use your data to authenticate you, personalize your experience, display your progress and ranking position, and improve the platform."
+      },
+      {
+        "title": "Legal Basis",
+        "content": "We process your data based on the performance of the service you requested upon registration and your consent, which you may withdraw at any time."
+      },
+      {
+        "title": "Data Sharing",
+        "content": "We do not sell your data. We only share it with providers that help us run the service (authentication, database, email) under confidentiality agreements."
+      },
+      {
+        "title": "Cookies and Similar Technologies",
+        "content": "We use cookies and local storage to keep your session and remember accessibility and language preferences. You may clear them from your browser."
+      },
+      {
+        "title": "Security",
+        "content": "We apply reasonable technical and organizational measures (encryption in transit, RLS in the database, password hashing) to protect your information."
+      },
+      {
+        "title": "Data Retention",
+        "content": "We keep your data while your account is active or as needed to provide the service. You may request its deletion by contacting us."
+      },
+      {
+        "title": "Your Rights",
+        "content": "You have the right to access, rectify, delete, and port your data, as well as to object to its processing. To exercise them, write to kdbermudezr@ufpso.edu.co."
+      },
+      {
+        "title": "Minors",
+        "content": "If you are a minor, you must have your parent or legal guardian's consent to use SparkLab."
+      },
+      {
+        "title": "Changes to this Policy",
+        "content": "We may update this policy. We will publish the current version on this page, indicating the last update date."
+      }
     ]
+  },
+  "settings": {
+    "desc": "Manage your account security and privacy preferences."
+  },
+  "modules": {
+    "headerLevel": "Level {{n}}",
+    "headerXp": "{{n}} XP",
+    "headerAccumulated": "earned",
+    "pathTitle1": "Learning",
+    "pathTitle2": "Path",
+    "pathDesc": "Master electronics module by module. Complete each stage to unlock the next.",
+    "howAdvance": "How to advance?",
+    "howAdvanceDesc": "Complete all lessons of a module to unlock the next. Each lesson unlocks the next inside the module.",
+    "statusCompleted": "Completed",
+    "statusInProgress": "In progress",
+    "statusLocked": "Locked",
+    "tierBasic": "BASIC",
+    "tierIntermediate": "INTERMEDIATE",
+    "tierAdvanced": "ADVANCED",
+    "modCompleted": "✓ COMPLETED",
+    "lockedHint": "Complete the previous module",
+    "currentLevel": "Current level:",
+    "notStarted": "Not started",
+    "levelN": "Level {{n}}",
+    "pctCompleted": "{{n}}% completed",
+    "lessons": "{{n}} lessons",
+    "moduleProgress": "Module progress",
+    "lessonsOf": "{{done}}/{{total}} lessons",
+    "lessonsHeader": "Lessons",
+    "lessonCompleted": "✓ Completed",
+    "lessonAvailable": "📖 Available",
+    "lessonLocked": "🔒 Locked",
+    "beginModule": "Start module",
+    "continueLevel": "Continue at level {{n}}",
+    "comingSoon": "Coming soon",
+    "comingSoonDesc": "This level is not yet available.",
+    "basic": {
+      "title": "Basic Learning Module",
+      "subtitle": "The starting point",
+      "l1": "level 1: What is electricity?",
+      "l2": "Voltage and current",
+      "l3": "Ohm's Law",
+      "l4": "Resistors in series",
+      "l5": "Resistors in parallel",
+      "l6": "Complete basic circuit"
+    },
+    "medium": {
+      "title": "Intermediate Learning Module",
+      "subtitle": "Take your circuits to the next level",
+      "l1": "Level 1: Color code",
+      "l2": "NPN Transistors",
+      "l3": "Signal amplification",
+      "l4": "RC circuits",
+      "l5": "Electrical filters",
+      "l6": "Capstone project"
+    },
+    "advanced": {
+      "title": "Advanced Learning Module",
+      "subtitle": "The engineer's mastery",
+      "l1": "Binary logic",
+      "l2": "Logic gates",
+      "l3": "Combinational circuits",
+      "l4": "Flip-Flops and memory",
+      "l5": "Microcontrollers",
+      "l6": "Final SparkLab project"
+    }
+  },
+  "quiz": {
+    "pageTitle1": "Timed",
+    "pageTitle2": "Quiz",
+    "pageSubtitle": "20 questions · answer fast to earn more points",
+    "loading": "Loading questions…",
+    "errorTitle": "Could not start the quiz",
+    "retry": "Retry",
+    "modeLabel": "Mode",
+    "modeName": "Quick Questions",
+    "modeDesc": "Test your electrical-circuit knowledge against the clock. Answer accurately and quickly to maximize your score.",
+    "timeLimit": "Time limit",
+    "timeValue": "{{n}} seconds",
+    "questionsLabel": "Questions",
+    "basePoints": "Base points",
+    "basePointsValue": "100 pts",
+    "indications": "Instructions",
+    "ind1": "You have a global time to answer all questions.",
+    "ind2": "Each correct answer adds base points + bonus for remaining time.",
+    "ind3": "Correct answers grant 3 extra seconds; wrong answers cost 5 seconds.",
+    "ind4": "Options appear in random order on each attempt.",
+    "ind5": "You're only notified if you enter the Top 100 or beat your personal best.",
+    "startAttempt": "Start attempt",
+    "questionOf": "Question",
+    "pts": "pts",
+    "correct": "Correct!",
+    "incorrect": "Incorrect",
+    "tapToContinue": "Tap to continue",
+    "completed": "Quiz completed!",
+    "performance": "Here's your performance:",
+    "points": "Points",
+    "hits": "Hits",
+    "accuracy": "Accuracy",
+    "playAgain": "Play again",
+    "enteredTop": "You entered the Top 100! Score: {{n}}",
+    "improved": "You improved your score! New best: {{n}}"
   }
 }
