@@ -1,5 +1,6 @@
 import { AnimatePresence, motion } from 'framer-motion';
 import { Check, X } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import type { FeedbackResult } from '../types';
 
 interface QuizFeedbackProps {
@@ -8,6 +9,7 @@ interface QuizFeedbackProps {
 }
 
 export function QuizFeedback({ result, onContinue }: QuizFeedbackProps) {
+  const { t } = useTranslation();
   return (
     <AnimatePresence>
       {result && (
@@ -37,18 +39,18 @@ export function QuizFeedback({ result, onContinue }: QuizFeedbackProps) {
               {result.correct ? <Check className="size-9" /> : <X className="size-9" />}
             </div>
             <h3 className="text-xl font-bold">
-              {result.correct ? '¡Correcto!' : 'Incorrecto'}
+              {result.correct ? t('quiz.correct') : t('quiz.incorrect')}
             </h3>
             {result.pointsAwarded > 0 && (
               <p className="mt-1 text-sm text-primary font-semibold">
-                +{result.pointsAwarded} pts
+                +{result.pointsAwarded} {t('quiz.pts')}
               </p>
             )}
             {result.explanation && (
               <p className="mt-3 text-sm text-muted-foreground">{result.explanation}</p>
             )}
             <p className="mt-4 text-xs uppercase tracking-wider text-muted-foreground">
-              Toca para continuar
+              {t('quiz.tapToContinue')}
             </p>
           </motion.div>
         </motion.div>

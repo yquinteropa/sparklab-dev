@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import { RotateCcw, Trophy } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/button';
 
 interface QuizResultsProps {
@@ -17,6 +18,7 @@ export function QuizResults({
   totalQuestions,
   onRestart,
 }: QuizResultsProps) {
+  const { t } = useTranslation();
   const accuracy = totalQuestions > 0 ? Math.round((correctCount / totalQuestions) * 100) : 0;
   return (
     <motion.div
@@ -27,18 +29,18 @@ export function QuizResults({
       <div className="mx-auto mb-4 flex size-20 items-center justify-center rounded-full bg-primary/15 text-primary">
         <Trophy className="size-10" />
       </div>
-      <h2 className="text-2xl font-bold">¡Quiz completado!</h2>
-      <p className="mt-1 text-muted-foreground">Aquí está tu desempeño:</p>
+      <h2 className="text-2xl font-bold">{t('quiz.completed')}</h2>
+      <p className="mt-1 text-muted-foreground">{t('quiz.performance')}</p>
 
       <div className="mt-6 grid grid-cols-3 gap-3">
-        <Stat label="Puntos" value={score.toString()} />
-        <Stat label="Aciertos" value={`${correctCount}/${totalQuestions}`} />
-        <Stat label="Precisión" value={`${accuracy}%`} />
+        <Stat label={t('quiz.points')} value={score.toString()} />
+        <Stat label={t('quiz.hits')} value={`${correctCount}/${totalQuestions}`} />
+        <Stat label={t('quiz.accuracy')} value={`${accuracy}%`} />
       </div>
 
       <Button onClick={onRestart} className="mt-6 w-full" size="lg">
         <RotateCcw className="mr-2 size-4" />
-        Jugar de nuevo
+        {t('quiz.playAgain')}
       </Button>
     </motion.div>
   );

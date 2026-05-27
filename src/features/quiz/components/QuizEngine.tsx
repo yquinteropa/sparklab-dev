@@ -1,6 +1,7 @@
 import { AnimatePresence, motion } from 'framer-motion';
 import { Loader2, Timer, Zap, Trophy, AlertCircle, CheckCircle2, BrainCircuit } from 'lucide-react';
 import { useEffect, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 import { toast } from 'sonner';
 import { Button } from '@/components/ui/button';
 import { supabase } from '@/integrations/supabase/client';
@@ -19,6 +20,7 @@ export function QuizEngine({
   totalQuestions = 20,
   totalSeconds = 180,
 }: QuizEngineProps) {
+  const { t } = useTranslation();
   const session = useQuizSession({ totalQuestions, totalSeconds });
   const submittedRef = useRef(false);
 
@@ -36,18 +38,18 @@ export function QuizEngine({
       if (error) return;
       const row = Array.isArray(data) ? data[0] : data;
       if (row?.entered_top) {
-        toast.success(`¡Entraste al Top 100! Puntaje: ${row.new_best}`);
+        toast.success(t('quiz.enteredTop', { n: row.new_best }));
       } else if (row?.improved) {
-        toast.success(`¡Mejoraste tu puntaje! Nuevo mejor: ${row.new_best}`);
+        toast.success(t('quiz.improved', { n: row.new_best }));
       }
     })();
-  }, [session.status, session.score]);
+  }, [session.status, session.score, t]);
 
   if (session.status === 'loading') {
     return (
       <div className="flex min-h-[300px] flex-col items-center justify-center gap-3 text-muted-foreground">
         <Loader2 className="size-8 animate-spin text-primary" />
-        <p>Cargando preguntas…</p>
+        <p>{t('quiz.loading')}</p>
       </div>
     );
   }
@@ -55,10 +57,10 @@ export function QuizEngine({
   if (session.status === 'error') {
     return (
       <div className="mx-auto max-w-md rounded-2xl border border-destructive/40 bg-card p-6 text-center">
-        <h3 className="text-lg font-semibold text-destructive">No se pudo iniciar el quiz</h3>
+        <h3 className="text-lg font-semibold text-destructive">{t('quiz.errorTitle')}</h3>
         <p className="mt-2 text-sm text-muted-foreground">{session.error}</p>
         <Button onClick={session.start} className="mt-4">
-          Reintentar
+          {t('quiz.retry')}
         </Button>
       </div>
     );
@@ -76,62 +78,48 @@ export function QuizEngine({
             <BrainCircuit className="size-8" />
           </div>
           <h2 className="text-2xl sm:text-3xl font-bold">
-            Modo <span className="text-primary">Preguntas Rápidas</span>
+            {t('quiz.modeLabel')} <span className="text-primary">{t('quiz.modeName')}</span>
           </h2>
           <p className="mt-2 text-sm text-muted-foreground max-w-md mx-auto">
-            Pon a prueba tus conocimientos de circuitos eléctricos contra el reloj. Responde con precisión y rapidez para maximizar tu puntuación.
+            {t('quiz.modeDesc')}
           </p>
 
           <div className="mt-8 grid grid-cols-1 sm:grid-cols-3 gap-4 text-left">
             <InfoCard
               icon={<Timer className="size-5 text-primary" />}
-              label="Tiempo límite"
-              value={`${totalSeconds} segundos`}
+              label={t('quiz.timeLimit')}
+              value={t('quiz.timeValue', { n: totalSeconds })}
             />
             <InfoCard
               icon={<Zap className="size-5 text-primary" />}
-              label="Preguntas"
+              label={t('quiz.questionsLabel')}
               value={`${totalQuestions}`}
             />
             <InfoCard
               icon={<Trophy className="size-5 text-primary" />}
-              label="Puntos base"
-              value="100 pts"
+              label={t('quiz.basePoints')}
+              value={t('quiz.basePointsValue')}
             />
           </div>
 
           <div className="mt-8 rounded-xl border border-border bg-secondary/40 p-5 text-left space-y-3">
             <h3 className="text-sm font-semibold text-foreground flex items-center gap-2">
               <AlertCircle className="size-4 text-primary" />
-              Indicaciones
+              {t('quiz.indications')}
             </h3>
             <ul className="space-y-2 text-sm text-muted-foreground">
-              <li className="flex items-start gap-2">
-                <CheckCircle2 className="size-4 mt-0.5 text-primary shrink-0" />
-                Tienes un tiempo global para responder todas las preguntas.
-              </li>
-              <li className="flex items-start gap-2">
-                <CheckCircle2 className="size-4 mt-0.5 text-primary shrink-0" />
-                Cada acierto suma puntos base + bonificación por tiempo restante.
-              </li>
-              <li className="flex items-start gap-2">
-                <CheckCircle2 className="size-4 mt-0.5 text-primary shrink-0" />
-                Al acertar ganas 3 segundos extra; al fallar pierdes 5 segundos.
-              </li>
-              <li className="flex items-start gap-2">
-                <CheckCircle2 className="size-4 mt-0.5 text-primary shrink-0" />
-                Las opciones aparecen en orden aleatorio en cada intento.
-              </li>
-              <li className="flex items-start gap-2">
-                <CheckCircle2 className="size-4 mt-0.5 text-primary shrink-0" />
-                Solo se notifica si entras al Top 100 o mejoras tu marca personal.
-              </li>
+              {[1, 2, 3, 4, 5].map((i) => (
+                <li key={i} className="flex items-start gap-2">
+                  <CheckCircle2 className="size-4 mt-0.5 text-primary shrink-0" />
+                  {t(`quiz.ind${i}`)}
+                </li>
+              ))}
             </ul>
           </div>
 
           <Button onClick={session.start} className="mt-8 w-full sm:w-auto" size="lg">
             <Zap className="mr-2 size-4" />
-            Comenzar intento
+            {t('quiz.startAttempt')}
           </Button>
         </div>
       </motion.div>
