@@ -175,7 +175,9 @@
     "clearAll": "Limpar tudo",
     "shortcuts": "Atalhos",
     "shortcutEscDesc": "cancelar",
-    "shortcutDelDesc": "excluir"
+    "shortcutDelDesc": "excluir",
+    "posRail": "+ Positivo (2 fileiras)",
+    "negRail": "− Negativo (2 fileiras)"
   },
   "leaderboard": {
     "title": "Classificação",

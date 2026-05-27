@@ -175,7 +175,9 @@
     "clearAll": "Clear all",
     "shortcuts": "Shortcuts",
     "shortcutEscDesc": "cancel",
-    "shortcutDelDesc": "delete"
+    "shortcutDelDesc": "delete",
+    "posRail": "+ Positive (2 rows)",
+    "negRail": "− Negative (2 rows)"
   },
   "leaderboard": {
     "title": "Leaderboard",

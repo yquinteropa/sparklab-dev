@@ -175,7 +175,9 @@
     "clearAll": "Limpiar todo",
     "shortcuts": "Atajos",
     "shortcutEscDesc": "cancelar",
-    "shortcutDelDesc": "eliminar"
+    "shortcutDelDesc": "eliminar",
+    "posRail": "+ Positivo (2 filas)",
+    "negRail": "− Negativo (2 filas)"
   },
   "leaderboard": {
     "title": "Leaderboard",

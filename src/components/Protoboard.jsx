@@ -1,4 +1,5 @@
 import { useRef, useEffect, useCallback } from 'react';
+import { useTranslation } from 'react-i18next';
 import { COMPONENT_TYPES, LED_COLORS } from '../utils/circuitValidator';
 
 const COLS = 30;
@@ -122,6 +123,7 @@ export default function Protoboard({
   selectedComponent, previewWire,
   onPointClick, onPointHover, onComponentClick,
 }) {
+  const { t } = useTranslation();
   const canvasRef = useRef(null);
   const allRows = [0,1,2,3,4,5,6,7,8,9,10,11,12,13];
 
@@ -334,10 +336,10 @@ export default function Protoboard({
     <div className="relative flex flex-col items-center gap-2">
       <div className="flex items-center gap-6 text-xs font-semibold">
         <span className="flex items-center gap-1.5 text-red-500">
-          <span className="w-3 h-1 bg-red-500 rounded inline-block" /> + Positivo (2 filas)
+          <span className="w-3 h-1 bg-red-500 rounded inline-block" /> {t('simulator.posRail')}
         </span>
         <span className="flex items-center gap-1.5 text-blue-500">
-          <span className="w-3 h-1 bg-blue-500 rounded inline-block" /> − Negativo (2 filas)
+          <span className="w-3 h-1 bg-blue-500 rounded inline-block" /> {t('simulator.negRail')}
         </span>
       </div>
 
