@@ -39,10 +39,10 @@ function useCountdown() {
 
 interface LeaderboardRow {
   rank: number;
-  user_id: string;
   score: number;
   display_name: string | null;
   avatar_url: string | null;
+  is_me: boolean;
 }
 
 const podiumStyles = [
