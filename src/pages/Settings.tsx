@@ -4,21 +4,18 @@ import { Settings as SettingsIcon } from 'lucide-react';
 
 export default function Settings() {
   return (
-    <div className="min-h-screen" style={{ background: '#060e1d', color: '#e2e8f0' }}>
+    <div className="min-h-screen bg-background text-foreground">
       <DashboardNav />
       <main className="relative z-10 max-w-3xl mx-auto px-4 py-8">
         <div className="flex items-center gap-3 mb-6">
-          <div
-            className="w-10 h-10 rounded-lg flex items-center justify-center"
-            style={{ background: '#22d3ee18', color: '#22d3ee', border: '1px solid #22d3ee35' }}
-          >
+          <div className="w-10 h-10 rounded-lg flex items-center justify-center bg-primary/10 text-primary border border-primary/30">
             <SettingsIcon size={18} />
           </div>
           <div>
-            <h1 className="font-display text-xl font-bold" style={{ color: '#f1f5f9' }}>
+            <h1 className="font-display text-xl font-bold text-foreground">
               Configuración y privacidad
             </h1>
-            <p className="text-xs" style={{ color: '#64748b' }}>
+            <p className="text-xs text-muted-foreground">
               Administra la seguridad de tu cuenta y tus preferencias de privacidad.
             </p>
           </div>

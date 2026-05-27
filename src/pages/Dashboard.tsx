@@ -218,7 +218,8 @@ export default function Dashboard() {
   ];
 
   return (
-    <div className="min-h-screen flex flex-col" style={{ background: 'linear-gradient(160deg,#060e1d 0%,#091624 60%,#060e1d 100%)', color: '#e2e8f0', fontFamily: "var(--font-body)" }}>
+    <div className="min-h-screen flex flex-col bg-background text-foreground" style={{ fontFamily: "var(--font-body)" }}>
+
       <DashboardNav />
 
       <main className="flex-1 relative">

@@ -416,10 +416,8 @@ export default function Profile() {
   }
 
   return (
-    <div
-      className="min-h-screen"
-      style={{ background: '#060e1d', color: '#e2e8f0' }}
-    >
+    <div className="min-h-screen bg-background text-foreground">
+
       <DashboardNav />
 
       {/* Ambient background */}
