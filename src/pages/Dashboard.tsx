@@ -94,18 +94,18 @@ function ModeCard({ icon, title, desc, tag, tagColor, badge, href }: ModeCardPro
           fontSize: 9, fontWeight: 700, padding: '2px 8px', borderRadius: 20,
           background: 'rgba(52,211,153,0.15)', color: '#34d399',
           border: '1px solid rgba(52,211,153,0.35)',
-          fontFamily: "'Courier New',monospace", letterSpacing: '0.1em', textTransform: 'uppercase',
+          fontFamily: "var(--font-display)", letterSpacing: '0.1em', textTransform: 'uppercase',
         }}>{badge}</div>
       )}
       <div style={{ fontSize: 36 }}>{icon}</div>
-      <div style={{ fontFamily: "'Courier New',monospace", fontWeight: 900, color: '#f1f5f9', fontSize: 16 }}>{title}</div>
-      <div style={{ fontSize: 12, color: '#64748b', lineHeight: 1.7, flex: 1 }}>{desc}</div>
+      <div style={{ fontFamily: "var(--font-display)", fontWeight: 800, color: '#f1f5f9', fontSize: 16, letterSpacing: '0.02em' }}>{title}</div>
+      <div style={{ fontSize: 13, color: '#94a3b8', lineHeight: 1.7, flex: 1, fontFamily: "var(--font-body)" }}>{desc}</div>
       <div style={{
         alignSelf: 'flex-start', fontSize: 9, fontWeight: 700,
         padding: '3px 10px', borderRadius: 20,
         background: `${tagColor}18`, color: tagColor,
         border: `1px solid ${tagColor}40`,
-        fontFamily: "'Courier New',monospace", letterSpacing: '0.1em', textTransform: 'uppercase',
+        fontFamily: "var(--font-display)", letterSpacing: '0.1em', textTransform: 'uppercase',
       }}>{tag}</div>
     </Link>
   );
@@ -120,7 +120,7 @@ function CompCard({ icon, label }: { icon: string; label: string }) {
       borderRadius: 14, padding: '18px 20px', minWidth: 80,
     }}>
       <span style={{ fontSize: 28 }}>{icon}</span>
-      <span style={{ fontSize: 10, color: '#64748b', fontFamily: "'Courier New',monospace" }}>{label}</span>
+      <span style={{ fontSize: 10, color: '#94a3b8', fontFamily: "var(--font-display)", letterSpacing: '0.08em', textTransform: 'uppercase', fontWeight: 600 }}>{label}</span>
     </div>
   );
 }
@@ -218,7 +218,7 @@ export default function Dashboard() {
   ];
 
   return (
-    <div className="min-h-screen flex flex-col" style={{ background: 'linear-gradient(160deg,#060e1d 0%,#091624 60%,#060e1d 100%)', color: '#e2e8f0', fontFamily: "'Courier New',monospace" }}>
+    <div className="min-h-screen flex flex-col" style={{ background: 'linear-gradient(160deg,#060e1d 0%,#091624 60%,#060e1d 100%)', color: '#e2e8f0', fontFamily: "var(--font-body)" }}>
       <DashboardNav />
 
       <main className="flex-1 relative">
