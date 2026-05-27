@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useMemo } from "react";
+import { useTranslation } from "react-i18next";
 
-const PUZZLES = [
+const buildPuzzles = (t) => [
   {
-    label: "Puzzle 1 — Circuito básico",
+    label: t('level1.puzzle1'),
     grid: [
       'bat','H','bend_br','V','bend_br','bend_bl','empty',
       'empty','empty','V','empty','V','V','empty',
@@ -18,7 +19,7 @@ const PUZZLES = [
     hint: 26,
   },
   {
-    label: "Puzzle 2 — Rama rota",
+    label: t('level1.puzzle2'),
     grid: [
       'bat','H','H','broken','H','H','bulb',
       'empty','empty','empty','empty','empty','empty','empty',
@@ -35,7 +36,7 @@ const PUZZLES = [
     hint: 3,
   },
   {
-    label: "Puzzle 3 — Laberinto",
+    label: t('level1.puzzle3'),
     grid: [
       'bat','H','bend_br','empty','empty','empty','empty',
       'empty','empty','V','empty','empty','empty','empty',
@@ -143,6 +144,7 @@ function CableCell({ type, lit, rotatable, onClick }) {
 
 // ── Modal intro ──
 function IntroModal({ onPlay, onBook }) {
+  const { t } = useTranslation();
   return (
     <div style={{
       position:"fixed", inset:0, background:"rgba(0,0,0,0.7)",
@@ -155,31 +157,30 @@ function IntroModal({ onPlay, onBook }) {
       }}>
         <div style={{display:"flex",alignItems:"center",gap:10,marginBottom:12}}>
           <span style={{fontSize:22}}>⚡</span>
-          <span style={{fontSize:18,fontWeight:500}}>Nivel 1 — El camino del electrón</span>
+          <span style={{fontSize:18,fontWeight:500}}>{t('level1.introTitle')}</span>
         </div>
-        <p style={{fontSize:13,color:"hsl(215, 20%, 70%)",lineHeight:1.65,marginBottom:14}}>
-          La bombilla está apagada porque los electrones no tienen un camino completo. Tu misión: <strong style={{fontWeight:500}}>rotar los cables</strong> para unir la batería con la bombilla y cerrar el circuito.
-        </p>
+        <p style={{fontSize:13,color:"hsl(215, 20%, 70%)",lineHeight:1.65,marginBottom:14}}
+           dangerouslySetInnerHTML={{ __html: t('level1.introDesc') }} />
         <div style={{
           borderLeft:"2px solid #93c5fd", padding:"10px 14px",
           fontSize:12, color:"hsl(215, 20%, 70%)", lineHeight:1.65,
           background:"hsl(217, 91%, 20%)", borderRadius:"0 8px 8px 0", marginBottom:18, fontStyle:"italic",
         }}>
-          "¡El foco está apagado porque los electrones no tienen un camino para volver a casa! Une los cables para cerrar el circuito."
+          {t('level1.introQuote')}
         </div>
         <p style={{fontSize:12,color:"hsl(215, 20%, 65%)",marginBottom:18}}>
-          💡 Clic en un cable resaltado para rotarlo 90° · Pulsa "Activar" para probar
+          {t('level1.introTip')}
         </p>
         <div style={{display:"flex",gap:8,justifyContent:"flex-end"}}>
           <button onClick={onBook} style={{
             display:"flex",alignItems:"center",gap:6,padding:"8px 16px",
             borderRadius:8,border:"0.5px solid #cbd5e1",background:"hsl(217, 33%, 17%)",
             fontSize:13,cursor:"pointer",color:"hsl(215, 20%, 75%)",
-          }}>📖 Ver explicación</button>
+          }}>{t('level1.viewExplanation')}</button>
           <button onClick={onPlay} style={{
             padding:"8px 20px",borderRadius:8,border:"0.5px solid #93c5fd",
             background:"hsl(217, 91%, 20%)",fontSize:13,cursor:"pointer",color:"hsl(199, 89%, 70%)",fontWeight:500,
-          }}>▶ ¡Jugar!</button>
+          }}>{t('level1.play')}</button>
         </div>
       </div>
     </div>
@@ -188,6 +189,7 @@ function IntroModal({ onPlay, onBook }) {
 
 // ── Modal libro ──
 function BookModal({ onClose }) {
+  const { t } = useTranslation();
   return (
     <div style={{
       position:"fixed", inset:0, background:"rgba(0,0,0,0.7)",
@@ -199,25 +201,25 @@ function BookModal({ onClose }) {
         borderRadius:12, padding:"28px 24px", maxWidth:460, width:"100%",
       }}>
         <div style={{display:"flex",alignItems:"center",justifyContent:"space-between",marginBottom:16}}>
-          <span style={{fontSize:16,fontWeight:500}}>📚 Circuito cerrado vs abierto</span>
+          <span style={{fontSize:16,fontWeight:500}}>{t('level1.bookTitle')}</span>
           <button onClick={onClose} style={{background:"none",border:"none",cursor:"pointer",fontSize:18,color:"hsl(215, 20%, 65%)"}}>✕</button>
         </div>
         <div style={{display:"flex",flexDirection:"column",gap:14,fontSize:13,color:"hsl(215, 20%, 70%)",lineHeight:1.7,marginBottom:20}}>
           <div style={{display:"flex",gap:12,alignItems:"flex-start"}}>
             <div style={{minWidth:32,height:32,borderRadius:"50%",background:"hsl(142, 70%, 14%)",display:"flex",alignItems:"center",justifyContent:"center",marginTop:2,fontSize:16}}>✅</div>
-            <div><strong style={{fontWeight:500,color:"hsl(210, 40%, 96%)"}}>Circuito cerrado</strong><br/>El camino está completo. Los electrones fluyen desde la batería, recorren todos los componentes y regresan. La bombilla enciende.</div>
+            <div><strong style={{fontWeight:500,color:"hsl(210, 40%, 96%)"}}>{t('level1.bookClosedTitle')}</strong><br/>{t('level1.bookClosedDesc')}</div>
           </div>
           <div style={{display:"flex",gap:12,alignItems:"flex-start"}}>
             <div style={{minWidth:32,height:32,borderRadius:"50%",background:"hsl(0, 70%, 18%)",display:"flex",alignItems:"center",justifyContent:"center",marginTop:2,fontSize:16}}>❌</div>
-            <div><strong style={{fontWeight:500,color:"hsl(210, 40%, 96%)"}}>Circuito abierto</strong><br/>Hay una ruptura en el camino. Los electrones no pueden circular. La bombilla permanece apagada sin importar la energía disponible.</div>
+            <div><strong style={{fontWeight:500,color:"hsl(210, 40%, 96%)"}}>{t('level1.bookOpenTitle')}</strong><br/>{t('level1.bookOpenDesc')}</div>
           </div>
           <div style={{background:"hsl(217, 33%, 17%)",borderRadius:8,padding:"10px 14px",fontSize:12}}>
-            <strong style={{fontWeight:500,color:"hsl(210, 40%, 96%)"}}>Analogía:</strong> Imagina que los electrones son agua en una tubería. Si hay un hueco, el agua se derrama y nunca llega al destino.
+            <strong style={{fontWeight:500,color:"hsl(210, 40%, 96%)"}}>{t('level1.bookAnalogyLabel')}</strong> {t('level1.bookAnalogy')}
           </div>
         </div>
         <div style={{display:"flex",justifyContent:"flex-end"}}>
           <button onClick={onClose} style={{padding:"8px 20px",borderRadius:8,border:"0.5px solid #93c5fd",background:"hsl(217, 91%, 20%)",fontSize:13,cursor:"pointer",color:"hsl(199, 89%, 70%)",fontWeight:500}}>
-            Entendido — ¡a jugar!
+            {t('level1.gotItPlay')}
           </button>
         </div>
       </div>
@@ -226,12 +228,14 @@ function BookModal({ onClose }) {
 }
 
 export default function Level1() {
+  const { t } = useTranslation();
+  const PUZZLES = useMemo(() => buildPuzzles(t), [t]);
   const [showIntro, setShowIntro] = useState(true);
   const [showBook, setShowBook]   = useState(false);
   const [currentPuzzle, setCurrentPuzzle] = useState(0);
   const [grid, setGrid] = useState(() => randomizeGrid(PUZZLES[0].grid));
   const [lit, setLit]   = useState(false);
-  const [msg, setMsg]   = useState({ type:"info", text:"Rota los cables para trazar un camino continuo desde la batería hasta la bombilla." });
+  const [msg, setMsg]   = useState({ type:"info", text:t('level1.msgRotate') });
   const [completed, setCompleted] = useState([false,false,false]);
   const [flash, setFlash] = useState(false);
 
@@ -245,13 +249,13 @@ export default function Level1() {
     newGrid[i] = ROTATE[newGrid[i]] || newGrid[i];
     setGrid(newGrid);
     setLit(false);
-    setMsg({ type:"info", text:"Rota los cables para trazar un camino continuo desde la batería hasta la bombilla." });
+    setMsg({ type:"info", text:t('level1.msgRotate') });
   };
 
   const activate = () => {
     if(checkSolved(grid)) {
       setLit(true);
-      setMsg({ type:"ok", text:"¡Circuito cerrado! Los electrones fluyen y la bombilla enciende. ✅" });
+      setMsg({ type:"ok", text:t('level1.msgSolved') });
       const newCompleted = [...completed];
       newCompleted[currentPuzzle] = true;
       setCompleted(newCompleted);
@@ -261,15 +265,15 @@ export default function Level1() {
           setCurrentPuzzle(next);
           setGrid(randomizeGrid(PUZZLES[next].grid));
           setLit(false);
-          setMsg({ type:"info", text:"Rota los cables para trazar un camino continuo desde la batería hasta la bombilla." });
+          setMsg({ type:"info", text:t('level1.msgRotate') });
         } else {
-          setMsg({ type:"ok", text:"¡Completaste los 3 puzzles del Nivel 1! Electrón domado. ⚡" });
+          setMsg({ type:"ok", text:t('level1.msgAllDone') });
         }
       }, 1800);
     } else {
       setFlash(true);
       setTimeout(()=>setFlash(false),900);
-      setMsg({ type:"err", text:"Circuito abierto — los electrones no tienen camino de regreso. Ajusta los cables." });
+      setMsg({ type:"err", text:t('level1.msgOpen') });
     }
   };
 
@@ -278,12 +282,12 @@ export default function Level1() {
     const newGrid=[...grid];
     newGrid[pz.hint]=pz.solution[pz.hint];
     setGrid(newGrid);
-    setMsg({ type:"info", text:"Pista: un cable fue colocado en su posición correcta." });
+    setMsg({ type:"info", text:t('level1.msgHint') });
   };
 
   const reset = () => {
     setGrid(randomizeGrid(pz.grid)); setLit(false);
-    setMsg({ type:"info", text:"Rota los cables para trazar un camino continuo desde la batería hasta la bombilla." });
+    setMsg({ type:"info", text:t('level1.msgRotate') });
   };
 
   const msgColors = { ok:{bg:"hsl(142, 70%, 14%)",border:"hsl(142, 71%, 45%)",text:"hsl(142, 71%, 70%)"}, err:{bg:"hsl(0, 70%, 18%)",border:"hsl(0, 84%, 60%)",text:"hsl(0, 84%, 75%)"}, info:{bg:"hsl(217, 33%, 17%)",border:"rgba(148,163,184,0.25)",text:"hsl(215, 20%, 75%)"} };
@@ -299,17 +303,17 @@ export default function Level1() {
       <div style={{display:"flex",alignItems:"center",justifyContent:"space-between",marginBottom:20,flexWrap:"wrap",gap:8}}>
         <div style={{display:"flex",alignItems:"center",gap:8}}>
           <span style={{fontSize:18}}>⚡</span>
-          <span style={{fontSize:15,fontWeight:500}}>Nivel 1</span>
-          <span style={{fontSize:12,color:"hsl(215, 20%, 65%)",background:"hsl(217, 33%, 20%)",border:"0.5px solid #e2e8f0",borderRadius:8,padding:"3px 10px"}}>El camino del electrón</span>
+          <span style={{fontSize:15,fontWeight:500}}>{t('level1.headerTitle')}</span>
+          <span style={{fontSize:12,color:"hsl(215, 20%, 65%)",background:"hsl(217, 33%, 20%)",border:"0.5px solid #e2e8f0",borderRadius:8,padding:"3px 10px"}}>{t('level1.headerSubtitle')}</span>
         </div>
         <button onClick={()=>setShowBook(true)} style={{display:"flex",alignItems:"center",gap:5,fontSize:12,color:"hsl(215, 20%, 70%)",background:"hsl(217, 33%, 17%)",border:"0.5px solid #e2e8f0",borderRadius:8,padding:"5px 12px",cursor:"pointer"}}>
-          📖 Explicación
+          📖 {t('level1.explanation')}
         </button>
       </div>
 
       {/* Progress */}
       <div style={{display:"flex",alignItems:"center",gap:10,marginBottom:16}}>
-        <span style={{fontSize:12,color:"hsl(215, 20%, 65%)",whiteSpace:"nowrap"}}>Progreso</span>
+        <span style={{fontSize:12,color:"hsl(215, 20%, 65%)",whiteSpace:"nowrap"}}>{t('level1.progress')}</span>
         <div style={{flex:1,height:6,background:"hsl(217, 33%, 20%)",borderRadius:99,overflow:"hidden"}}>
           <div style={{height:"100%",width:`${donePct}%`,background:"#3b82f6",borderRadius:99,transition:"width .5s ease"}}/>
         </div>
@@ -356,13 +360,13 @@ export default function Level1() {
       {/* Actions */}
       <div style={{display:"flex",gap:8,justifyContent:"center",flexWrap:"wrap"}}>
         <button onClick={reset} style={{padding:"8px 18px",borderRadius:8,border:"0.5px solid #e2e8f0",background:"hsl(217, 33%, 17%)",fontSize:13,cursor:"pointer",color:"hsl(215, 20%, 75%)"}}>
-          🔄 Reiniciar
+          {t('level1.reset')}
         </button>
         <button onClick={giveHint} style={{padding:"8px 18px",borderRadius:8,border:"0.5px solid #e2e8f0",background:"hsl(217, 33%, 17%)",fontSize:13,cursor:"pointer",color:"hsl(215, 20%, 75%)"}}>
-          💡 Pista
+          {t('level1.hint')}
         </button>
         <button onClick={activate} style={{padding:"8px 22px",borderRadius:8,border:"0.5px solid #93c5fd",background:"hsl(217, 91%, 20%)",fontSize:13,cursor:"pointer",color:"hsl(199, 89%, 70%)",fontWeight:500}}>
-          ⚡ Activar circuito
+          {t('level1.activate')}
         </button>
       </div>
 

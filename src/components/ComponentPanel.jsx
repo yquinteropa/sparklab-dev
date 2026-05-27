@@ -1,17 +1,5 @@
+import { useTranslation } from 'react-i18next';
 import { COMPONENT_TYPES, LED_COLORS } from '../utils/circuitValidator';
-
-const TOOLS = [
-  { type: COMPONENT_TYPES.WIRE, label: 'Cable', icon: '➖', desc: 'Conecta dos puntos' },
-  { type: COMPONENT_TYPES.BATTERY, label: 'Batería 9V', icon: '🔋', desc: 'Fuente de energía' },
-  { type: COMPONENT_TYPES.RESISTOR, label: 'Resistencia', icon: '🟪', desc: 'Limita la corriente' },
-];
-
-const LED_OPTIONS = [
-  { color: 'red', label: 'Rojo' },
-  { color: 'green', label: 'Verde' },
-  { color: 'blue', label: 'Azul' },
-  { color: 'yellow', label: 'Amarillo' },
-];
 
 export default function ComponentPanel({
   selectedTool,
@@ -20,6 +8,21 @@ export default function ComponentPanel({
   onCancel,
   pendingPoint,
 }) {
+  const { t } = useTranslation();
+
+  const TOOLS = [
+    { type: COMPONENT_TYPES.WIRE, label: t('simulator.toolWire'), icon: '➖', desc: t('simulator.toolWireDesc') },
+    { type: COMPONENT_TYPES.BATTERY, label: t('simulator.battery'), icon: '🔋', desc: t('simulator.toolBatteryDesc') },
+    { type: COMPONENT_TYPES.RESISTOR, label: t('simulator.resistor'), icon: '🟪', desc: t('simulator.toolResistorDesc') },
+  ];
+
+  const LED_OPTIONS = [
+    { color: 'red', label: t('simulator.ledRed') },
+    { color: 'green', label: t('simulator.ledGreen') },
+    { color: 'blue', label: t('simulator.ledBlue') },
+    { color: 'yellow', label: t('simulator.ledYellow') },
+  ];
+
   const isSelected = (type, color) => {
     if (!selectedTool) return false;
     if (selectedTool.type !== type) return false;
@@ -30,7 +33,7 @@ export default function ComponentPanel({
   return (
     <div className="flex flex-col gap-3">
       <h3 className="text-xs font-black uppercase tracking-widest text-green-700 dark:text-green-400">
-        Componentes
+        {t('simulator.components')}
       </h3>
 
       <div className="flex flex-col gap-2">
@@ -57,7 +60,7 @@ export default function ComponentPanel({
 
       <div className="mt-1">
         <h4 className="mb-1.5 text-[10px] font-black uppercase tracking-widest text-slate-600 dark:text-slate-500">
-          LED
+          {t('simulator.ledLabel')}
         </h4>
         <div className="grid grid-cols-2 gap-1.5">
           {LED_OPTIONS.map((led) => (
@@ -95,21 +98,21 @@ export default function ComponentPanel({
             onClick={onCancel}
             className="rounded-md border border-amber-500/60 bg-amber-100 px-2 py-1.5 text-[11px] font-bold text-amber-800 hover:bg-amber-200 dark:border-amber-500/50 dark:bg-amber-900/30 dark:text-amber-300 dark:hover:bg-amber-900/50"
           >
-            Cancelar colocación
+            {t('simulator.cancelPlacement')}
           </button>
         )}
         <button
           onClick={onClear}
           className="rounded-md border border-red-500/50 bg-red-100 px-2 py-1.5 text-[11px] font-bold text-red-800 hover:bg-red-200 dark:border-red-500/40 dark:bg-red-900/20 dark:text-red-300 dark:hover:bg-red-900/40"
         >
-          Limpiar todo
+          {t('simulator.clearAll')}
         </button>
       </div>
 
       <div className="mt-2 rounded-lg border border-slate-300 bg-slate-50 p-2.5 text-[10px] leading-relaxed text-slate-600 dark:border-slate-700/40 dark:bg-slate-900/40 dark:text-slate-400">
-        <p className="mb-1 font-bold text-slate-800 dark:text-slate-300">Atajos</p>
-        <p><kbd className="text-slate-900 dark:text-slate-200">ESC</kbd> · cancelar</p>
-        <p><kbd className="text-slate-900 dark:text-slate-200">Del</kbd> · eliminar</p>
+        <p className="mb-1 font-bold text-slate-800 dark:text-slate-300">{t('simulator.shortcuts')}</p>
+        <p><kbd className="text-slate-900 dark:text-slate-200">ESC</kbd> · {t('simulator.shortcutEscDesc')}</p>
+        <p><kbd className="text-slate-900 dark:text-slate-200">Del</kbd> · {t('simulator.shortcutDelDesc')}</p>
       </div>
     </div>
   );
