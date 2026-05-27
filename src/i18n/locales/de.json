@@ -175,7 +175,9 @@
     "clearAll": "Alles löschen",
     "shortcuts": "Kürzel",
     "shortcutEscDesc": "abbrechen",
-    "shortcutDelDesc": "löschen"
+    "shortcutDelDesc": "löschen",
+    "posRail": "+ Plus (2 Reihen)",
+    "negRail": "− Minus (2 Reihen)"
   },
   "leaderboard": {
     "title": "Rangliste",

@@ -175,7 +175,9 @@
     "clearAll": "Tout effacer",
     "shortcuts": "Raccourcis",
     "shortcutEscDesc": "annuler",
-    "shortcutDelDesc": "supprimer"
+    "shortcutDelDesc": "supprimer",
+    "posRail": "+ Positif (2 lignes)",
+    "negRail": "− Négatif (2 lignes)"
   },
   "leaderboard": {
     "title": "Classement",
