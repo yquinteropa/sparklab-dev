@@ -77,14 +77,15 @@ function NodeDot({ size = 6, pulse = false, color = '#22d3ee' }: { size?: number
 }
 
 // ── Rank badge ────────────────────────────────────────────────────────────
-const rankConfig: Record<string, { color: string; glow: string; label: string; icon: string }> = {
-  Bronce: { color: '#cd7f32', glow: '#cd7f3240', label: 'BRONCE', icon: '◆' },
-  Plata: { color: '#94a3b8', glow: '#94a3b840', label: 'PLATA', icon: '◆' },
-  Oro: { color: '#fbbf24', glow: '#fbbf2440', label: 'ORO', icon: '◆' },
-  Diamante: { color: '#67e8f9', glow: '#67e8f940', label: 'DIAMANTE', icon: '◆' },
+const rankConfig: Record<string, { color: string; glow: string; labelKey: string; icon: string }> = {
+  Bronce: { color: '#cd7f32', glow: '#cd7f3240', labelKey: 'profile.ranks.bronze', icon: '◆' },
+  Plata: { color: '#94a3b8', glow: '#94a3b840', labelKey: 'profile.ranks.silver', icon: '◆' },
+  Oro: { color: '#fbbf24', glow: '#fbbf2440', labelKey: 'profile.ranks.gold', icon: '◆' },
+  Diamante: { color: '#67e8f9', glow: '#67e8f940', labelKey: 'profile.ranks.diamond', icon: '◆' },
 };
 
 function RankBadge({ rank }: { rank: string }) {
+  const { t } = useTranslation();
   const cfg = rankConfig[rank] || rankConfig['Plata'];
   return (
     <span
@@ -97,10 +98,11 @@ function RankBadge({ rank }: { rank: string }) {
         fontFamily: "'Courier New', monospace",
       }}
     >
-      {cfg.icon} {cfg.label}
+      {cfg.icon} {t(cfg.labelKey)}
     </span>
   );
 }
+
 
 // ── Achievement icons/colors ──────────────────────────────────────────────
 const ACHIEVEMENT_ICONS: Record<string, React.ReactNode> = {
@@ -385,23 +387,24 @@ export default function Profile() {
 
   // Placeholder data for modules + achievements (visual content from the mock)
   const progressData = [
-    { name: 'Ley de Ohm', progress: 100 },
-    { name: 'Circuitos Serie', progress: 85 },
-    { name: 'Circuitos Paralelo', progress: 60 },
-    { name: 'Leyes de Kirchhoff', progress: 40 },
-    { name: 'Capacitores', progress: 20 },
-    { name: 'Inductores', progress: 0 },
+    { name: t('profile.modules.ohm'), progress: 100 },
+    { name: t('profile.modules.series'), progress: 85 },
+    { name: t('profile.modules.parallel'), progress: 60 },
+    { name: t('profile.modules.kirchhoff'), progress: 40 },
+    { name: t('profile.modules.capacitors'), progress: 20 },
+    { name: t('profile.modules.inductors'), progress: 0 },
   ];
   const achievements: Achievement[] = [
-    { id: 1, title: 'Primera Chispa', icon: 'zap', unlocked: true, description: 'Completa tu primer circuito', progress: 1, total: 1, xpReward: 50 },
-    { id: 2, title: 'Maestro de Ohm', icon: 'omega', unlocked: true, description: 'Domina la Ley de Ohm', progress: 10, total: 10, xpReward: 200 },
-    { id: 3, title: 'Racha Eléctrica', icon: 'flame', unlocked: true, description: 'Racha de 7 días', progress: 7, total: 7, xpReward: 150 },
-    { id: 4, title: 'Constructor Serial', icon: 'link', unlocked: true, description: 'Experto en serie', progress: 15, total: 15, xpReward: 175 },
-    { id: 5, title: 'Ing. Paralelo', icon: 'settings', unlocked: false, description: 'Domina paralelos', progress: 6, total: 10, xpReward: 200 },
-    { id: 6, title: 'Kirchhoff Novato', icon: 'book', unlocked: false, description: 'Inicia Kirchhoff', progress: 0, total: 1, xpReward: 100 },
-    { id: 7, title: 'Velocista', icon: 'timer', unlocked: false, description: 'Nivel en < 30s', progress: 0, total: 1, xpReward: 75 },
-    { id: 8, title: 'Perfeccionista', icon: 'trophy', unlocked: false, description: '5 niveles perfectos', progress: 2, total: 5, xpReward: 250 },
+    { id: 1, title: t('profile.achievements.firstSpark.title'), icon: 'zap', unlocked: true, description: t('profile.achievements.firstSpark.desc'), progress: 1, total: 1, xpReward: 50 },
+    { id: 2, title: t('profile.achievements.ohmMaster.title'), icon: 'omega', unlocked: true, description: t('profile.achievements.ohmMaster.desc'), progress: 10, total: 10, xpReward: 200 },
+    { id: 3, title: t('profile.achievements.streak.title'), icon: 'flame', unlocked: true, description: t('profile.achievements.streak.desc'), progress: 7, total: 7, xpReward: 150 },
+    { id: 4, title: t('profile.achievements.serial.title'), icon: 'link', unlocked: true, description: t('profile.achievements.serial.desc'), progress: 15, total: 15, xpReward: 175 },
+    { id: 5, title: t('profile.achievements.parallel.title'), icon: 'settings', unlocked: false, description: t('profile.achievements.parallel.desc'), progress: 6, total: 10, xpReward: 200 },
+    { id: 6, title: t('profile.achievements.kirchhoffNovice.title'), icon: 'book', unlocked: false, description: t('profile.achievements.kirchhoffNovice.desc'), progress: 0, total: 1, xpReward: 100 },
+    { id: 7, title: t('profile.achievements.speedster.title'), icon: 'timer', unlocked: false, description: t('profile.achievements.speedster.desc'), progress: 0, total: 1, xpReward: 75 },
+    { id: 8, title: t('profile.achievements.perfectionist.title'), icon: 'trophy', unlocked: false, description: t('profile.achievements.perfectionist.desc'), progress: 2, total: 5, xpReward: 250 },
   ];
+
   const unlockedCount = achievements.filter(a => a.unlocked).length;
 
   if (loading) {
@@ -510,8 +513,8 @@ export default function Profile() {
                 {/* Tabs */}
                 <div className="flex gap-6 mt-5" style={{ borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
                   {[
-                    { key: 'progreso' as const, label: 'Progreso' },
-                    { key: 'logros' as const, label: `Logros (${unlockedCount}/${achievements.length})` },
+                    { key: 'progreso' as const, label: t('profile.tabProgress') },
+                    { key: 'logros' as const, label: `${t('profile.tabAchievements')} (${unlockedCount}/${achievements.length})` },
                   ].map(({ key, label }) => (
                     <button
                       key={key}
@@ -529,6 +532,7 @@ export default function Profile() {
                     </button>
                   ))}
                 </div>
+
               </div>
             </div>
 
@@ -537,7 +541,7 @@ export default function Profile() {
               <div className="rounded-2xl p-6" style={{ background: '#0a1628', border: '1px solid rgba(34,211,238,0.1)' }}>
                 <h2 className="text-xs font-bold tracking-widest uppercase mb-5 flex items-center gap-2"
                   style={{ color: '#22d3ee', letterSpacing: '0.15em' }}>
-                  <CircuitBoard size={14} /> Progreso por Módulo
+                  <CircuitBoard size={14} /> {t('profile.moduleProgressTitle')}
                 </h2>
                 <div className="space-y-5 mb-7">
                   {progressData.map((m, i) => (
@@ -547,10 +551,10 @@ export default function Profile() {
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-5"
                   style={{ borderTop: '1px solid rgba(255,255,255,0.05)' }}>
                   {[
-                    { value: '24', label: 'Niveles', color: '#22d3ee' },
-                    { value: '89%', label: 'Precisión', color: '#34d399' },
-                    { value: '45', label: 'Circuitos', color: '#fbbf24' },
-                    { value: '12h', label: 'Tiempo', color: '#a78bfa' },
+                    { value: '24', label: t('profile.stats.levels'), color: '#22d3ee' },
+                    { value: '89%', label: t('profile.stats.accuracy'), color: '#34d399' },
+                    { value: '45', label: t('profile.stats.circuits'), color: '#fbbf24' },
+                    { value: '12h', label: t('profile.stats.time'), color: '#a78bfa' },
                   ].map(({ value, label, color }) => (
                     <div key={label} className="rounded-xl p-3 text-center"
                       style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.05)' }}>
@@ -566,13 +570,14 @@ export default function Profile() {
               <div className="rounded-2xl p-6" style={{ background: '#0a1628', border: '1px solid rgba(34,211,238,0.1)' }}>
                 <h2 className="text-xs font-bold tracking-widest uppercase mb-5 flex items-center gap-2"
                   style={{ color: '#fbbf24', letterSpacing: '0.15em' }}>
-                  <Trophy size={14} /> Mis Logros
+                  <Trophy size={14} /> {t('profile.myAchievements')}
                 </h2>
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
                   {achievements.map(a => <AchievementCard key={a.id} achievement={a} />)}
                 </div>
               </div>
             )}
+
 
           </div>
 
@@ -588,19 +593,19 @@ export default function Profile() {
                   {avatarInitials}
                 </div>
                 <div>
-                  <p className="text-xs font-semibold" style={{ color: '#e2e8f0' }}>@{username || 'user'}</p>
+                  <p className="text-xs font-semibold" style={{ color: '#e2e8f0' }}>@{username || t('profile.userFallback')}</p>
                   <div className="flex items-center gap-1.5 mt-0.5">
                     <NodeDot size={5} pulse />
-                    <span className="text-[10px]" style={{ color: '#22d3ee' }}>Online · Nivel {level}</span>
+                    <span className="text-[10px]" style={{ color: '#22d3ee' }}>{t('profile.onlineLevel', { level })}</span>
                   </div>
                 </div>
               </div>
               <div className="mb-5"><XPBar current={xp} total={xpToNext} level={level} /></div>
               <div className="grid grid-cols-2 gap-2.5">
-                <StatPill icon={<Star size={16} />} value={xp} label="Total XP" color="#fbbf24" />
-                <StatPill icon={<Trophy size={16} />} value={rank} label="Rango" color="#94a3b8" />
-                <StatPill icon={<Medal size={16} />} value={unlockedCount} label="Insignias" color="#60a5fa" />
-                <StatPill icon={<Flame size={16} />} value={`${0}d`} label="Racha" color="#f97316" />
+                <StatPill icon={<Star size={16} />} value={xp} label={t('profile.totalXp')} color="#fbbf24" />
+                <StatPill icon={<Trophy size={16} />} value={rank} label={t('profile.rank')} color="#94a3b8" />
+                <StatPill icon={<Medal size={16} />} value={unlockedCount} label={t('profile.badges')} color="#60a5fa" />
+                <StatPill icon={<Flame size={16} />} value={`${0}d`} label={t('profile.streak')} color="#f97316" />
               </div>
             </div>
 
@@ -608,7 +613,7 @@ export default function Profile() {
               style={{ background: '#0a1628', border: '1px solid rgba(255,255,255,0.07)' }}>
               <h3 className="text-[10px] font-bold tracking-widest uppercase mb-4 flex items-center gap-2"
                 style={{ color: '#fbbf24', letterSpacing: '0.15em' }}>
-                <Trophy size={12} /> Logros Recientes
+                <Trophy size={12} /> {t('profile.recentAchievements')}
               </h3>
               <div className="space-y-2.5">
                 {achievements.filter(a => a.unlocked).slice(0, 3).map(a => {
@@ -638,7 +643,7 @@ export default function Profile() {
                   color: '#64748b', letterSpacing: '0.08em',
                 }}
               >
-                Ver todos los logros <ChevronRight size={12} />
+                {t('profile.viewAllAchievements')} <ChevronRight size={12} />
               </button>
             </div>
 
@@ -646,11 +651,11 @@ export default function Profile() {
               style={{ background: 'rgba(14,116,144,0.08)', border: '1px solid rgba(34,211,238,0.18)' }}>
               <h3 className="text-[10px] font-bold tracking-widest uppercase mb-3 flex items-center gap-2"
                 style={{ color: '#22d3ee', letterSpacing: '0.15em' }}>
-                <Target size={12} /> Siguiente Objetivo
+                <Target size={12} /> {t('profile.nextGoal')}
               </h3>
-              <p className="text-sm font-bold mb-1" style={{ color: '#f1f5f9' }}>Ingeniero en Paralelo</p>
+              <p className="text-sm font-bold mb-1" style={{ color: '#f1f5f9' }}>{t('profile.nextGoalTitle')}</p>
               <p className="text-[11px] mb-4" style={{ color: '#475569' }}>
-                Completa el módulo de Circuitos Paralelo
+                {t('profile.nextGoalDesc')}
               </p>
               <div className="flex items-center gap-2">
                 <div className="flex-1 h-1.5 rounded-full overflow-hidden" style={{ background: 'rgba(255,255,255,0.06)' }}>
@@ -660,6 +665,7 @@ export default function Profile() {
                 <span className="text-xs font-mono font-bold" style={{ color: '#22d3ee' }}>60%</span>
               </div>
             </div>
+
           </div>
         </div>
       </main>

@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useNavigate }  from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { DashboardNav } from '@/components/DashboardNav';
 import { SiteFooter } from '@/components/SiteFooter';
 import { useAccessibility } from '@/contexts/AccessibilityContext';
@@ -23,77 +24,80 @@ type Module = {
   lessons: Lesson[];
 };
 
-const MODULES_DATA: Module[] = [
-  {
-    id: 'basico',
-    tier: 'BÁSICO',
-    title: 'Módulo de Aprendizaje Básico',
-    subtitle: 'El punto de partida',
-    icon: '⚡',
-    color: '#22d3ee',
-    colorDim: 'rgba(34,211,238,0.12)',
-    colorBorder: 'rgba(34,211,238,0.35)',
-    colorGlow: 'rgba(34,211,238,0.18)',
-    unlocked: true,
-    currentLevel: 0,
-    totalLevels: 6,
-    xpReward: 600,
-    lessons: [
-      { id: 1, title: 'nivel 1: ¿Qué es la electricidad?', icon: '⚡', done: false, xp: 50 },
-      { id: 2, title: 'Voltaje y corriente', icon: '🔋', done: false, xp: 75 },
-      { id: 3, title: 'La Ley de Ohm', icon: '📐', done: false, xp: 100 },
-      { id: 4, title: 'Resistencias en serie', icon: '▬', done: false, xp: 100 },
-      { id: 5, title: 'Resistencias en paralelo', icon: '🔗', done: false, xp: 125 },
-      { id: 6, title: 'Circuito básico completo', icon: '🔬', done: false, xp: 150 },
-    ],
-  },
-  {
-    id: 'medio',
-    tier: 'INTERMEDIO',
-    title: 'Módulo de Aprendizaje Medio',
-    subtitle: 'Lleva tus circuitos al siguiente nivel',
-    icon: '💡',
-    color: '#f59e0b',
-    colorDim: 'rgba(245,158,11,0.1)',
-    colorBorder: 'rgba(245,158,11,0.3)',
-    colorGlow: 'rgba(245,158,11,0.15)',
-    unlocked: true,
-    currentLevel: 0,
-    totalLevels: 6,
-    xpReward: 1200,
-    lessons: [
-      { id: 1, title: 'Nivel 1: Código de colores', icon: '🎨', done: false, xp: 100 },
-      { id: 2, title: 'Transistores NPN', icon: '🔌', done: false, xp: 125 },
-      { id: 3, title: 'Amplificación de señal', icon: '📡', done: false, xp: 150 },
-      { id: 4, title: 'Circuitos RC', icon: '⏱', done: false, xp: 175 },
-      { id: 5, title: 'Filtros eléctricos', icon: '🎛', done: false, xp: 200 },
-      { id: 6, title: 'Proyecto integrador', icon: '🏆', done: false, xp: 450 },
-    ],
-  },
-  {
-    id: 'avanzado',
-    tier: 'AVANZADO',
-    title: 'Módulo de Aprendizaje Avanzado',
-    subtitle: 'El dominio del ingeniero',
-    icon: '🛠️',
-    color: '#a78bfa',
-    colorDim: 'rgba(167,139,250,0.1)',
-    colorBorder: 'rgba(167,139,250,0.3)',
-    colorGlow: 'rgba(167,139,250,0.15)',
-    unlocked: false,
-    currentLevel: 0,
-    totalLevels: 6,
-    xpReward: 2400,
-    lessons: [
-      { id: 1, title: 'Lógica binaria', icon: '0️⃣', done: false, xp: 150 },
-      { id: 2, title: 'Compuertas lógicas', icon: '🔣', done: false, xp: 200 },
-      { id: 3, title: 'Circuitos combinacionales', icon: '🧩', done: false, xp: 250 },
-      { id: 4, title: 'Flip-Flops y memorias', icon: '💾', done: false, xp: 300 },
-      { id: 5, title: 'Microcontroladores', icon: '🤖', done: false, xp: 400 },
-      { id: 6, title: 'Proyecto final SparkLab', icon: '🚀', done: false, xp: 1100 },
-    ],
-  },
-];
+function buildModulesData(t: (k: string) => string): Module[] {
+  return [
+    {
+      id: 'basico',
+      tier: t('modules.tierBasic'),
+      title: t('modules.basic.title'),
+      subtitle: t('modules.basic.subtitle'),
+      icon: '⚡',
+      color: '#22d3ee',
+      colorDim: 'rgba(34,211,238,0.12)',
+      colorBorder: 'rgba(34,211,238,0.35)',
+      colorGlow: 'rgba(34,211,238,0.18)',
+      unlocked: true,
+      currentLevel: 0,
+      totalLevels: 6,
+      xpReward: 600,
+      lessons: [
+        { id: 1, title: t('modules.basic.l1'), icon: '⚡', done: false, xp: 50 },
+        { id: 2, title: t('modules.basic.l2'), icon: '🔋', done: false, xp: 75 },
+        { id: 3, title: t('modules.basic.l3'), icon: '📐', done: false, xp: 100 },
+        { id: 4, title: t('modules.basic.l4'), icon: '▬', done: false, xp: 100 },
+        { id: 5, title: t('modules.basic.l5'), icon: '🔗', done: false, xp: 125 },
+        { id: 6, title: t('modules.basic.l6'), icon: '🔬', done: false, xp: 150 },
+      ],
+    },
+    {
+      id: 'medio',
+      tier: t('modules.tierIntermediate'),
+      title: t('modules.medium.title'),
+      subtitle: t('modules.medium.subtitle'),
+      icon: '💡',
+      color: '#f59e0b',
+      colorDim: 'rgba(245,158,11,0.1)',
+      colorBorder: 'rgba(245,158,11,0.3)',
+      colorGlow: 'rgba(245,158,11,0.15)',
+      unlocked: true,
+      currentLevel: 0,
+      totalLevels: 6,
+      xpReward: 1200,
+      lessons: [
+        { id: 1, title: t('modules.medium.l1'), icon: '🎨', done: false, xp: 100 },
+        { id: 2, title: t('modules.medium.l2'), icon: '🔌', done: false, xp: 125 },
+        { id: 3, title: t('modules.medium.l3'), icon: '📡', done: false, xp: 150 },
+        { id: 4, title: t('modules.medium.l4'), icon: '⏱', done: false, xp: 175 },
+        { id: 5, title: t('modules.medium.l5'), icon: '🎛', done: false, xp: 200 },
+        { id: 6, title: t('modules.medium.l6'), icon: '🏆', done: false, xp: 450 },
+      ],
+    },
+    {
+      id: 'avanzado',
+      tier: t('modules.tierAdvanced'),
+      title: t('modules.advanced.title'),
+      subtitle: t('modules.advanced.subtitle'),
+      icon: '🛠️',
+      color: '#a78bfa',
+      colorDim: 'rgba(167,139,250,0.1)',
+      colorBorder: 'rgba(167,139,250,0.3)',
+      colorGlow: 'rgba(167,139,250,0.15)',
+      unlocked: false,
+      currentLevel: 0,
+      totalLevels: 6,
+      xpReward: 2400,
+      lessons: [
+        { id: 1, title: t('modules.advanced.l1'), icon: '0️⃣', done: false, xp: 150 },
+        { id: 2, title: t('modules.advanced.l2'), icon: '🔣', done: false, xp: 200 },
+        { id: 3, title: t('modules.advanced.l3'), icon: '🧩', done: false, xp: 250 },
+        { id: 4, title: t('modules.advanced.l4'), icon: '💾', done: false, xp: 300 },
+        { id: 5, title: t('modules.advanced.l5'), icon: '🤖', done: false, xp: 400 },
+        { id: 6, title: t('modules.advanced.l6'), icon: '🚀', done: false, xp: 1100 },
+      ],
+    },
+  ];
+}
+
 
 function CircuitLines({ isLight }: { isLight: boolean }) {
   const stroke = isLight ? '#0ea5e9' : '#22d3ee';
@@ -176,7 +180,9 @@ function ProgressRing({ pct, color, size = 72, stroke = 5 }: { pct: number; colo
 }
 
 function ModuleCard({ mod, onOpen, isLight }: { mod: Module; onOpen: (m: Module) => void; isLight: boolean }) {
+  const { t } = useTranslation();
   const [hov, setHov] = useState(false);
+
   const pct = mod.totalLevels > 0 ? Math.round((mod.currentLevel / mod.totalLevels) * 100) : 0;
   const isLocked = !mod.unlocked;
   const isCompleted = mod.currentLevel === mod.totalLevels;
@@ -252,8 +258,9 @@ function ModuleCard({ mod, onOpen, isLight }: { mod: Module; onOpen: (m: Module)
         >
           <div style={{ fontSize: 36, marginBottom: 8 }}>🔒</div>
           <div style={{ fontSize: 11, color: isLight ? '#334155' : '#475569', fontFamily: "'Courier New',monospace", fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase' }}>
-            Completa el módulo anterior
+            {t('modules.lockedHint')}
           </div>
+
         </div>
       )}
 
@@ -290,7 +297,7 @@ function ModuleCard({ mod, onOpen, isLight }: { mod: Module; onOpen: (m: Module)
               letterSpacing: '0.1em',
             }}
           >
-            ✓ COMPLETADO
+            {t('modules.modCompleted')}
           </div>
         )}
       </div>
@@ -310,12 +317,13 @@ function ModuleCard({ mod, onOpen, isLight }: { mod: Module; onOpen: (m: Module)
             </div>
             <div style={{ flex: 1 }}>
               <div style={{ fontSize: 12, color: isLight ? '#475569' : '#94a3b8', fontWeight: 700, marginBottom: 4 }}>
-                Nivel actual: <span style={{ color: mod.color }}>{mod.currentLevel === 0 ? 'Sin iniciar' : `Nivel ${mod.currentLevel}`}</span>
+                {t('modules.currentLevel')} <span style={{ color: mod.color }}>{mod.currentLevel === 0 ? t('modules.notStarted') : t('modules.levelN', { n: mod.currentLevel })}</span>
               </div>
               <div style={{ height: 5, background: isLight ? 'rgba(15,23,42,0.08)' : 'rgba(255,255,255,0.06)', borderRadius: 99, overflow: 'hidden', marginBottom: 6 }}>
                 <div style={{ height: '100%', width: `${pct}%`, background: `linear-gradient(90deg, ${mod.color}99, ${mod.color})`, borderRadius: 99, transition: 'width 1s ease' }} />
               </div>
-              <div style={{ fontSize: 10, color: subColor }}>{pct}% completado</div>
+              <div style={{ fontSize: 10, color: subColor }}>{t('modules.pctCompleted', { n: pct })}</div>
+
             </div>
           </div>
         </div>
@@ -328,7 +336,7 @@ function ModuleCard({ mod, onOpen, isLight }: { mod: Module; onOpen: (m: Module)
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 11, color: subColor }}>
           <span>📚</span>
-          <span>{mod.totalLevels} lecciones</span>
+          <span>{t('modules.lessons', { n: mod.totalLevels })}</span>
         </div>
         <div style={{ fontSize: 12, fontWeight: 900, color: '#f59e0b', fontFamily: "'Courier New',monospace" }}>+{mod.xpReward.toLocaleString()} XP</div>
       </div>
@@ -338,7 +346,9 @@ function ModuleCard({ mod, onOpen, isLight }: { mod: Module; onOpen: (m: Module)
 
 function LessonsDrawer({ mod, onClose, isLight }: { mod: Module | null; onClose: () => void; isLight: boolean }) {
   const navigate = useNavigate();
+  const { t } = useTranslation();
   if (!mod) return null;
+
   const completedCount = mod.lessons.filter((l) => l.done).length;
   const panelBg = isLight ? 'linear-gradient(180deg,#ffffff 0%,#f8fafc 100%)' : 'linear-gradient(180deg,#0a1628 0%,#060e1d 100%)';
   const headerBg = isLight ? 'rgba(255,255,255,0.95)' : 'rgba(6,14,29,0.95)';
@@ -353,7 +363,7 @@ function LessonsDrawer({ mod, onClose, isLight }: { mod: Module | null; onClose:
     } else if (mod.id === 'medio' && lesson.id === 1) {
       navigate('/dashboard/level1-medio');
     } else {
-      toast('Próximamente', { description: 'Este nivel aún no está disponible.' });
+      toast(t('modules.comingSoon'), { description: t('modules.comingSoonDesc') });
     }
   };
 
@@ -432,10 +442,11 @@ function LessonsDrawer({ mod, onClose, isLight }: { mod: Module | null; onClose:
           <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
             <div style={{ flex: 1 }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 5 }}>
-                <span style={{ fontSize: 10, color: subColor }}>Progreso del módulo</span>
+                <span style={{ fontSize: 10, color: subColor }}>{t('modules.moduleProgress')}</span>
                 <span style={{ fontSize: 10, color: mod.color, fontWeight: 700 }}>
-                  {completedCount}/{mod.totalLevels} lecciones
+                  {t('modules.lessonsOf', { done: completedCount, total: mod.totalLevels })}
                 </span>
+
               </div>
               <div style={{ height: 5, background: isLight ? 'rgba(15,23,42,0.08)' : 'rgba(255,255,255,0.06)', borderRadius: 99, overflow: 'hidden' }}>
                 <div style={{ height: '100%', width: `${Math.round((completedCount / mod.totalLevels) * 100)}%`, background: `linear-gradient(90deg,${mod.color}99,${mod.color})`, borderRadius: 99 }} />
@@ -446,7 +457,7 @@ function LessonsDrawer({ mod, onClose, isLight }: { mod: Module | null; onClose:
         </div>
 
         <div style={{ padding: '16px 24px', display: 'flex', flexDirection: 'column', gap: 8 }}>
-          <div style={{ fontSize: 10, color: subColor, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.15em', marginBottom: 4 }}>Lecciones</div>
+          <div style={{ fontSize: 10, color: subColor, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.15em', marginBottom: 4 }}>{t('modules.lessonsHeader')}</div>
 
           {mod.lessons.map((lesson, i) => {
             const prevDone = i === 0 || mod.lessons[i - 1].done;
@@ -514,7 +525,7 @@ function LessonsDrawer({ mod, onClose, isLight }: { mod: Module | null; onClose:
                   >
                     {lesson.title}
                   </div>
-                  <div style={{ fontSize: 10, color: lesson.done ? mod.color : subColor }}>{lesson.done ? '✓ Completado' : isAvailable ? '📖 Disponible' : '🔒 Bloqueado'}</div>
+                  <div style={{ fontSize: 10, color: lesson.done ? mod.color : subColor }}>{lesson.done ? t('modules.lessonCompleted') : isAvailable ? t('modules.lessonAvailable') : t('modules.lessonLocked')}</div>
                 </div>
 
                 <div style={{ fontSize: 11, fontWeight: 900, color: lesson.done ? mod.color : subColor, fontFamily: "'Courier New',monospace" }}>+{lesson.xp}</div>
@@ -541,7 +552,7 @@ function LessonsDrawer({ mod, onClose, isLight }: { mod: Module | null; onClose:
               transition: 'all 0.2s',
             }}
           >
-            {mod.currentLevel === 0 ? `${mod.icon} Comenzar módulo` : `${mod.icon} Continuar en nivel ${mod.currentLevel + 1}`}
+            {mod.currentLevel === 0 ? `${mod.icon} ${t('modules.beginModule')}` : `${mod.icon} ${t('modules.continueLevel', { n: mod.currentLevel + 1 })}`}
           </button>
         </div>
       </div>
@@ -552,9 +563,12 @@ function LessonsDrawer({ mod, onClose, isLight }: { mod: Module | null; onClose:
 export default function Modules() {
   const [openMod, setOpenMod] = useState<Module | null>(null);
   const { themeMode } = useAccessibility();
+  const { t } = useTranslation();
   const isLight = themeMode === 'light';
   const totalXP = 125;
   const userLevel = 2;
+  const MODULES_DATA = buildModulesData(t);
+
 
   const pageBg = isLight
     ? 'radial-gradient(ellipse at 30% 10%, #f1f5f9 0%, #ffffff 45%, #f8fafc 100%)'
@@ -627,11 +641,11 @@ export default function Modules() {
                 >
                   ⚡
                 </div>
-                <span style={{ fontSize: 11, color: '#0891b2', fontWeight: 700 }}>Nivel {userLevel}</span>
+                <span style={{ fontSize: 11, color: '#0891b2', fontWeight: 700 }}>{t('modules.headerLevel', { n: userLevel })}</span>
               </div>
               <div style={{ width: 1, height: 14, background: isLight ? 'rgba(15,23,42,0.12)' : 'rgba(255,255,255,0.1)' }} />
               <span style={{ fontSize: 11, color: mutedText }}>
-                <span style={{ color: '#f59e0b', fontWeight: 700 }}>{totalXP} XP</span> acumulados
+                <span style={{ color: '#f59e0b', fontWeight: 700 }}>{t('modules.headerXp', { n: totalXP })}</span> {t('modules.headerAccumulated')}
               </span>
             </div>
 
@@ -645,7 +659,7 @@ export default function Modules() {
                   WebkitTextFillColor: 'transparent',
                 }}
               >
-                Ruta de
+                {t('modules.pathTitle1')}
               </span>
               <br />
               <span
@@ -655,13 +669,14 @@ export default function Modules() {
                   WebkitTextFillColor: 'transparent',
                 }}
               >
-                Aprendizaje
+                {t('modules.pathTitle2')}
               </span>
             </h1>
             <p style={{ fontSize: 14, color: mutedText, maxWidth: 400, margin: '0 auto', lineHeight: 1.75 }}>
-              Domina la electrónica módulo a módulo. Completa cada etapa para desbloquear la siguiente.
+              {t('modules.pathDesc')}
             </p>
           </div>
+
 
           {/* PATH CONNECTOR */}
           <div style={{ position: 'relative', marginBottom: 8 }}>
@@ -682,16 +697,16 @@ export default function Modules() {
           <div style={{ background: bannerBg, border: `1px solid ${bannerBorder}`, borderRadius: 16, padding: '18px 24px', display: 'flex', alignItems: 'center', gap: 16, flexWrap: 'wrap' }}>
             <div style={{ fontSize: 20 }}>💡</div>
             <div style={{ flex: 1, minWidth: 200 }}>
-              <div style={{ fontSize: 13, fontWeight: 700, color: isLight ? '#334155' : '#94a3b8', marginBottom: 3 }}>¿Cómo avanzar?</div>
+              <div style={{ fontSize: 13, fontWeight: 700, color: isLight ? '#334155' : '#94a3b8', marginBottom: 3 }}>{t('modules.howAdvance')}</div>
               <div style={{ fontSize: 11, color: mutedText, lineHeight: 1.6 }}>
-                Completa todas las lecciones de un módulo para desbloquear el siguiente. Cada lección desbloquea la siguiente dentro del módulo.
+                {t('modules.howAdvanceDesc')}
               </div>
             </div>
             <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
               {[
-                { icon: '🟢', label: 'Completado', color: '#34d399' },
-                { icon: '🔵', label: 'En progreso', color: '#0891b2' },
-                { icon: '🔒', label: 'Bloqueado', color: mutedText },
+                { icon: '🟢', label: t('modules.statusCompleted'), color: '#34d399' },
+                { icon: '🔵', label: t('modules.statusInProgress'), color: '#0891b2' },
+                { icon: '🔒', label: t('modules.statusLocked'), color: mutedText },
               ].map((s) => (
                 <div key={s.label} style={{ display: 'flex', alignItems: 'center', gap: 5, fontSize: 10, color: s.color }}>
                   <span>{s.icon}</span>
@@ -699,6 +714,7 @@ export default function Modules() {
                 </div>
               ))}
             </div>
+
           </div>
 
           <div style={{ display: 'flex', justifyContent: 'center', gap: 32, marginTop: 32, opacity: 0.18 }}>
