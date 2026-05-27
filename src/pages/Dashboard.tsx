@@ -98,14 +98,14 @@ function ModeCard({ icon, title, desc, tag, tagColor, badge, href }: ModeCardPro
         }}>{badge}</div>
       )}
       <div style={{ fontSize: 36 }}>{icon}</div>
-      <div style={{ fontFamily: "'Courier New',monospace", fontWeight: 900, color: '#f1f5f9', fontSize: 16 }}>{title}</div>
-      <div style={{ fontSize: 12, color: '#64748b', lineHeight: 1.7, flex: 1 }}>{desc}</div>
+      <div style={{ fontFamily: "var(--font-display)", fontWeight: 800, color: '#f1f5f9', fontSize: 16, letterSpacing: '0.02em' }}>{title}</div>
+      <div style={{ fontSize: 13, color: '#94a3b8', lineHeight: 1.7, flex: 1, fontFamily: "var(--font-body)" }}>{desc}</div>
       <div style={{
         alignSelf: 'flex-start', fontSize: 9, fontWeight: 700,
         padding: '3px 10px', borderRadius: 20,
         background: `${tagColor}18`, color: tagColor,
         border: `1px solid ${tagColor}40`,
-        fontFamily: "'Courier New',monospace", letterSpacing: '0.1em', textTransform: 'uppercase',
+        fontFamily: "var(--font-display)", letterSpacing: '0.1em', textTransform: 'uppercase',
       }}>{tag}</div>
     </Link>
   );
