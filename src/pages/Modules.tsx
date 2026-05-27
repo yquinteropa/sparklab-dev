@@ -180,7 +180,9 @@ function ProgressRing({ pct, color, size = 72, stroke = 5 }: { pct: number; colo
 }
 
 function ModuleCard({ mod, onOpen, isLight }: { mod: Module; onOpen: (m: Module) => void; isLight: boolean }) {
+  const { t } = useTranslation();
   const [hov, setHov] = useState(false);
+
   const pct = mod.totalLevels > 0 ? Math.round((mod.currentLevel / mod.totalLevels) * 100) : 0;
   const isLocked = !mod.unlocked;
   const isCompleted = mod.currentLevel === mod.totalLevels;
@@ -256,8 +258,9 @@ function ModuleCard({ mod, onOpen, isLight }: { mod: Module; onOpen: (m: Module)
         >
           <div style={{ fontSize: 36, marginBottom: 8 }}>🔒</div>
           <div style={{ fontSize: 11, color: isLight ? '#334155' : '#475569', fontFamily: "'Courier New',monospace", fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase' }}>
-            Completa el módulo anterior
+            {t('modules.lockedHint')}
           </div>
+
         </div>
       )}
 
@@ -294,7 +297,7 @@ function ModuleCard({ mod, onOpen, isLight }: { mod: Module; onOpen: (m: Module)
               letterSpacing: '0.1em',
             }}
           >
-            ✓ COMPLETADO
+            {t('modules.modCompleted')}
           </div>
         )}
       </div>
@@ -314,12 +317,13 @@ function ModuleCard({ mod, onOpen, isLight }: { mod: Module; onOpen: (m: Module)
             </div>
             <div style={{ flex: 1 }}>
               <div style={{ fontSize: 12, color: isLight ? '#475569' : '#94a3b8', fontWeight: 700, marginBottom: 4 }}>
-                Nivel actual: <span style={{ color: mod.color }}>{mod.currentLevel === 0 ? 'Sin iniciar' : `Nivel ${mod.currentLevel}`}</span>
+                {t('modules.currentLevel')} <span style={{ color: mod.color }}>{mod.currentLevel === 0 ? t('modules.notStarted') : t('modules.levelN', { n: mod.currentLevel })}</span>
               </div>
               <div style={{ height: 5, background: isLight ? 'rgba(15,23,42,0.08)' : 'rgba(255,255,255,0.06)', borderRadius: 99, overflow: 'hidden', marginBottom: 6 }}>
                 <div style={{ height: '100%', width: `${pct}%`, background: `linear-gradient(90deg, ${mod.color}99, ${mod.color})`, borderRadius: 99, transition: 'width 1s ease' }} />
               </div>
-              <div style={{ fontSize: 10, color: subColor }}>{pct}% completado</div>
+              <div style={{ fontSize: 10, color: subColor }}>{t('modules.pctCompleted', { n: pct })}</div>
+
             </div>
           </div>
         </div>
@@ -332,7 +336,7 @@ function ModuleCard({ mod, onOpen, isLight }: { mod: Module; onOpen: (m: Module)
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 11, color: subColor }}>
           <span>📚</span>
-          <span>{mod.totalLevels} lecciones</span>
+          <span>{t('modules.lessons', { n: mod.totalLevels })}</span>
         </div>
         <div style={{ fontSize: 12, fontWeight: 900, color: '#f59e0b', fontFamily: "'Courier New',monospace" }}>+{mod.xpReward.toLocaleString()} XP</div>
       </div>
@@ -342,7 +346,9 @@ function ModuleCard({ mod, onOpen, isLight }: { mod: Module; onOpen: (m: Module)
 
 function LessonsDrawer({ mod, onClose, isLight }: { mod: Module | null; onClose: () => void; isLight: boolean }) {
   const navigate = useNavigate();
+  const { t } = useTranslation();
   if (!mod) return null;
+
   const completedCount = mod.lessons.filter((l) => l.done).length;
   const panelBg = isLight ? 'linear-gradient(180deg,#ffffff 0%,#f8fafc 100%)' : 'linear-gradient(180deg,#0a1628 0%,#060e1d 100%)';
   const headerBg = isLight ? 'rgba(255,255,255,0.95)' : 'rgba(6,14,29,0.95)';
@@ -357,7 +363,7 @@ function LessonsDrawer({ mod, onClose, isLight }: { mod: Module | null; onClose:
     } else if (mod.id === 'medio' && lesson.id === 1) {
       navigate('/dashboard/level1-medio');
     } else {
-      toast('Próximamente', { description: 'Este nivel aún no está disponible.' });
+      toast(t('modules.comingSoon'), { description: t('modules.comingSoonDesc') });
     }
   };
 
