@@ -101,17 +101,32 @@ export function AccessibilityProvider({ children }: { children: ReactNode }) {
   }, [i18n]);
 
   const setLanguage = async (lang: string) => {
-    setLanguageState(lang);
-    i18n.changeLanguage(lang);
-    localStorage.setItem('sparklab-language', lang);
+    // Avoid unnecessary reload if language hasn't changed
+    if (lang === language) return;
 
-    // Sync to DB if logged in
-    const { data: { session } } = await supabase.auth.getSession();
-    if (session?.user) {
-      await supabase
-        .from('profiles')
-        .update({ language: lang })
-        .eq('user_id', session.user.id);
+    // Persist locally first so the reload picks up the new language immediately
+    try { localStorage.setItem('sparklab-language', lang); } catch {}
+    setLanguageState(lang);
+    await i18n.changeLanguage(lang);
+    document.documentElement.setAttribute('lang', lang);
+
+    // Sync to DB if logged in (best-effort, don't block reload on failure)
+    try {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (session?.user) {
+        await supabase
+          .from('profiles')
+          .update({ language: lang })
+          .eq('user_id', session.user.id);
+      }
+    } catch (err) {
+      console.warn('[i18n] Failed to sync language to profile:', err);
+    }
+
+    // Global refresh so every component (including non-reactive strings,
+    // memoized translations, and third-party widgets) picks up the new language.
+    if (typeof window !== 'undefined') {
+      window.location.reload();
     }
   };
 
