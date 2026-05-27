@@ -85,16 +85,8 @@ export default function Leaderboard() {
   useEffect(() => {
     let alive = true;
     (async () => {
-      const [{ data: userData }, { data, error }] = await Promise.all([
-        supabase.auth.getUser(),
-        supabase
-          .from('weekly_leaderboard')
-          .select('rank, user_id, score, display_name, avatar_url')
-          .order('rank', { ascending: true })
-          .limit(100),
-      ]);
+      const { data, error } = await supabase.rpc('get_weekly_leaderboard');
       if (!alive) return;
-      setCurrentUserId(userData.user?.id ?? null);
       if (!error && data) setRows(data as LeaderboardRow[]);
       setLoading(false);
     })();
