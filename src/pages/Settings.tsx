@@ -1,8 +1,10 @@
 import { DashboardNav } from '@/components/DashboardNav';
 import { ProfileSecurity } from '@/components/ProfileSecurity';
 import { Settings as SettingsIcon } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 export default function Settings() {
+  const { t } = useTranslation();
   return (
     <div className="min-h-screen bg-background text-foreground">
       <DashboardNav />
@@ -13,10 +15,10 @@ export default function Settings() {
           </div>
           <div>
             <h1 className="font-display text-xl font-bold text-foreground">
-              Configuración y privacidad
+              {t('nav.settings')}
             </h1>
             <p className="text-xs text-muted-foreground">
-              Administra la seguridad de tu cuenta y tus preferencias de privacidad.
+              {t('settings.desc')}
             </p>
           </div>
         </div>

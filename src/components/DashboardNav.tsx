@@ -107,7 +107,7 @@ export function DashboardNav() {
                   onClick={() => setMenuOpen(false)}
                   className="flex items-center gap-2 px-4 py-2 text-sm text-card-foreground hover:bg-muted"
                 >
-                  <Settings className="h-4 w-4" /> Configuración y privacidad
+                  <Settings className="h-4 w-4" /> {t('nav.settings')}
                 </Link>
                 <div className="my-1 border-t border-border" />
                 <button
