@@ -82,7 +82,7 @@ function buildModulesData(t: (k: string) => string): Module[] {
       colorDim: 'rgba(167,139,250,0.1)',
       colorBorder: 'rgba(167,139,250,0.3)',
       colorGlow: 'rgba(167,139,250,0.15)',
-      unlocked: false,
+      unlocked: true,
       currentLevel: 0,
       totalLevels: 6,
       xpReward: 2400,
@@ -362,6 +362,8 @@ function LessonsDrawer({ mod, onClose, isLight }: { mod: Module | null; onClose:
       navigate('/dashboard/level1');
     } else if (mod.id === 'medio' && lesson.id === 1) {
       navigate('/dashboard/level1-medio');
+    } else if (mod.id === 'avanzado' && lesson.id === 1) {
+      navigate('/dashboard/level1-avanzado');
     } else {
       toast(t('modules.comingSoon'), { description: t('modules.comingSoonDesc') });
     }

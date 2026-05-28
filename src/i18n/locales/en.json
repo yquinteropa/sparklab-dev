@@ -643,5 +643,56 @@
       "Oro": "Gold",
       "Plata": "Silver"
     }
+  },
+  "level1Avanzado": {
+    "quickRef": "Quick reference",
+    "seriesRes": "Series resistors",
+    "seriesDesc": "They sit one after another on the same path.",
+    "seriesEx": "Ex: 100 Ω + 220 Ω = 320 Ω",
+    "parallelRes": "Parallel resistors",
+    "parallelDesc": "They are on separate branches. Current splits.",
+    "parallelEx": "Ex: 100 Ω ∥ 100 Ω = 50 Ω",
+    "understood": "Got it",
+    "introTitle": "Level 1 — Circuit reduction",
+    "introDesc": "A circuit with many resistors can be simplified to a single one. Your mission: pick pairs and combine them with the right formula.",
+    "chipSeries": "Series: R1 + R2",
+    "chipParallel": "Parallel: (R1×R2)/(R1+R2)",
+    "howToPlay": "How to play:",
+    "how1": "1. Tap two resistors of the same type to select them.",
+    "how2": "2. Type the resulting value in ohms.",
+    "how3": "3. Press \"Reduce\" — if correct, they merge.",
+    "reference": "Reference",
+    "start": "Start",
+    "headerTitle": "Level 1",
+    "headerSubtitle": "Circuit reduction",
+    "progress": "Progress",
+    "selectedNone": "Selected: —",
+    "reduce": "Reduce",
+    "reductionsDone": "Reductions done",
+    "restart": "Restart",
+    "hint": "Hint",
+    "series": "Series",
+    "parallel": "Parallel",
+    "msgSelectTwo": "Select two resistors from the circuit to start.",
+    "msgPickTwoFirst": "Select two resistors first.",
+    "msgDifferentTypes": "You can't directly reduce resistors of different types. Reduce each group first.",
+    "msgEnterValue": "Type the resulting value in ohms.",
+    "msgWrong": "Incorrect. {{kind}}: {{formula}}. You entered {{got}} Ω.",
+    "msgDone": "Circuit reduced! Equivalent resistance: {{val}} Ω",
+    "msgKeepGoing": "Correct. {{names}} → {{val}} Ω. Keep reducing.",
+    "hintPair": "Hint: {{a}}({{av}}Ω) and {{b}}({{bv}}Ω) in {{kind}} = {{val}} Ω",
+    "hintGeneric": "Hint: look for two resistors of the same connection type.",
+    "ex1": {
+      "title": "Exercise 1 — Series",
+      "desc": "Reduce the series resistors from left to right until only one remains."
+    },
+    "ex2": {
+      "title": "Exercise 2 — Parallel",
+      "desc": "Reduce the pairs of parallel resistors until you get the equivalent."
+    },
+    "ex3": {
+      "title": "Exercise 3 — Mixed",
+      "desc": "First reduce the parallel pair, then combine it in series with the rest."
+    }
   }
 }

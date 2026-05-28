@@ -14,6 +14,7 @@ import Simulator from "./pages/Simulator";
 import Modules from "./pages/Modules";
 import Level1 from "./pages/Level1";
 import Level1Medio from "./pages/Level1Medio";
+import Level1Avanzado from "./pages/Level1Avanzado";
 import QuickQuiz from "./pages/QuickQuiz";
 import Leaderboard from "./pages/Leaderboard";
 import Profile from "./pages/Profile";
@@ -52,6 +53,7 @@ const App = () => (
             <Route path="/dashboard/modules" element={<ProtectedRoute><Modules /></ProtectedRoute>} />
             <Route path="/dashboard/level1" element={<ProtectedRoute><Level1 /></ProtectedRoute>} />
             <Route path="/dashboard/level1-medio" element={<ProtectedRoute><Level1Medio /></ProtectedRoute>} />
+            <Route path="/dashboard/level1-avanzado" element={<ProtectedRoute><Level1Avanzado /></ProtectedRoute>} />
               <Route path="/dashboard/quiz" element={<ProtectedRoute><QuickQuiz /></ProtectedRoute>} />
               <Route path="/dashboard/leaderboard" element={<ProtectedRoute><Leaderboard /></ProtectedRoute>} />
               <Route path="/dashboard/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
