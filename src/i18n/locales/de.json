@@ -643,5 +643,56 @@
       "Oro": "Gold",
       "Plata": "Silber"
     }
+  },
+  "level1Avanzado": {
+    "quickRef": "Schnellreferenz",
+    "seriesRes": "Widerstände in Reihe",
+    "seriesDesc": "Sie liegen hintereinander auf demselben Pfad.",
+    "seriesEx": "Bsp.: 100 Ω + 220 Ω = 320 Ω",
+    "parallelRes": "Widerstände parallel",
+    "parallelDesc": "Sie liegen auf getrennten Zweigen. Der Strom teilt sich.",
+    "parallelEx": "Bsp.: 100 Ω ∥ 100 Ω = 50 Ω",
+    "understood": "Verstanden",
+    "introTitle": "Level 1 — Schaltkreis-Reduktion",
+    "introDesc": "Ein Schaltkreis mit vielen Widerständen lässt sich auf einen einzigen reduzieren. Deine Aufgabe: Paare auswählen und mit der richtigen Formel kombinieren.",
+    "chipSeries": "Reihe: R1 + R2",
+    "chipParallel": "Parallel: (R1×R2)/(R1+R2)",
+    "howToPlay": "So spielst du:",
+    "how1": "1. Tippe zwei Widerstände desselben Typs an, um sie auszuwählen.",
+    "how2": "2. Schreibe den resultierenden Wert in Ohm.",
+    "how3": "3. Drücke „Reduzieren\" — bei korrekter Eingabe verschmelzen sie.",
+    "reference": "Referenz",
+    "start": "Start",
+    "headerTitle": "Level 1",
+    "headerSubtitle": "Schaltkreis-Reduktion",
+    "progress": "Fortschritt",
+    "selectedNone": "Ausgewählt: —",
+    "reduce": "Reduzieren",
+    "reductionsDone": "Durchgeführte Reduktionen",
+    "restart": "Neu starten",
+    "hint": "Tipp",
+    "series": "Reihe",
+    "parallel": "Parallel",
+    "msgSelectTwo": "Wähle zwei Widerstände aus dem Schaltkreis, um zu starten.",
+    "msgPickTwoFirst": "Wähle zuerst zwei Widerstände aus.",
+    "msgDifferentTypes": "Widerstände unterschiedlichen Typs kannst du nicht direkt reduzieren. Reduziere zuerst jede Gruppe.",
+    "msgEnterValue": "Schreibe den resultierenden Wert in Ohm.",
+    "msgWrong": "Falsch. {{kind}}: {{formula}}. Du hast {{got}} Ω eingegeben.",
+    "msgDone": "Schaltkreis reduziert! Ersatzwiderstand: {{val}} Ω",
+    "msgKeepGoing": "Richtig. {{names}} → {{val}} Ω. Reduziere weiter.",
+    "hintPair": "Tipp: {{a}}({{av}}Ω) und {{b}}({{bv}}Ω) in {{kind}} = {{val}} Ω",
+    "hintGeneric": "Tipp: Suche zwei Widerstände desselben Verbindungstyps.",
+    "ex1": {
+      "title": "Übung 1 — Reihe",
+      "desc": "Reduziere die Widerstände in Reihe von links nach rechts, bis nur einer übrig bleibt."
+    },
+    "ex2": {
+      "title": "Übung 2 — Parallel",
+      "desc": "Reduziere die Paare paralleler Widerstände, bis du den Ersatzwert erhältst."
+    },
+    "ex3": {
+      "title": "Übung 3 — Gemischt",
+      "desc": "Reduziere zuerst das Parallelpaar und kombiniere es dann in Reihe mit den restlichen."
+    }
   }
 }

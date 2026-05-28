@@ -643,5 +643,56 @@
       "Oro": "Oro",
       "Plata": "Plata"
     }
+  },
+  "level1Avanzado": {
+    "quickRef": "Referencia rápida",
+    "seriesRes": "Resistencias en serie",
+    "seriesDesc": "Están una tras otra en el mismo camino.",
+    "seriesEx": "Ej: 100 Ω + 220 Ω = 320 Ω",
+    "parallelRes": "Resistencias en paralelo",
+    "parallelDesc": "Están en ramas separadas. La corriente se divide.",
+    "parallelEx": "Ej: 100 Ω ∥ 100 Ω = 50 Ω",
+    "understood": "Entendido",
+    "introTitle": "Nivel 1 — Reducción de circuitos",
+    "introDesc": "Un circuito con muchas resistencias puede simplificarse en una sola. Tu misión: selecciona pares y combínalos con la fórmula correcta.",
+    "chipSeries": "Serie: R1 + R2",
+    "chipParallel": "Paralelo: (R1×R2)/(R1+R2)",
+    "howToPlay": "Cómo jugar:",
+    "how1": "1. Toca dos resistencias del mismo tipo para seleccionarlas.",
+    "how2": "2. Escribe el valor resultante en ohmios.",
+    "how3": "3. Presiona \"Reducir\" — si es correcto se fusionan.",
+    "reference": "Referencia",
+    "start": "Empezar",
+    "headerTitle": "Nivel 1",
+    "headerSubtitle": "Reducción de circuitos",
+    "progress": "Progreso",
+    "selectedNone": "Seleccionadas: —",
+    "reduce": "Reducir",
+    "reductionsDone": "Reducciones realizadas",
+    "restart": "Reiniciar",
+    "hint": "Pista",
+    "series": "Serie",
+    "parallel": "Paralelo",
+    "msgSelectTwo": "Selecciona dos resistencias del circuito para comenzar.",
+    "msgPickTwoFirst": "Selecciona dos resistencias primero.",
+    "msgDifferentTypes": "No puedes reducir resistencias de tipos distintos directamente. Reduce primero cada grupo.",
+    "msgEnterValue": "Escribe el valor resultante en ohmios.",
+    "msgWrong": "Incorrecto. {{kind}}: {{formula}}. Ingresaste {{got}} Ω.",
+    "msgDone": "¡Circuito reducido! Resistencia equivalente: {{val}} Ω",
+    "msgKeepGoing": "Correcto. {{names}} → {{val}} Ω. Sigue reduciendo.",
+    "hintPair": "Pista: {{a}}({{av}}Ω) y {{b}}({{bv}}Ω) en {{kind}} = {{val}} Ω",
+    "hintGeneric": "Pista: busca dos resistencias del mismo tipo de conexión.",
+    "ex1": {
+      "title": "Ejercicio 1 — Serie",
+      "desc": "Reduce las resistencias en serie de izquierda a derecha hasta obtener una sola."
+    },
+    "ex2": {
+      "title": "Ejercicio 2 — Paralelo",
+      "desc": "Reduce los pares de resistencias en paralelo hasta obtener el equivalente."
+    },
+    "ex3": {
+      "title": "Ejercicio 3 — Mixto",
+      "desc": "Primero reduce el par en paralelo, luego combínalo en serie con las demás."
+    }
   }
 }

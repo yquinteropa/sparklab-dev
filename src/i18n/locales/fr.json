@@ -643,5 +643,56 @@
       "Oro": "Or",
       "Plata": "Argent"
     }
+  },
+  "level1Avanzado": {
+    "quickRef": "Référence rapide",
+    "seriesRes": "Résistances en série",
+    "seriesDesc": "Elles sont placées l'une après l'autre sur le même chemin.",
+    "seriesEx": "Ex : 100 Ω + 220 Ω = 320 Ω",
+    "parallelRes": "Résistances en parallèle",
+    "parallelDesc": "Elles sont sur des branches séparées. Le courant se divise.",
+    "parallelEx": "Ex : 100 Ω ∥ 100 Ω = 50 Ω",
+    "understood": "Compris",
+    "introTitle": "Niveau 1 — Réduction de circuits",
+    "introDesc": "Un circuit avec de nombreuses résistances peut se simplifier en une seule. Ta mission : choisir des paires et les combiner avec la bonne formule.",
+    "chipSeries": "Série : R1 + R2",
+    "chipParallel": "Parallèle : (R1×R2)/(R1+R2)",
+    "howToPlay": "Comment jouer :",
+    "how1": "1. Touche deux résistances du même type pour les sélectionner.",
+    "how2": "2. Écris la valeur résultante en ohms.",
+    "how3": "3. Appuie sur « Réduire » — si c'est correct, elles fusionnent.",
+    "reference": "Référence",
+    "start": "Commencer",
+    "headerTitle": "Niveau 1",
+    "headerSubtitle": "Réduction de circuits",
+    "progress": "Progression",
+    "selectedNone": "Sélectionnées : —",
+    "reduce": "Réduire",
+    "reductionsDone": "Réductions effectuées",
+    "restart": "Recommencer",
+    "hint": "Indice",
+    "series": "Série",
+    "parallel": "Parallèle",
+    "msgSelectTwo": "Sélectionne deux résistances du circuit pour commencer.",
+    "msgPickTwoFirst": "Sélectionne d'abord deux résistances.",
+    "msgDifferentTypes": "Tu ne peux pas réduire directement des résistances de types différents. Réduis d'abord chaque groupe.",
+    "msgEnterValue": "Écris la valeur résultante en ohms.",
+    "msgWrong": "Incorrect. {{kind}} : {{formula}}. Tu as saisi {{got}} Ω.",
+    "msgDone": "Circuit réduit ! Résistance équivalente : {{val}} Ω",
+    "msgKeepGoing": "Correct. {{names}} → {{val}} Ω. Continue à réduire.",
+    "hintPair": "Indice : {{a}}({{av}}Ω) et {{b}}({{bv}}Ω) en {{kind}} = {{val}} Ω",
+    "hintGeneric": "Indice : cherche deux résistances du même type de connexion.",
+    "ex1": {
+      "title": "Exercice 1 — Série",
+      "desc": "Réduis les résistances en série de gauche à droite jusqu'à n'en obtenir qu'une."
+    },
+    "ex2": {
+      "title": "Exercice 2 — Parallèle",
+      "desc": "Réduis les paires de résistances en parallèle jusqu'à obtenir l'équivalent."
+    },
+    "ex3": {
+      "title": "Exercice 3 — Mixte",
+      "desc": "Réduis d'abord la paire en parallèle, puis combine-la en série avec les autres."
+    }
   }
 }
