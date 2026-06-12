@@ -19,7 +19,7 @@ To develop a gamified platform for teaching basic electrical circuit concepts us
 - **Domain:** name.com
 
 ## Entity-Relationship Model (ERM)
-![Entity-Relationship Model](docs/diagrams/MER.jpeg)
+![Entity-Relationship Model](docs/assets/diagrams/MER.jpeg)
 
 ## Main Features
 - **User Management (CRUD)**
@@ -30,12 +30,12 @@ To develop a gamified platform for teaching basic electrical circuit concepts us
 - **Virtual Lab (Beta):** A simulator of a laboratory environment with electronic components (Currently under development).
 
 ## Results
-![Welcome page](docs/assets/welcome_page.png)
-![User dashboard](docs/assets/user_dashboard.png)
-![Example user profile](docs/assets/user_profile.png)
-![Home page in the timed module](docs/assets/mode_quick_questions.png)
-![Quick question in timed module](docs/assets/quiz_question.png)
-![Leaderboard](docs/assets/leadboard.png)
-![Theory modules: Basic, Intermediate and Advanced](docs/assets/theory_modules.png)
-![Theoretical and practical question - Intermediate module](docs/assets/theoretical_practical_question.png)
-![Virtual Lab](docs/assets/virtual_lab.png)
+![Welcome page](docs/assets/screenshots/welcome_page.png)
+![User dashboard](docs/assets/screenshots/user_dashboard.png)
+![Example user profile](docs/assets/screenshots/user_profile.png)
+![Home page in the timed module](docs/assets/screenshots/mode_quick_questions.png)
+![Quick question in timed module](docs/assets/screenshots/quiz_question.png)
+![Leaderboard](docs/assets/screenshots/leadboard.png)
+![Theory modules: Basic, Intermediate and Advanced](docs/assets/screenshots/theory_modules.png)
+![Theoretical and practical question - Intermediate module](docs/assets/screenshots/theoretical_practical_question.png)
+![Virtual Lab](docs/assets/screenshots/virtual_lab.png)
