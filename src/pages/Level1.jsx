@@ -11,7 +11,7 @@ const buildPuzzles = (t) => [
       'empty','empty','bend_tr','H','bend_tl','bend_tr','bulb',
     ],
     solution: [
-      'bat','H','bend_br','empty','bend_br','bend_bl','empty',
+      'bat','H','bend_bl','empty','bend_br','bend_bl','empty',
       'empty','empty','V','empty','V','V','empty',
       'empty','empty','V','empty','V','V','empty',
       'empty','empty','bend_tr','H','bend_tl','bend_tr','bulb',
