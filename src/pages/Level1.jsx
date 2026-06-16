@@ -38,15 +38,15 @@ const buildPuzzles = (t) => [
   {
     label: t('level1.puzzle3'),
     grid: [
-      'bat','H','bend_br','empty','empty','empty','empty',
+      'bat','H','bend_bl','empty','empty','empty','empty',
       'empty','empty','V','empty','empty','empty','empty',
-      'empty','empty','bend_tr','H','bend_br','empty','empty',
+      'empty','empty','bend_tr','H','bend_bl','empty','empty',
       'empty','empty','empty','empty','bend_tr','H','bulb',
     ],
     solution: [
-      'bat','H','bend_br','empty','empty','empty','empty',
+      'bat','H','bend_bl','empty','empty','empty','empty',
       'empty','empty','V','empty','empty','empty','empty',
-      'empty','empty','bend_tr','H','bend_br','empty','empty',
+      'empty','empty','bend_tr','H','bend_bl','empty','empty',
       'empty','empty','empty','empty','bend_tr','H','bulb',
     ],
     rotatable: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0],
