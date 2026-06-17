@@ -389,6 +389,9 @@ export default function Level1() {
 
       {/* Actions */}
       <div style={{display:"flex",gap:8,justifyContent:"center",flexWrap:"wrap"}}>
+        <button onClick={()=>setShowExit(true)} style={{padding:"8px 18px",borderRadius:8,border:"0.5px solid hsl(0, 70%, 50%)",background:"hsl(0, 60%, 18%)",fontSize:13,cursor:"pointer",color:"hsl(0, 84%, 75%)",fontWeight:500}}>
+          {t('exitAttempt.exit','Salir')}
+        </button>
         <button onClick={reset} style={{padding:"8px 18px",borderRadius:8,border:"0.5px solid #e2e8f0",background:"hsl(217, 33%, 17%)",fontSize:13,cursor:"pointer",color:"hsl(215, 20%, 75%)"}}>
           {t('level1.reset')}
         </button>
