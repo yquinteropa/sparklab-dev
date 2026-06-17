@@ -8,6 +8,8 @@ import { useTranslation } from 'react-i18next';
 import { DashboardNav } from '@/components/DashboardNav';
 import { SiteFooter } from '@/components/SiteFooter';
 import { useAccessibility } from '@/contexts/AccessibilityContext';
+import { useAuth } from '@/contexts/AuthContext';
+import { isLevelAwarded } from '@/lib/progress';
 import { toast } from 'sonner';
 
 type Lesson = { id: number; title: string; icon: string; done: boolean; xp: number };
@@ -569,11 +571,13 @@ function LessonsDrawer({ mod, onClose, isLight }: { mod: Module | null; onClose:
 export default function Modules() {
   const [openMod, setOpenMod] = useState<Module | null>(null);
   const { themeMode } = useAccessibility();
+  const { user } = useAuth();
   const { t } = useTranslation();
   const isLight = themeMode === 'light';
   const totalXP = 125;
   const userLevel = 2;
-  const MODULES_DATA = buildModulesData(t);
+  // Datos derivados del progreso real del usuario (localStorage por nivel completado).
+  const MODULES_DATA = buildModulesData(t, user?.id);
 
 
   const pageBg = isLight
