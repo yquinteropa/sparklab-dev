@@ -324,9 +324,10 @@ export default function Level1() {
 
   return (
     <div style={{ fontFamily:"'Inter',sans-serif", padding:"24px 16px", maxWidth:560, margin:"0 auto" }}>
-      {showIntro && <IntroModal onPlay={()=>setShowIntro(false)} onBook={()=>{setShowIntro(false);setShowBook(true);}}/>}
+      {showIntro && <IntroModal onPlay={()=>setShowIntro(false)} onBook={()=>{setShowIntro(false);setShowBook(true);}} onExit={()=>navigate('/dashboard/modules')}/>}
       {showBook  && <BookModal onClose={()=>setShowBook(false)}/>}
       {showComplete && <LevelCompleteModal levelKey="basico:level1" xp={100} onClose={()=>setShowComplete(false)} />}
+      <ExitAttemptModal open={showExit} onCancel={()=>setShowExit(false)} />
 
       {/* Top bar */}
       <div style={{display:"flex",alignItems:"center",justifyContent:"space-between",marginBottom:20,flexWrap:"wrap",gap:8}}>
