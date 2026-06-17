@@ -247,6 +247,13 @@ export default function Level1() {
   const [completed, setCompleted] = useState([false,false,false]);
   const [flash, setFlash] = useState(false);
 
+  // Otorga 100 XP la primera vez que se completan los 3 puzzles del nivel.
+  useEffect(() => {
+    if (completed.every(Boolean)) {
+      awardLevelXP(user?.id, "basico:level1", 100);
+    }
+  }, [completed, user]);
+
   const pz = PUZZLES[currentPuzzle];
 
   const checkSolved = (g) => pz.solution.every((v,i)=>v===g[i]);
