@@ -30,7 +30,28 @@ type Module = {
   lessons: Lesson[];
 };
 
-function buildModulesData(t: (k: string) => string): Module[] {
+function buildModulesData(t: (k: string) => string, userId?: string): Module[] {
+  // Lectura del progreso local del usuario por nivel construido.
+  // El desbloqueo de módulos es secuencial: medio requiere terminar básico,
+  // y avanzado requiere terminar medio.
+  const basicoL1Done   = isLevelAwarded(userId, 'basico:level1');
+  const medioL1Done    = isLevelAwarded(userId, 'basico:level1-medio');
+  const avanzadoL1Done = isLevelAwarded(userId, 'basico:level1-avanzado');
+
+  const mkLessons = (
+    titles: string[],
+    icons: string[],
+    xps: number[],
+    firstDone: boolean,
+  ): Lesson[] =>
+    titles.map((title, i) => ({
+      id: i + 1,
+      title,
+      icon: icons[i],
+      done: i === 0 ? firstDone : false,
+      xp: xps[i],
+    }));
+
   return [
     {
       id: 'basico',
@@ -42,18 +63,16 @@ function buildModulesData(t: (k: string) => string): Module[] {
       colorDim: 'rgba(34,211,238,0.12)',
       colorBorder: 'rgba(34,211,238,0.35)',
       colorGlow: 'rgba(34,211,238,0.18)',
-      unlocked: true,
-      currentLevel: 0,
+      unlocked: true, // Básico siempre disponible.
+      currentLevel: basicoL1Done ? 1 : 0,
       totalLevels: 6,
       xpReward: 600,
-      lessons: [
-        { id: 1, title: t('modules.basic.l1'), icon: '⚡', done: false, xp: 50 },
-        { id: 2, title: t('modules.basic.l2'), icon: '🔋', done: false, xp: 75 },
-        { id: 3, title: t('modules.basic.l3'), icon: '📐', done: false, xp: 100 },
-        { id: 4, title: t('modules.basic.l4'), icon: '▬', done: false, xp: 100 },
-        { id: 5, title: t('modules.basic.l5'), icon: '🔗', done: false, xp: 125 },
-        { id: 6, title: t('modules.basic.l6'), icon: '🔬', done: false, xp: 150 },
-      ],
+      lessons: mkLessons(
+        [t('modules.basic.l1'), t('modules.basic.l2'), t('modules.basic.l3'), t('modules.basic.l4'), t('modules.basic.l5'), t('modules.basic.l6')],
+        ['⚡','🔋','📐','▬','🔗','🔬'],
+        [50, 75, 100, 100, 125, 150],
+        basicoL1Done,
+      ),
     },
     {
       id: 'medio',
@@ -65,18 +84,16 @@ function buildModulesData(t: (k: string) => string): Module[] {
       colorDim: 'rgba(245,158,11,0.1)',
       colorBorder: 'rgba(245,158,11,0.3)',
       colorGlow: 'rgba(245,158,11,0.15)',
-      unlocked: true,
-      currentLevel: 0,
+      unlocked: basicoL1Done, // Se desbloquea al terminar el Nivel 1 Básico.
+      currentLevel: medioL1Done ? 1 : 0,
       totalLevels: 6,
       xpReward: 1200,
-      lessons: [
-        { id: 1, title: t('modules.medium.l1'), icon: '🎨', done: false, xp: 100 },
-        { id: 2, title: t('modules.medium.l2'), icon: '🔌', done: false, xp: 125 },
-        { id: 3, title: t('modules.medium.l3'), icon: '📡', done: false, xp: 150 },
-        { id: 4, title: t('modules.medium.l4'), icon: '⏱', done: false, xp: 175 },
-        { id: 5, title: t('modules.medium.l5'), icon: '🎛', done: false, xp: 200 },
-        { id: 6, title: t('modules.medium.l6'), icon: '🏆', done: false, xp: 450 },
-      ],
+      lessons: mkLessons(
+        [t('modules.medium.l1'), t('modules.medium.l2'), t('modules.medium.l3'), t('modules.medium.l4'), t('modules.medium.l5'), t('modules.medium.l6')],
+        ['🎨','🔌','📡','⏱','🎛','🏆'],
+        [100, 125, 150, 175, 200, 450],
+        medioL1Done,
+      ),
     },
     {
       id: 'avanzado',
@@ -88,18 +105,16 @@ function buildModulesData(t: (k: string) => string): Module[] {
       colorDim: 'rgba(167,139,250,0.1)',
       colorBorder: 'rgba(167,139,250,0.3)',
       colorGlow: 'rgba(167,139,250,0.15)',
-      unlocked: true,
-      currentLevel: 0,
+      unlocked: medioL1Done, // Se desbloquea al terminar el Nivel 1 Medio.
+      currentLevel: avanzadoL1Done ? 1 : 0,
       totalLevels: 6,
       xpReward: 2400,
-      lessons: [
-        { id: 1, title: t('modules.advanced.l1'), icon: '0️⃣', done: false, xp: 150 },
-        { id: 2, title: t('modules.advanced.l2'), icon: '🔣', done: false, xp: 200 },
-        { id: 3, title: t('modules.advanced.l3'), icon: '🧩', done: false, xp: 250 },
-        { id: 4, title: t('modules.advanced.l4'), icon: '💾', done: false, xp: 300 },
-        { id: 5, title: t('modules.advanced.l5'), icon: '🤖', done: false, xp: 400 },
-        { id: 6, title: t('modules.advanced.l6'), icon: '🚀', done: false, xp: 1100 },
-      ],
+      lessons: mkLessons(
+        [t('modules.advanced.l1'), t('modules.advanced.l2'), t('modules.advanced.l3'), t('modules.advanced.l4'), t('modules.advanced.l5'), t('modules.advanced.l6')],
+        ['0️⃣','🔣','🧩','💾','🤖','🚀'],
+        [150, 200, 250, 300, 400, 1100],
+        avanzadoL1Done,
+      ),
     },
   ];
 }
