@@ -203,7 +203,8 @@ export default function Level1Medio(){
           {t('level1Medio.formulaText')}<br/>
           <span style={{fontSize:11}}>{t('level1Medio.formulaExample')}</span>
         </div>
-        <div style={{display:'flex',gap:8,justifyContent:'flex-end'}}>
+        <div style={{display:'flex',gap:8,justifyContent:'flex-end',alignItems:'center'}}>
+          <button onClick={()=>navigate('/dashboard/modules')} style={{padding:'8px 16px',borderRadius:8,border:'0.5px solid hsl(0, 70%, 50%)',background:'hsl(0, 60%, 18%)',fontSize:13,cursor:'pointer',color:'hsl(0, 84%, 75%)'}}>{t('level1Medio.exit','Salir')}</button>
           <button onClick={()=>setScreen('book')} style={{padding:'8px 16px',borderRadius:8,border:'0.5px solid #e2e8f0',background:'hsl(217, 33%, 17%)',fontSize:13,cursor:'pointer',color:'hsl(215, 20%, 75%)'}}>{t('level1Medio.tableBtn')}</button>
           <button onClick={()=>setScreen('game')} style={{padding:'8px 20px',borderRadius:8,border:'0.5px solid #93c5fd',background:'hsl(217, 91%, 20%)',fontSize:13,cursor:'pointer',color:'hsl(199, 89%, 70%)',fontWeight:500}}>{t('level1Medio.startBtn')}</button>
         </div>
