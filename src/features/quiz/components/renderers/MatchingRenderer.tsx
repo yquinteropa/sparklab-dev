@@ -35,9 +35,6 @@ export function MatchingRenderer({
     setMatches({});
   }, [question.id]);
 
-  const usedRight = new Set(Object.values(matches));
-  const allDone = Object.keys(matches).length === pairs.length;
-
   // Set de índices del lado derecho ya utilizados (para deshabilitarlos visualmente)
   const usedRight = new Set(Object.values(matches));
   // ¿Todos los pares ya tienen asignación? Habilita el botón "Confirmar".
