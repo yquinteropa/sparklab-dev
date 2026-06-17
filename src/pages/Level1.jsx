@@ -236,6 +236,7 @@ function BookModal({ onClose }) {
 
 export default function Level1() {
   const { t } = useTranslation();
+  const { user } = useAuth();
   const PUZZLES = useMemo(() => buildPuzzles(t), [t]);
   const [showIntro, setShowIntro] = useState(true);
   const [showBook, setShowBook]   = useState(false);
