@@ -144,6 +144,11 @@ export function AccessibilityProvider({ children }: { children: ReactNode }) {
     }
   };
 
+  // ─── EFECTO: APLICAR TAMAÑO DE FUENTE GLOBAL ───
+  // Cada vez que cambia el estado 'fontSize' (small | normal | large) se limpian
+  // las clases anteriores en <html> y se añade la nueva. Las reglas correspondientes
+  // viven en index.css (@layer base) y establecen font-size: 14px, 16px o 20px
+  // sobre la raíz, escalando toda la interfaz que dependa de rem/em.
   useEffect(() => {
     const root = document.documentElement;
     root.classList.remove('font-size-small', 'font-size-normal', 'font-size-large');
