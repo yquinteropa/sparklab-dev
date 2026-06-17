@@ -41,6 +41,21 @@ export type Database = {
         }
         Relationships: []
       }
+      leaderboard_meta: {
+        Row: {
+          id: number
+          last_reset_at: string
+        }
+        Insert: {
+          id?: number
+          last_reset_at?: string
+        }
+        Update: {
+          id?: number
+          last_reset_at?: string
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           avatar_url: string | null
@@ -232,6 +247,7 @@ export type Database = {
           explanation: string
         }[]
       }
+      ensure_weekly_reset: { Args: never; Returns: boolean }
       get_quiz_questions: {
         Args: { p_limit?: number }
         Returns: {
