@@ -284,7 +284,7 @@ export default function Level1Medio(){
             </div>
             <div style={{display:'flex',alignItems:'center',justifyContent:'center',gap:10}}>
               <input type="number" value={ohmsInput} onChange={e=>setOhmsInput(e.target.value)} placeholder={t('level1Medio.valuePlaceholder')}
-                style={{width:120,height:36,borderRadius:8,border:'0.5px solid #e2e8f0',fontSize:15,textAlign:'center',padding:'0 8px',fontFamily:'monospace'}}/>
+                style={{width:120,height:36,borderRadius:8,border:'0.5px solid #e2e8f0',fontSize:15,textAlign:'center',padding:'0 8px',fontFamily:'monospace',background:'hsl(217, 33%, 17%)',color:'hsl(210, 40%, 96%)'}}/>
               <span style={{fontSize:13,color:'hsl(215, 20%, 70%)'}}>Ω</span>
             </div>
           </>
