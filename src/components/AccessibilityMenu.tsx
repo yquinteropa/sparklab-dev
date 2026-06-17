@@ -1,3 +1,20 @@
+/**
+ * Menú Flotante de Accesibilidad
+ *
+ * Este componente renderiza el botón circular fijo en la esquina inferior derecha
+ * que abre un panel con opciones de accesibilidad. Gestiona tres funcionalidades
+ * principales ya construidas:
+ *
+ * 1. Tamaño de fuente: Cambia la escala tipográfica global (small/normal/large)
+ *    aplicando clases CSS al elemento <html> raíz (ver index.css).
+ * 2. Modo oscuro: Alterna el tema visual entre claro y oscuro mediante la clase
+ *    .dark en <html>, redefiniendo todas las variables CSS de color.
+ * 3. Alto contraste: Activa un perfil de colores de máximo contraste (negro,
+ *    blanco y amarillo) para usuarios con baja visión, aplicando la clase
+ *    .high-contrast en <html>.
+ *
+ * La lógica de estado y persistencia vive en AccessibilityContext.tsx.
+ */
 import { useState } from 'react';
 import { Accessibility, Sun, Moon, Contrast, Type, Globe } from 'lucide-react';
 import { useAccessibility } from '@/contexts/AccessibilityContext';
