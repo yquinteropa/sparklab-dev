@@ -40,6 +40,16 @@ export function AccessibilityMenu() {
         <div className="mb-3 w-64 rounded-lg border bg-card p-4 shadow-xl animate-in fade-in slide-in-from-bottom-4 duration-300" role="dialog" aria-label={t('accessibility.title')}>
           <h3 className="mb-3 text-sm font-semibold text-card-foreground font-display">{t('accessibility.title')}</h3>
 
+          {/*
+            ─── TAMAÑO DE FUENTE ───
+            Ofrece tres escalas tipográficas globales: Pequeño (14 px), Normal (16 px)
+            y Grande (20 px). Al pulsar un botón se invoca setFontSize(...) del contexto,
+            que almacena la preferencia en localStorage y aplica la clase CSS
+            correspondiente (font-size-small, font-size-normal o font-size-large)
+            sobre plano raíz <html>. Esto fuerza el tamaño base del documento, por lo que
+            todos los elementos que usen unidades relativas (rem, em) se escalan
+            proporcionalmente, mejorando la legibilidad sin romper el layout.
+          */}
           {/* Font Size */}
           <div className="mb-3">
             <label className="mb-1.5 flex items-center gap-2 text-xs text-muted-foreground">
