@@ -155,6 +155,14 @@ export function AccessibilityProvider({ children }: { children: ReactNode }) {
     root.classList.add(`font-size-${fontSize}`);
   }, [fontSize]);
 
+  // ─── EFECTO: APLICAR TEMA (OSCURO / ALTO CONTRASTE) ───
+  // Reactivo al estado 'themeMode'. Primero limpia ambas clases para evitar
+  // solapamientos, luego aplica la correspondiente:
+  // · 'dark'         → añade .dark a <html>; redefine la paleta completa en
+  //                    index.css a tonos oscuros (fondos ~#0f172a, texto claro).
+  // · 'high-contrast'→ añade .high-contrast; fuerza fondo negro, texto blanco y
+  //                    acentos amarillos para máxima legibilidad visual.
+  // · 'light'        → no añade clase especial; usa los valores por defecto :root.
   useEffect(() => {
     const root = document.documentElement;
     root.classList.remove('dark', 'high-contrast');
