@@ -11,17 +11,24 @@ import { supabase } from '@/integrations/supabase/client';
 import { useTranslation } from 'react-i18next';
 import { cn } from '@/lib/utils';
 
+/**
+ * Calcula los milisegundos restantes hasta el próximo reinicio semanal.
+ * El reset ocurre todos los lunes a las 00:00 UTC (coordinado con el cron del backend).
+ */
 function getTimeUntilNextReset() {
   const now = new Date();
   const next = new Date(now);
+  // Avanza al próximo lunes; getUTCDay() devuelve 0=domingo..6=sábado
   next.setUTCDate(now.getUTCDate() + ((7 - now.getUTCDay()) % 7 || 7));
   next.setUTCHours(0, 0, 0, 0);
+  // Si por cualquier desfase quedó en el pasado, suma una semana completa
   if (next.getTime() <= now.getTime()) {
     next.setUTCDate(next.getUTCDate() + 7);
   }
   return next.getTime() - now.getTime();
 }
 
+// Formatea milisegundos a un string tipo "Xd HH:MM:SS" (sin días si no aplican).
 function formatCountdown(ms: number) {
   const s = Math.max(0, Math.floor(ms / 1000));
   const days = Math.floor(s / 86400);
@@ -33,6 +40,7 @@ function formatCountdown(ms: number) {
   return `${pad(hours)}:${pad(minutes)}:${pad(seconds)}`;
 }
 
+// Hook que mantiene actualizada (cada segundo) la cuenta atrás hasta el reset.
 function useCountdown() {
   const [ms, setMs] = useState(getTimeUntilNextReset());
   useEffect(() => {
@@ -42,12 +50,13 @@ function useCountdown() {
   return ms;
 }
 
+// Estructura de una fila devuelta por el RPC `get_weekly_leaderboard`.
 interface LeaderboardRow {
-  rank: number;
-  score: number;
+  rank: number;            // Posición global (1..N)
+  score: number;           // Puntuación acumulada de la semana
   display_name: string | null;
   avatar_url: string | null;
-  is_me: boolean;
+  is_me: boolean;          // Bandera del backend que identifica al usuario actual
 }
 
 const podiumStyles = [
@@ -86,9 +95,12 @@ export default function Leaderboard() {
   const [loading, setLoading] = useState(true);
   const countdownMs = useCountdown();
 
+  // Carga única del leaderboard al montar la página.
+  // El flag `alive` evita actualizar el estado si el componente se desmonta antes.
   useEffect(() => {
     let alive = true;
     (async () => {
+      // RPC seguro: el backend aplica filtros, calcula `is_me` y limita el tamaño.
       const { data, error } = await supabase.rpc('get_weekly_leaderboard');
       if (!alive) return;
       if (error) {
@@ -103,6 +115,7 @@ export default function Leaderboard() {
     };
   }, []);
 
+  // Separa el podio (top 3) del resto para layouts visuales distintos.
   const top3 = rows.slice(0, 3);
   const rest = rows.slice(3);
 
