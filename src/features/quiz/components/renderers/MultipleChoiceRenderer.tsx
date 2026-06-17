@@ -1,3 +1,8 @@
+/**
+ * Renderer de preguntas de opción múltiple.
+ * Muestra el enunciado y un grid de botones; al hacer click, dispara `onAnswer`
+ * con el texto exacto de la opción seleccionada (el motor compara strings).
+ */
 import { motion } from 'framer-motion';
 import type { RendererProps } from '../../types';
 

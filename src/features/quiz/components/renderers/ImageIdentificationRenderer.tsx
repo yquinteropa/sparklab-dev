@@ -1,3 +1,7 @@
+/**
+ * Renderer de preguntas de identificación por imagen.
+ * Muestra una imagen (con fallback si falla la carga) y opciones tipo botón.
+ */
 import { motion } from 'framer-motion';
 import { ImageOff } from 'lucide-react';
 import { useState } from 'react';

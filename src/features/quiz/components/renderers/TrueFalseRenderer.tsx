@@ -1,3 +1,7 @@
+/**
+ * Renderer de preguntas Verdadero/Falso.
+ * Renderiza dos botones grandes y devuelve un boolean como respuesta.
+ */
 import { motion } from 'framer-motion';
 import { Check, X } from 'lucide-react';
 import type { RendererProps } from '../../types';
