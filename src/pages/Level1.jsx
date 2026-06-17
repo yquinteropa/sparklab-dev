@@ -5,9 +5,11 @@
  */
 import React, { useState, useMemo, useEffect } from "react";
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
 import { awardLevelXP } from "@/lib/progress";
 import { LevelCompleteModal } from "@/components/LevelCompleteModal";
+import { ExitAttemptModal } from "@/components/ExitAttemptModal";
 
 const buildPuzzles = (t) => [
   {
@@ -151,7 +153,7 @@ function CableCell({ type, lit, rotatable, onClick }) {
 }
 
 // ── Modal intro ──
-function IntroModal({ onPlay, onBook }) {
+function IntroModal({ onPlay, onBook, onExit }) {
   const { t } = useTranslation();
   return (
     <div style={{
@@ -179,7 +181,11 @@ function IntroModal({ onPlay, onBook }) {
         <p style={{fontSize:12,color:"hsl(215, 20%, 65%)",marginBottom:18}}>
           {t('level1.introTip')}
         </p>
-        <div style={{display:"flex",gap:8,justifyContent:"flex-end"}}>
+        <div style={{display:"flex",gap:8,justifyContent:"flex-end",flexWrap:"wrap"}}>
+          <button onClick={onExit} style={{
+            padding:"8px 16px",borderRadius:8,border:"0.5px solid hsl(0, 70%, 50%)",
+            background:"hsl(0, 60%, 18%)",fontSize:13,cursor:"pointer",color:"hsl(0, 84%, 75%)",
+          }}>{t('exitAttempt.exit','Salir')}</button>
           <button onClick={onBook} style={{
             display:"flex",alignItems:"center",gap:6,padding:"8px 16px",
             borderRadius:8,border:"0.5px solid #cbd5e1",background:"hsl(217, 33%, 17%)",
@@ -238,6 +244,7 @@ function BookModal({ onClose }) {
 export default function Level1() {
   const { t } = useTranslation();
   const { user } = useAuth();
+  const navigate = useNavigate();
   const PUZZLES = useMemo(() => buildPuzzles(t), [t]);
   const [showIntro, setShowIntro] = useState(true);
   const [showBook, setShowBook]   = useState(false);
@@ -249,6 +256,7 @@ export default function Level1() {
   const [flash, setFlash] = useState(false);
   // Modal de "Nivel completado" — se abre al terminar los 3 puzzles.
   const [showComplete, setShowComplete] = useState(false);
+  const [showExit, setShowExit] = useState(false);
 
   // Otorga 100 XP la primera vez que se completan los 3 puzzles del nivel
   // y muestra el modal con la opción de avanzar al siguiente nivel.
@@ -316,9 +324,10 @@ export default function Level1() {
 
   return (
     <div style={{ fontFamily:"'Inter',sans-serif", padding:"24px 16px", maxWidth:560, margin:"0 auto" }}>
-      {showIntro && <IntroModal onPlay={()=>setShowIntro(false)} onBook={()=>{setShowIntro(false);setShowBook(true);}}/>}
+      {showIntro && <IntroModal onPlay={()=>setShowIntro(false)} onBook={()=>{setShowIntro(false);setShowBook(true);}} onExit={()=>navigate('/dashboard/modules')}/>}
       {showBook  && <BookModal onClose={()=>setShowBook(false)}/>}
       {showComplete && <LevelCompleteModal levelKey="basico:level1" xp={100} onClose={()=>setShowComplete(false)} />}
+      <ExitAttemptModal open={showExit} onCancel={()=>setShowExit(false)} />
 
       {/* Top bar */}
       <div style={{display:"flex",alignItems:"center",justifyContent:"space-between",marginBottom:20,flexWrap:"wrap",gap:8}}>
@@ -380,6 +389,9 @@ export default function Level1() {
 
       {/* Actions */}
       <div style={{display:"flex",gap:8,justifyContent:"center",flexWrap:"wrap"}}>
+        <button onClick={()=>setShowExit(true)} style={{padding:"8px 18px",borderRadius:8,border:"0.5px solid hsl(0, 70%, 50%)",background:"hsl(0, 60%, 18%)",fontSize:13,cursor:"pointer",color:"hsl(0, 84%, 75%)",fontWeight:500}}>
+          {t('exitAttempt.exit','Salir')}
+        </button>
         <button onClick={reset} style={{padding:"8px 18px",borderRadius:8,border:"0.5px solid #e2e8f0",background:"hsl(217, 33%, 17%)",fontSize:13,cursor:"pointer",color:"hsl(215, 20%, 75%)"}}>
           {t('level1.reset')}
         </button>

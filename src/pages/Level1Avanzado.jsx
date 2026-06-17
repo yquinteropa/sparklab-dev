@@ -4,9 +4,11 @@
  */
 import React, { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
 import { awardLevelXP } from "@/lib/progress";
 import { LevelCompleteModal } from "@/components/LevelCompleteModal";
+import { ExitAttemptModal } from "@/components/ExitAttemptModal";
 
 const EXERCISES = [
   {
@@ -128,7 +130,9 @@ function ReferenceModal({ onClose, t }) {
 export default function Level1Avanzado() {
   const { t } = useTranslation();
   const { user } = useAuth();
+  const navigate = useNavigate();
   const [screen, setScreen] = useState("intro");
+  const [showExit, setShowExit] = useState(false);
   const [qIdx, setQIdx] = useState(0);
   const [resistors, setResistors] = useState([]);
   const [selected, setSelected] = useState([]);
@@ -263,7 +267,10 @@ export default function Level1Avanzado() {
           {t("level1Avanzado.how2")}<br />
           {t("level1Avanzado.how3")}
         </div>
-        <div style={{ display: "flex", gap: 8, justifyContent: "flex-end" }}>
+        <div style={{ display: "flex", gap: 8, justifyContent: "flex-end", flexWrap: "wrap" }}>
+          <button onClick={() => navigate('/dashboard/modules')} style={{ padding: "7px 16px", borderRadius: 8, border: "1px solid hsl(0, 70%, 50%)", background: "hsl(0, 60%, 18%)", fontSize: 12, cursor: "pointer", color: "hsl(0, 84%, 75%)", fontWeight: 500 }}>
+            {t("exitAttempt.exit", "Salir")}
+          </button>
           <button onClick={() => setScreen("book")} style={{ padding: "7px 16px", borderRadius: 8, border: `1px solid ${C.border}`, background: C.bg2, fontSize: 12, cursor: "pointer", color: C.muted }}>
             📖 {t("level1Avanzado.reference")}
           </button>
@@ -278,6 +285,7 @@ export default function Level1Avanzado() {
   return (
     <div style={{ padding: "1.5rem 0", maxWidth: 640, margin: "0 auto", fontFamily: "sans-serif", color: C.text }}>
       {showComplete && <LevelCompleteModal levelKey="basico:level1-avanzado" xp={100} onClose={()=>setShowComplete(false)} />}
+      <ExitAttemptModal open={showExit} onCancel={()=>setShowExit(false)} />
       <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "1rem", flexWrap: "wrap", gap: 8 }}>
         <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
           <span style={{ fontSize: 16 }}>⚡</span>
@@ -386,7 +394,10 @@ export default function Level1Avanzado() {
         </div>
       )}
 
-      <div style={{ display: "flex", gap: 8, justifyContent: "flex-end" }}>
+      <div style={{ display: "flex", gap: 8, justifyContent: "flex-end", flexWrap: "wrap" }}>
+        <button onClick={() => setShowExit(true)} style={{ padding: "7px 16px", borderRadius: 8, border: "1px solid hsl(0, 70%, 50%)", background: "hsl(0, 60%, 18%)", fontSize: 12, cursor: "pointer", color: "hsl(0, 84%, 75%)", fontWeight: 500 }}>
+          {t("exitAttempt.exit", "Salir")}
+        </button>
         <button onClick={() => loadExercise(qIdx)} style={{ padding: "7px 16px", borderRadius: 8, border: `1px solid ${C.border}`, background: C.bg2, fontSize: 12, cursor: "pointer", color: C.muted }}>
           🔄 {t("level1Avanzado.restart")}
         </button>
