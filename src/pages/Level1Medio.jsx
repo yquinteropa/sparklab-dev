@@ -4,6 +4,8 @@
  */
 import React, { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
+import { toast } from "sonner";
 import { useAuth } from "@/contexts/AuthContext";
 import { awardLevelXP } from "@/lib/progress";
 import { LevelCompleteModal } from "@/components/LevelCompleteModal";
