@@ -352,6 +352,7 @@ export default function Profile() {
       if (progress) {
         setXp(progress.xp ?? 0);
         setLevel(progress.level ?? 1);
+        setMissionsCompleted(progress.missions_completed ?? 0);
       }
       setLoading(false);
     };
