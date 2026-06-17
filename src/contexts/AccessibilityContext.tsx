@@ -1,3 +1,17 @@
+/**
+ * AccessibilityContext
+ *
+ * Provee el estado global y los efectos secundarios para las funcionalidades de
+ * accesibilidad construidas en SparkLab. Este archivo es el "cerebro" que
+ * sincroniza las preferencias del usuario con el DOM y con la base de datos.
+ *
+ * Funcionalidades documentadas:
+ * 1. Tamaño de fuente   → Clases CSS en <html> + localStorage.
+ * 2. Modo oscuro        → Clase .dark en <html> + localStorage.
+ * 3. Alto contraste     → Clase .high-contrast en <html> + localStorage.
+ *
+ * Además gestiona el idioma (i18n) sincronizándolo con el perfil de Supabase.
+ */
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
 import { supabase } from '@/integrations/supabase/client';

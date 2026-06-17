@@ -70,6 +70,19 @@ export function AccessibilityMenu() {
             </div>
           </div>
 
+          {/*
+            ─── MODO VISUAL (CLARO / OSCURO / ALTO CONTRASTE) ───
+            Este bloque agrupa las tres variantes de tema en botones verticales:
+            · light   → tema diurno con fondos claros (valores CSS en :root).
+            · dark    → tema nocturno que añade la clase .dark a <html> y redefine
+                        la paleta completa mediante variables CSS (fondos oscuros,
+                        texto claro, bordes tenues), reduciendo la fatiga visual.
+            · high-contrast → perfil accesible que fuerza fondo negro, texto blanco
+                              y acentos amarillos (clase .high-contrast en <html>)
+                              para maximizar la diferencia de luminosidad y ayudar
+                              a usuarios con baja visión o daltonismo.
+            El estado se guarda en localStorage para persistir entre sesiones.
+          */}
           {/* Theme */}
           <div className="mb-3">
             <label className="mb-1.5 flex items-center gap-2 text-xs text-muted-foreground">
