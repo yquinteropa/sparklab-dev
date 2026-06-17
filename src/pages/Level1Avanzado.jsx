@@ -277,6 +277,7 @@ export default function Level1Avanzado() {
 
   return (
     <div style={{ padding: "1.5rem 0", maxWidth: 640, margin: "0 auto", fontFamily: "sans-serif", color: C.text }}>
+      {showComplete && <LevelCompleteModal levelKey="basico:level1-avanzado" xp={100} onClose={()=>setShowComplete(false)} />}
       <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "1rem", flexWrap: "wrap", gap: 8 }}>
         <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
           <span style={{ fontSize: 16 }}>⚡</span>
