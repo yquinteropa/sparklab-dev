@@ -130,7 +130,9 @@ function ReferenceModal({ onClose, t }) {
 export default function Level1Avanzado() {
   const { t } = useTranslation();
   const { user } = useAuth();
+  const navigate = useNavigate();
   const [screen, setScreen] = useState("intro");
+  const [showExit, setShowExit] = useState(false);
   const [qIdx, setQIdx] = useState(0);
   const [resistors, setResistors] = useState([]);
   const [selected, setSelected] = useState([]);
