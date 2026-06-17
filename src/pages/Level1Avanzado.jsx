@@ -4,6 +4,8 @@
  */
 import React, { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
+import { useAuth } from "@/contexts/AuthContext";
+import { awardLevelXP } from "@/lib/progress";
 
 const EXERCISES = [
   {
@@ -124,6 +126,7 @@ function ReferenceModal({ onClose, t }) {
 
 export default function Level1Avanzado() {
   const { t } = useTranslation();
+  const { user } = useAuth();
   const [screen, setScreen] = useState("intro");
   const [qIdx, setQIdx] = useState(0);
   const [resistors, setResistors] = useState([]);
@@ -132,6 +135,14 @@ export default function Level1Avanzado() {
   const [history, setHistory] = useState([]);
   const [msg, setMsg] = useState({ type: "info", text: "" });
   const [completed, setCompleted] = useState([false, false, false]);
+
+  // Otorga 100 XP la primera vez que se completan los 3 ejercicios.
+  useEffect(() => {
+    if (completed.every(Boolean)) {
+      awardLevelXP(user?.id, "basico:level1-avanzado", 100);
+    }
+  }, [completed, user]);
+
 
   useEffect(() => {
     if (screen === "game") loadExercise(qIdx);

@@ -3,8 +3,10 @@
  * Contiene varios puzzles de rotación de piezas; al activar el circuito se valida
  * que el camino de corriente coincida con la solución esperada.
  */
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import { useTranslation } from "react-i18next";
+import { useAuth } from "@/contexts/AuthContext";
+import { awardLevelXP } from "@/lib/progress";
 
 const buildPuzzles = (t) => [
   {
@@ -234,6 +236,7 @@ function BookModal({ onClose }) {
 
 export default function Level1() {
   const { t } = useTranslation();
+  const { user } = useAuth();
   const PUZZLES = useMemo(() => buildPuzzles(t), [t]);
   const [showIntro, setShowIntro] = useState(true);
   const [showBook, setShowBook]   = useState(false);
@@ -243,6 +246,13 @@ export default function Level1() {
   const [msg, setMsg]   = useState({ type:"info", text:t('level1.msgRotate') });
   const [completed, setCompleted] = useState([false,false,false]);
   const [flash, setFlash] = useState(false);
+
+  // Otorga 100 XP la primera vez que se completan los 3 puzzles del nivel.
+  useEffect(() => {
+    if (completed.every(Boolean)) {
+      awardLevelXP(user?.id, "basico:level1", 100);
+    }
+  }, [completed, user]);
 
   const pz = PUZZLES[currentPuzzle];
 

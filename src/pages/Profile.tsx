@@ -304,9 +304,10 @@ export default function Profile() {
   const [country, setCountry] = useState('');
   const [joinDate, setJoinDate] = useState<string>('—');
 
-  // Gamification (real from user_progress, otherwise zero)
+  // Gamificación (datos reales desde user_progress; por defecto en 0).
   const [xp, setXp] = useState(0);
   const [level, setLevel] = useState(1);
+  const [missionsCompleted, setMissionsCompleted] = useState(0);
 
   const genders = [
     { value: 'male', label: t('auth.genderMale') },
@@ -327,7 +328,7 @@ export default function Profile() {
           .maybeSingle(),
         supabase
           .from('user_progress')
-          .select('xp, level')
+          .select('xp, level, missions_completed')
           .eq('user_id', user.id)
           .maybeSingle(),
       ]);
@@ -351,6 +352,7 @@ export default function Profile() {
       if (progress) {
         setXp(progress.xp ?? 0);
         setLevel(progress.level ?? 1);
+        setMissionsCompleted(progress.missions_completed ?? 0);
       }
       setLoading(false);
     };
@@ -398,15 +400,21 @@ export default function Profile() {
     { name: t('profile.modules.capacitors'), progress: 20 },
     { name: t('profile.modules.inductors'), progress: 0 },
   ];
+  // Logros: por defecto TODOS bloqueados. El progreso se deriva de missionsCompleted (niveles completados).
+  // El primer logro se desbloquea al completar 1 misión; los demás escalan según el avance real del usuario.
+  const milestone = (need: number) => ({
+    progress: Math.min(missionsCompleted, need),
+    unlocked: missionsCompleted >= need,
+  });
   const achievements: Achievement[] = [
-    { id: 1, title: t('profile.achievements.firstSpark.title'), icon: 'zap', unlocked: true, description: t('profile.achievements.firstSpark.desc'), progress: 1, total: 1, xpReward: 50 },
-    { id: 2, title: t('profile.achievements.ohmMaster.title'), icon: 'omega', unlocked: true, description: t('profile.achievements.ohmMaster.desc'), progress: 10, total: 10, xpReward: 200 },
-    { id: 3, title: t('profile.achievements.streak.title'), icon: 'flame', unlocked: true, description: t('profile.achievements.streak.desc'), progress: 7, total: 7, xpReward: 150 },
-    { id: 4, title: t('profile.achievements.serial.title'), icon: 'link', unlocked: true, description: t('profile.achievements.serial.desc'), progress: 15, total: 15, xpReward: 175 },
-    { id: 5, title: t('profile.achievements.parallel.title'), icon: 'settings', unlocked: false, description: t('profile.achievements.parallel.desc'), progress: 6, total: 10, xpReward: 200 },
-    { id: 6, title: t('profile.achievements.kirchhoffNovice.title'), icon: 'book', unlocked: false, description: t('profile.achievements.kirchhoffNovice.desc'), progress: 0, total: 1, xpReward: 100 },
-    { id: 7, title: t('profile.achievements.speedster.title'), icon: 'timer', unlocked: false, description: t('profile.achievements.speedster.desc'), progress: 0, total: 1, xpReward: 75 },
-    { id: 8, title: t('profile.achievements.perfectionist.title'), icon: 'trophy', unlocked: false, description: t('profile.achievements.perfectionist.desc'), progress: 2, total: 5, xpReward: 250 },
+    { id: 1, title: t('profile.achievements.firstSpark.title'),       icon: 'zap',      description: t('profile.achievements.firstSpark.desc'),       total: 1,  xpReward: 50,  ...milestone(1) },
+    { id: 2, title: t('profile.achievements.ohmMaster.title'),        icon: 'omega',    description: t('profile.achievements.ohmMaster.desc'),        total: 10, xpReward: 200, ...milestone(10) },
+    { id: 3, title: t('profile.achievements.streak.title'),           icon: 'flame',    description: t('profile.achievements.streak.desc'),           total: 7,  xpReward: 150, ...milestone(7) },
+    { id: 4, title: t('profile.achievements.serial.title'),           icon: 'link',     description: t('profile.achievements.serial.desc'),           total: 15, xpReward: 175, ...milestone(15) },
+    { id: 5, title: t('profile.achievements.parallel.title'),         icon: 'settings', description: t('profile.achievements.parallel.desc'),         total: 10, xpReward: 200, ...milestone(10) },
+    { id: 6, title: t('profile.achievements.kirchhoffNovice.title'),  icon: 'book',     description: t('profile.achievements.kirchhoffNovice.desc'),  total: 1,  xpReward: 100, ...milestone(3) },
+    { id: 7, title: t('profile.achievements.speedster.title'),        icon: 'timer',    description: t('profile.achievements.speedster.desc'),        total: 1,  xpReward: 75,  ...milestone(5) },
+    { id: 8, title: t('profile.achievements.perfectionist.title'),    icon: 'trophy',   description: t('profile.achievements.perfectionist.desc'),    total: 5,  xpReward: 250, ...milestone(5) },
   ];
 
   const unlockedCount = achievements.filter(a => a.unlocked).length;

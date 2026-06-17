@@ -2,8 +2,10 @@
  * Nivel 1 del módulo MEDIO: identificación de resistencias por bandas de color.
  * El usuario combina bandas y la lógica compara el valor calculado con el esperado.
  */
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
+import { useAuth } from "@/contexts/AuthContext";
+import { awardLevelXP } from "@/lib/progress";
 
 const BANDS = [
   {name:'Negro',   hex:'#1a1a1a', digit:0, mult:1,       tol:null},
@@ -81,6 +83,7 @@ function ColorTable({ t, bandName }){
 
 export default function Level1Medio(){
   const { t } = useTranslation();
+  const { user } = useAuth();
   const bandName = (n) => t(`level1Medio.bandNames.${n}`, { defaultValue: n });
   const [screen, setScreen] = useState('intro'); // intro | book | game
   const [part,   setPart]   = useState(0);
@@ -89,6 +92,13 @@ export default function Level1Medio(){
   const [ohmsInput, setOhmsInput] = useState('');
   const [msg,    setMsg]    = useState({type:'info',text:t('level1Medio.msgInfo1')});
   const [completed, setCompleted] = useState([0,0]);
+
+  // Otorga 100 XP la primera vez que se completan ambas partes (3+3 retos).
+  useEffect(() => {
+    if (completed[0] >= 3 && completed[1] >= 3) {
+      awardLevelXP(user?.id, "basico:level1-medio", 100);
+    }
+  }, [completed, user]);
 
   const q1 = PART1_Q[qIdx];
   const q2 = PART2_Q[qIdx];
