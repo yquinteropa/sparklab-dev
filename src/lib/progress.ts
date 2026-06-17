@@ -1,5 +1,6 @@
 /**
- * Utilidades para otorgar experiencia (XP) y registrar misiones completadas.
+ * Utilidades para otorgar experiencia (XP), registrar misiones completadas
+ * y consultar el progreso local del usuario por nivel.
  *
  * Reglas:
  *  - Cada nivel completado otorga 100 XP por defecto y suma 1 a missions_completed.
@@ -13,6 +14,39 @@ import { toast } from "sonner";
 const STORAGE_PREFIX = "sparklab:awarded:";
 
 /**
+ * Clave única de localStorage para marcar un nivel como completado por un usuario.
+ */
+export function awardedKey(userId: string, levelKey: string): string {
+  return `${STORAGE_PREFIX}${userId}:${levelKey}`;
+}
+
+/**
+ * Devuelve true si el usuario ya completó (y se le otorgó XP por) ese nivel.
+ * Seguro en SSR — si no hay window, devuelve false.
+ */
+export function isLevelAwarded(userId: string | undefined, levelKey: string): boolean {
+  if (!userId || typeof window === "undefined") return false;
+  return Boolean(localStorage.getItem(awardedKey(userId, levelKey)));
+}
+
+/**
+ * Mapa de progresión secuencial entre niveles construidos.
+ * Define cuál es el "siguiente nivel" disponible al terminar el actual.
+ */
+export const NEXT_LEVEL: Record<string, { route: string; key: string; label: string } | null> = {
+  "basico:level1":          { route: "/dashboard/level1-medio",    key: "basico:level1-medio",    label: "Nivel 1 — Medio" },
+  "basico:level1-medio":    { route: "/dashboard/level1-avanzado", key: "basico:level1-avanzado", label: "Nivel 1 — Avanzado" },
+  "basico:level1-avanzado": null, // Último nivel construido; vuelve a módulos.
+};
+
+/**
+ * Devuelve la información del siguiente nivel, o null si es el último.
+ */
+export function getNextLevel(levelKey: string) {
+  return NEXT_LEVEL[levelKey] ?? null;
+}
+
+/**
  * Otorga XP por completar un nivel. Idempotente por (userId, levelKey).
  * @param userId  ID del usuario autenticado.
  * @param levelKey  Clave única del nivel (ej: 'basico:level1', 'basico:level1-medio').
@@ -24,7 +58,7 @@ export async function awardLevelXP(
   amount = 100
 ): Promise<void> {
   if (!userId) return;
-  const storageKey = `${STORAGE_PREFIX}${userId}:${levelKey}`;
+  const storageKey = awardedKey(userId, levelKey);
   if (typeof window !== "undefined" && localStorage.getItem(storageKey)) {
     return; // Ya se otorgó previamente.
   }
