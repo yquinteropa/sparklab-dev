@@ -328,7 +328,7 @@ export default function Profile() {
           .maybeSingle(),
         supabase
           .from('user_progress')
-          .select('xp, level')
+          .select('xp, level, missions_completed')
           .eq('user_id', user.id)
           .maybeSingle(),
       ]);
