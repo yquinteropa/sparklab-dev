@@ -138,6 +138,11 @@ export default function Dashboard() {
     user?.user_metadata?.full_name || user?.email?.split('@')[0] || 'Explorer'
   );
 
+  // Métricas reales de gamificación del usuario.
+  const [xp, setXp] = useState(0);
+  const [missions, setMissions] = useState(0);
+  const [level, setLevel] = useState(1);
+
   const [msgIndex, setMsgIndex] = useState(0);
   const [displayText, setDisplay] = useState('');
   const [charIndex, setCharIndex] = useState(0);
