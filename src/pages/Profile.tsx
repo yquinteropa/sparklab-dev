@@ -391,15 +391,31 @@ export default function Profile() {
   const xpToNext = Math.max(100, level * 250);
   const rank = level >= 20 ? 'Diamante' : level >= 10 ? 'Oro' : level >= 5 ? 'Plata' : 'Bronce';
 
-  // Placeholder data for modules + achievements (visual content from the mock)
-  const progressData = [
-    { name: t('profile.modules.ohm'), progress: 100 },
-    { name: t('profile.modules.series'), progress: 85 },
-    { name: t('profile.modules.parallel'), progress: 60 },
-    { name: t('profile.modules.kirchhoff'), progress: 40 },
-    { name: t('profile.modules.capacitors'), progress: 20 },
-    { name: t('profile.modules.inductors'), progress: 0 },
+  // Progreso por módulo (TIER) calculado de forma realista.
+  // Cada módulo (Básico/Medio/Avanzado) contempla 6 lecciones; actualmente
+  // solo la Lección 1 está implementada en cada uno. La marca de completado
+  // queda registrada por `awardLevelXP` en localStorage con la clave
+  // `sparklab:awarded:<userId>:<levelKey>`.
+  const isDone = (levelKey: string) =>
+    typeof window !== 'undefined' &&
+    !!user?.id &&
+    localStorage.getItem(`sparklab:awarded:${user.id}:${levelKey}`) === '1';
+
+  const TOTAL_LESSONS_PER_MODULE = 6;
+  const moduleCompletion = [
+    { name: t('modules.basic.title', { defaultValue: t('profile.modules.ohm') }),
+      done: [isDone('basico:level1')].filter(Boolean).length },
+    { name: t('modules.medium.title', { defaultValue: t('profile.modules.series') }),
+      done: [isDone('basico:level1-medio')].filter(Boolean).length },
+    { name: t('modules.advanced.title', { defaultValue: t('profile.modules.parallel') }),
+      done: [isDone('basico:level1-avanzado')].filter(Boolean).length },
   ];
+  const progressData = moduleCompletion.map(m => ({
+    name: m.name,
+    progress: Math.round((m.done / TOTAL_LESSONS_PER_MODULE) * 100),
+  }));
+  // Total real de lecciones completadas (suma de los 3 módulos disponibles).
+  const totalLessonsDone = moduleCompletion.reduce((s, m) => s + m.done, 0);
   // Logros: por defecto TODOS bloqueados. El progreso se deriva de missionsCompleted (niveles completados).
   // El primer logro se desbloquea al completar 1 misión; los demás escalan según el avance real del usuario.
   const milestone = (need: number) => ({
