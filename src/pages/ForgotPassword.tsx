@@ -1,3 +1,7 @@
+/**
+ * Página de recuperación de contraseña.
+ * Solicita el correo del usuario y dispara el envío del email con el enlace de reseteo.
+ */
 import { useState } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';

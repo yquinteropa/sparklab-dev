@@ -1,3 +1,8 @@
+/**
+ * Vista del Leaderboard (clasificación) del modo cronometrado.
+ * Lee el top semanal desde el backend y resalta al usuario actual si aparece en él.
+ * El reinicio semanal se realiza vía cron job en el backend.
+ */
 import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Trophy, Medal, Crown, Zap, Loader2, Timer } from 'lucide-react';

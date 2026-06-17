@@ -1,3 +1,8 @@
+/**
+ * Pantalla unificada de autenticación (login + registro).
+ * Gestiona validación de credenciales, fortaleza de contraseña, login con proveedores OAuth
+ * y el envío del email de verificación tras un registro nuevo.
+ */
 import { useState, useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { lovable } from '@/integrations/lovable';

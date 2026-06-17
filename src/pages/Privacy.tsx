@@ -1,3 +1,6 @@
+/**
+ * Página estática con la política de privacidad de la plataforma.
+ */
 import { Zap, ArrowLeft } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";

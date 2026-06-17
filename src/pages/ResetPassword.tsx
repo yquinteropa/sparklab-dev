@@ -1,3 +1,7 @@
+/**
+ * Página de definición de nueva contraseña tras seguir el enlace de recuperación.
+ * Valida fortaleza y actualiza la credencial vía Supabase Auth.
+ */
 import { useState, useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';

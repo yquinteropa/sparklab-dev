@@ -1,3 +1,7 @@
+/**
+ * Landing page pública de SparkLab.
+ * Muestra hero, características, módulos y CTA hacia el registro/login.
+ */
 import { Link } from "react-router-dom";
 import { useEffect, useRef } from "react";
 import {

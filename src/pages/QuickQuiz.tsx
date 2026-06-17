@@ -1,3 +1,7 @@
+/**
+ * Ruta dedicada al modo cronometrado.
+ * Monta directamente el QuizEngine con su configuración por defecto.
+ */
 import { DashboardNav } from '@/components/DashboardNav';
 import { QuizEngine } from '@/features/quiz/components/QuizEngine';
 import { useTranslation } from 'react-i18next';

@@ -1,3 +1,7 @@
+/**
+ * Perfil del usuario: datos personales, avatar y preferencias de aprendizaje.
+ * Leer/actualizar va contra la tabla `profiles` con RLS por owner.
+ */
 import { useState, useEffect } from 'react';
 import { DashboardNav } from '@/components/DashboardNav';
 import { useAuth } from '@/contexts/AuthContext';

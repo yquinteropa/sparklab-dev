@@ -1,3 +1,8 @@
+/**
+ * Nivel 1 del módulo BÁSICO.
+ * Contiene varios puzzles de rotación de piezas; al activar el circuito se valida
+ * que el camino de corriente coincida con la solución esperada.
+ */
 import React, { useState, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 

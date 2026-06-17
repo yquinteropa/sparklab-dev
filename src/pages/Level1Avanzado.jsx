@@ -1,3 +1,7 @@
+/**
+ * Nivel 1 del módulo AVANZADO: ejercicios complejos de análisis de circuitos.
+ * Evalúa la respuesta del estudiante contra una serie de casos predefinidos.
+ */
 import React, { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 
