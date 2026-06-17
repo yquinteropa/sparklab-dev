@@ -89,22 +89,8 @@ export default function Level1Medio(){
   const { user } = useAuth();
   const navigate = useNavigate();
 
-  // Maneja la salida anticipada del intento: muestra un toast con confirmación
-  // explícita advirtiendo que el progreso no se guardará antes de redirigir.
-  const handleExitAttempt = () => {
-    toast(t('level1Medio.exitConfirmTitle', 'Salir del intento?'), {
-      description: t('level1Medio.exitConfirmDesc', 'Si sales ahora perderás el progreso de este intento. ¿Deseas continuar?'),
-      duration: 10000,
-      action: {
-        label: t('level1Medio.exitConfirm', 'Salir'),
-        onClick: () => navigate('/dashboard/modules'),
-      },
-      cancel: {
-        label: t('level1Medio.exitCancel', 'Cancelar'),
-        onClick: () => {},
-      },
-    });
-  };
+  // Estado del modal de confirmación de salida del intento.
+  const [showExit, setShowExit] = useState(false);
   const bandName = (n) => t(`level1Medio.bandNames.${n}`, { defaultValue: n });
   const [screen, setScreen] = useState('intro'); // intro | book | game
   const [part,   setPart]   = useState(0);
