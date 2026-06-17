@@ -252,6 +252,7 @@ export default function Level1() {
   const [flash, setFlash] = useState(false);
   // Modal de "Nivel completado" — se abre al terminar los 3 puzzles.
   const [showComplete, setShowComplete] = useState(false);
+  const [showExit, setShowExit] = useState(false);
 
   // Otorga 100 XP la primera vez que se completan los 3 puzzles del nivel
   // y muestra el modal con la opción de avanzar al siguiente nivel.
