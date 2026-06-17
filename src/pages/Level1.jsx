@@ -7,6 +7,7 @@ import React, { useState, useMemo, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { useAuth } from "@/contexts/AuthContext";
 import { awardLevelXP } from "@/lib/progress";
+import { LevelCompleteModal } from "@/components/LevelCompleteModal";
 
 const buildPuzzles = (t) => [
   {
@@ -246,11 +247,15 @@ export default function Level1() {
   const [msg, setMsg]   = useState({ type:"info", text:t('level1.msgRotate') });
   const [completed, setCompleted] = useState([false,false,false]);
   const [flash, setFlash] = useState(false);
+  // Modal de "Nivel completado" — se abre al terminar los 3 puzzles.
+  const [showComplete, setShowComplete] = useState(false);
 
-  // Otorga 100 XP la primera vez que se completan los 3 puzzles del nivel.
+  // Otorga 100 XP la primera vez que se completan los 3 puzzles del nivel
+  // y muestra el modal con la opción de avanzar al siguiente nivel.
   useEffect(() => {
     if (completed.every(Boolean)) {
       awardLevelXP(user?.id, "basico:level1", 100);
+      setShowComplete(true);
     }
   }, [completed, user]);
 
@@ -313,6 +318,7 @@ export default function Level1() {
     <div style={{ fontFamily:"'Inter',sans-serif", padding:"24px 16px", maxWidth:560, margin:"0 auto" }}>
       {showIntro && <IntroModal onPlay={()=>setShowIntro(false)} onBook={()=>{setShowIntro(false);setShowBook(true);}}/>}
       {showBook  && <BookModal onClose={()=>setShowBook(false)}/>}
+      {showComplete && <LevelCompleteModal levelKey="basico:level1" xp={100} onClose={()=>setShowComplete(false)} />}
 
       {/* Top bar */}
       <div style={{display:"flex",alignItems:"center",justifyContent:"space-between",marginBottom:20,flexWrap:"wrap",gap:8}}>
