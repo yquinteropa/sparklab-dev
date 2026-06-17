@@ -304,9 +304,10 @@ export default function Profile() {
   const [country, setCountry] = useState('');
   const [joinDate, setJoinDate] = useState<string>('—');
 
-  // Gamification (real from user_progress, otherwise zero)
+  // Gamificación (datos reales desde user_progress; por defecto en 0).
   const [xp, setXp] = useState(0);
   const [level, setLevel] = useState(1);
+  const [missionsCompleted, setMissionsCompleted] = useState(0);
 
   const genders = [
     { value: 'male', label: t('auth.genderMale') },
