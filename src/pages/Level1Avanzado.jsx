@@ -267,7 +267,10 @@ export default function Level1Avanzado() {
           {t("level1Avanzado.how2")}<br />
           {t("level1Avanzado.how3")}
         </div>
-        <div style={{ display: "flex", gap: 8, justifyContent: "flex-end" }}>
+        <div style={{ display: "flex", gap: 8, justifyContent: "flex-end", flexWrap: "wrap" }}>
+          <button onClick={() => navigate('/dashboard/modules')} style={{ padding: "7px 16px", borderRadius: 8, border: "1px solid hsl(0, 70%, 50%)", background: "hsl(0, 60%, 18%)", fontSize: 12, cursor: "pointer", color: "hsl(0, 84%, 75%)", fontWeight: 500 }}>
+            {t("exitAttempt.exit", "Salir")}
+          </button>
           <button onClick={() => setScreen("book")} style={{ padding: "7px 16px", borderRadius: 8, border: `1px solid ${C.border}`, background: C.bg2, fontSize: 12, cursor: "pointer", color: C.muted }}>
             📖 {t("level1Avanzado.reference")}
           </button>
