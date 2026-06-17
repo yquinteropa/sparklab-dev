@@ -153,7 +153,7 @@ function CableCell({ type, lit, rotatable, onClick }) {
 }
 
 // ── Modal intro ──
-function IntroModal({ onPlay, onBook }) {
+function IntroModal({ onPlay, onBook, onExit }) {
   const { t } = useTranslation();
   return (
     <div style={{
@@ -181,7 +181,11 @@ function IntroModal({ onPlay, onBook }) {
         <p style={{fontSize:12,color:"hsl(215, 20%, 65%)",marginBottom:18}}>
           {t('level1.introTip')}
         </p>
-        <div style={{display:"flex",gap:8,justifyContent:"flex-end"}}>
+        <div style={{display:"flex",gap:8,justifyContent:"flex-end",flexWrap:"wrap"}}>
+          <button onClick={onExit} style={{
+            padding:"8px 16px",borderRadius:8,border:"0.5px solid hsl(0, 70%, 50%)",
+            background:"hsl(0, 60%, 18%)",fontSize:13,cursor:"pointer",color:"hsl(0, 84%, 75%)",
+          }}>{t('exitAttempt.exit','Salir')}</button>
           <button onClick={onBook} style={{
             display:"flex",alignItems:"center",gap:6,padding:"8px 16px",
             borderRadius:8,border:"0.5px solid #cbd5e1",background:"hsl(217, 33%, 17%)",
