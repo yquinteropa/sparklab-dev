@@ -1,3 +1,17 @@
+/**
+ * AccessibilityContext
+ *
+ * Provee el estado global y los efectos secundarios para las funcionalidades de
+ * accesibilidad construidas en SparkLab. Este archivo es el "cerebro" que
+ * sincroniza las preferencias del usuario con el DOM y con la base de datos.
+ *
+ * Funcionalidades documentadas:
+ * 1. Tamaño de fuente   → Clases CSS en <html> + localStorage.
+ * 2. Modo oscuro        → Clase .dark en <html> + localStorage.
+ * 3. Alto contraste     → Clase .high-contrast en <html> + localStorage.
+ *
+ * Además gestiona el idioma (i18n) sincronizándolo con el perfil de Supabase.
+ */
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
 import { supabase } from '@/integrations/supabase/client';
@@ -130,12 +144,25 @@ export function AccessibilityProvider({ children }: { children: ReactNode }) {
     }
   };
 
+  // ─── EFECTO: APLICAR TAMAÑO DE FUENTE GLOBAL ───
+  // Cada vez que cambia el estado 'fontSize' (small | normal | large) se limpian
+  // las clases anteriores en <html> y se añade la nueva. Las reglas correspondientes
+  // viven en index.css (@layer base) y establecen font-size: 14px, 16px o 20px
+  // sobre la raíz, escalando toda la interfaz que dependa de rem/em.
   useEffect(() => {
     const root = document.documentElement;
     root.classList.remove('font-size-small', 'font-size-normal', 'font-size-large');
     root.classList.add(`font-size-${fontSize}`);
   }, [fontSize]);
 
+  // ─── EFECTO: APLICAR TEMA (OSCURO / ALTO CONTRASTE) ───
+  // Reactivo al estado 'themeMode'. Primero limpia ambas clases para evitar
+  // solapamientos, luego aplica la correspondiente:
+  // · 'dark'         → añade .dark a <html>; redefine la paleta completa en
+  //                    index.css a tonos oscuros (fondos ~#0f172a, texto claro).
+  // · 'high-contrast'→ añade .high-contrast; fuerza fondo negro, texto blanco y
+  //                    acentos amarillos para máxima legibilidad visual.
+  // · 'light'        → no añade clase especial; usa los valores por defecto :root.
   useEffect(() => {
     const root = document.documentElement;
     root.classList.remove('dark', 'high-contrast');

@@ -1,3 +1,20 @@
+/**
+ * Menú Flotante de Accesibilidad
+ *
+ * Este componente renderiza el botón circular fijo en la esquina inferior derecha
+ * que abre un panel con opciones de accesibilidad. Gestiona tres funcionalidades
+ * principales ya construidas:
+ *
+ * 1. Tamaño de fuente: Cambia la escala tipográfica global (small/normal/large)
+ *    aplicando clases CSS al elemento <html> raíz (ver index.css).
+ * 2. Modo oscuro: Alterna el tema visual entre claro y oscuro mediante la clase
+ *    .dark en <html>, redefiniendo todas las variables CSS de color.
+ * 3. Alto contraste: Activa un perfil de colores de máximo contraste (negro,
+ *    blanco y amarillo) para usuarios con baja visión, aplicando la clase
+ *    .high-contrast en <html>.
+ *
+ * La lógica de estado y persistencia vive en AccessibilityContext.tsx.
+ */
 import { useState } from 'react';
 import { Accessibility, Sun, Moon, Contrast, Type, Globe } from 'lucide-react';
 import { useAccessibility } from '@/contexts/AccessibilityContext';
@@ -23,6 +40,16 @@ export function AccessibilityMenu() {
         <div className="mb-3 w-64 rounded-lg border bg-card p-4 shadow-xl animate-in fade-in slide-in-from-bottom-4 duration-300" role="dialog" aria-label={t('accessibility.title')}>
           <h3 className="mb-3 text-sm font-semibold text-card-foreground font-display">{t('accessibility.title')}</h3>
 
+          {/*
+            ─── TAMAÑO DE FUENTE ───
+            Ofrece tres escalas tipográficas globales: Pequeño (14 px), Normal (16 px)
+            y Grande (20 px). Al pulsar un botón se invoca setFontSize(...) del contexto,
+            que almacena la preferencia en localStorage y aplica la clase CSS
+            correspondiente (font-size-small, font-size-normal o font-size-large)
+            sobre plano raíz <html>. Esto fuerza el tamaño base del documento, por lo que
+            todos los elementos que usen unidades relativas (rem, em) se escalan
+            proporcionalmente, mejorando la legibilidad sin romper el layout.
+          */}
           {/* Font Size */}
           <div className="mb-3">
             <label className="mb-1.5 flex items-center gap-2 text-xs text-muted-foreground">
@@ -43,6 +70,19 @@ export function AccessibilityMenu() {
             </div>
           </div>
 
+          {/*
+            ─── MODO VISUAL (CLARO / OSCURO / ALTO CONTRASTE) ───
+            Este bloque agrupa las tres variantes de tema en botones verticales:
+            · light   → tema diurno con fondos claros (valores CSS en :root).
+            · dark    → tema nocturno que añade la clase .dark a <html> y redefine
+                        la paleta completa mediante variables CSS (fondos oscuros,
+                        texto claro, bordes tenues), reduciendo la fatiga visual.
+            · high-contrast → perfil accesible que fuerza fondo negro, texto blanco
+                              y acentos amarillos (clase .high-contrast en <html>)
+                              para maximizar la diferencia de luminosidad y ayudar
+                              a usuarios con baja visión o daltonismo.
+            El estado se guarda en localStorage para persistir entre sesiones.
+          */}
           {/* Theme */}
           <div className="mb-3">
             <label className="mb-1.5 flex items-center gap-2 text-xs text-muted-foreground">
