@@ -1,3 +1,6 @@
+/**
+ * Página 404 mostrada cuando una ruta no coincide con ninguna definida en el router.
+ */
 import { useLocation } from "react-router-dom";
 import { useEffect } from "react";
 import { useTranslation } from "react-i18next";

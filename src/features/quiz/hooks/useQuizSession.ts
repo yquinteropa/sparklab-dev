@@ -1,3 +1,10 @@
+/**
+ * Hook principal del modo cronometrado.
+ * Orquesta: carga de preguntas (RPC), barajado, cronómetro global,
+ * validación contra el backend, cálculo de puntos y transiciones de estado.
+ *
+ * Diseño: reducer puro + efectos aislados (timer) para mantener la lógica testeable.
+ */
 import { useCallback, useEffect, useReducer, useRef } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import type {
@@ -9,11 +16,13 @@ import type {
 import { shuffle } from '../lib/shuffle';
 import { SCORING, calculatePoints } from '../lib/scoring';
 
+// Opciones de configuración aceptadas por el hook.
 interface UseQuizSessionOptions {
-  totalQuestions?: number;
-  totalSeconds?: number;
+  totalQuestions?: number; // Nº de preguntas que se solicitarán al backend
+  totalSeconds?: number;   // Duración inicial del cronómetro en segundos
 }
 
+// Estado interno del reducer.
 interface State {
   status: QuizStatus;
   questions: Question[];
@@ -26,6 +35,7 @@ interface State {
   error: string | null;
 }
 
+// Acciones soportadas por el reducer (cada una representa una transición).
 type Action =
   | { type: 'START' }
   | { type: 'LOAD' }
@@ -37,6 +47,7 @@ type Action =
   | { type: 'FINISH' }
   | { type: 'RESET' };
 
+// Estado inicial: configurable según los segundos totales pasados como opción.
 const buildInitial = (totalSeconds: number): State => ({
   status: 'ready',
   questions: [],
@@ -116,9 +127,14 @@ export function useQuizSession({
   const totalSecondsRef = useRef(totalSeconds);
   totalSecondsRef.current = totalSeconds;
 
+  /**
+   * Solicita preguntas al backend mediante un RPC, baraja las opciones
+   * (para evitar que el orden facilite la respuesta) e inicia la sesión.
+   */
   const start = useCallback(async () => {
     dispatch({ type: 'START' });
     try {
+      // RPC seguro: el backend valida y filtra preguntas según el usuario
       const { data, error } = await supabase.rpc('get_quiz_questions', {
         p_limit: totalQuestions,
       });
@@ -128,6 +144,7 @@ export function useQuizSession({
         dispatch({ type: 'ERROR', error: 'No hay preguntas disponibles aún.' });
         return;
       }
+      // Aleatoriza las opciones de las preguntas que lo requieren
       const randomized = rows.map((q): Question => {
         if (q.type === 'multiple_choice') {
           const content = q.content as Question<'multiple_choice'>['content'];
@@ -143,6 +160,7 @@ export function useQuizSession({
             content: { ...content, options: shuffle(content.options) },
           } as Question;
         }
+        // Otros tipos no requieren barajado adicional aquí
         return q;
       });
       dispatch({
@@ -156,6 +174,11 @@ export function useQuizSession({
     }
   }, [totalQuestions]);
 
+  /**
+   * Envía la respuesta del usuario al backend para validarla.
+   * El servidor es la fuente de verdad: previene trampas modificando el cliente.
+   * Aplica bonus/penalización de tiempo y calcula puntos localmente.
+   */
   const submitAnswer = useCallback(
     async (answer: UserAnswer) => {
       const q = state.questions[state.currentIndex];
@@ -165,11 +188,14 @@ export function useQuizSession({
         p_answer: answer as unknown as never,
       });
       if (error) return;
+      // El RPC puede devolver un array o un objeto según versión
       const row = Array.isArray(data) ? data[0] : data;
       const correct = !!row?.correct;
       const explanation = row?.explanation ?? undefined;
       const questionsLeft = state.questions.length - state.currentIndex;
+      // Cálculo de puntos basado en tiempo restante y preguntas pendientes
       const points = calculatePoints(correct, state.timeLeft, questionsLeft);
+      // Ajuste del cronómetro: bonus al acertar, penalización al fallar
       const timeDelta = correct
         ? SCORING.timeBonusOnCorrect
         : -SCORING.timePenaltyOnWrong;
@@ -182,18 +208,22 @@ export function useQuizSession({
     [state.questions, state.currentIndex, state.timeLeft],
   );
 
+  // Avanza a la siguiente pregunta (o finaliza si era la última).
   const next = useCallback(() => dispatch({ type: 'NEXT' }), []);
+  // Reinicia el estado para permitir volver a jugar.
   const reset = useCallback(() => {
     dispatch({ type: 'RESET' });
   }, []);
 
-  // Timer global: solo corre mientras playing
+  // Timer global: el intervalo solo se activa mientras el estado es "playing".
+  // Se limpia automáticamente al cambiar de estado para no consumir recursos.
   useEffect(() => {
     if (state.status !== 'playing') return;
     const id = window.setInterval(() => dispatch({ type: 'TICK' }), 1000);
     return () => window.clearInterval(id);
   }, [state.status]);
 
+  // API expuesta a los componentes consumidores.
   return {
     ...state,
     currentQuestion: state.questions[state.currentIndex] ?? null,

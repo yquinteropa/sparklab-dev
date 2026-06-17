@@ -1,3 +1,7 @@
+/**
+ * Página de confirmación post-activación de cuenta.
+ * Se muestra al usuario tras verificar su email mediante el enlace enviado por el sistema de auth.
+ */
 import { useEffect, useState } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';

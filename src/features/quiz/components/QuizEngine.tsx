@@ -1,3 +1,9 @@
+/**
+ * QuizEngine — Componente raíz del modo cronometrado.
+ * Renderiza la pantalla apropiada según el estado de la sesión (ready/loading/
+ * playing/feedback/finished/error) y, al terminar, persiste el score en el
+ * leaderboard mediante el RPC `update_user_score`.
+ */
 import { AnimatePresence, motion } from 'framer-motion';
 import { Loader2, Timer, Zap, Trophy, AlertCircle, CheckCircle2, BrainCircuit } from 'lucide-react';
 import { useEffect, useRef } from 'react';
@@ -12,8 +18,8 @@ import { QuizFeedback } from './QuizFeedback';
 import { QuizResults } from './QuizResults';
 
 interface QuizEngineProps {
-  totalQuestions?: number;
-  totalSeconds?: number;
+  totalQuestions?: number; // Nº de preguntas por intento
+  totalSeconds?: number;   // Duración del cronómetro
 }
 
 export function QuizEngine({
@@ -22,8 +28,10 @@ export function QuizEngine({
 }: QuizEngineProps) {
   const { t } = useTranslation();
   const session = useQuizSession({ totalQuestions, totalSeconds });
+  // Evita enviar el score más de una vez si el componente re-renderiza.
   const submittedRef = useRef(false);
 
+  // Cuando la sesión termina, sincronizamos la puntuación con el leaderboard.
   useEffect(() => {
     if (session.status !== 'finished') {
       submittedRef.current = false;
@@ -32,11 +40,14 @@ export function QuizEngine({
     if (submittedRef.current) return;
     submittedRef.current = true;
     (async () => {
+      // Solo se actualiza si hay un usuario autenticado.
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) return;
+      // RPC que decide si la puntuación entra al top o mejora la marca personal.
       const { data, error } = await supabase.rpc('update_user_score', { p_score: session.score });
       if (error) return;
       const row = Array.isArray(data) ? data[0] : data;
+      // Notificación contextual al usuario según el resultado del RPC.
       if (row?.entered_top) {
         toast.success(t('quiz.enteredTop', { n: row.new_best }));
       } else if (row?.improved) {
@@ -44,6 +55,7 @@ export function QuizEngine({
       }
     })();
   }, [session.status, session.score, t]);
+
 
   if (session.status === 'loading') {
     return (

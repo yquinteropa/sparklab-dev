@@ -1,3 +1,7 @@
+/**
+ * Panel principal del usuario autenticado.
+ * Resume progreso, accesos rápidos a módulos, misiones activas y métricas de gamificación.
+ */
 import { useEffect, useRef, useState } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import { DashboardNav } from '@/components/DashboardNav';

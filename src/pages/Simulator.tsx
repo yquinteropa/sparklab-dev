@@ -1,3 +1,7 @@
+/**
+ * Página del simulador (modo práctica libre).
+ * Usa useCircuitLogic + Protoboard + ComponentPanel sin reglas de validación.
+ */
 import { useEffect, useCallback } from 'react';
 import { DashboardNav } from '@/components/DashboardNav';
 import Protoboard from '@/components/Protoboard';

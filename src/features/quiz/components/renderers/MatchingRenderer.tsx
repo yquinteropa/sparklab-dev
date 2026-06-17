@@ -1,3 +1,11 @@
+/**
+ * Renderer de preguntas de emparejamiento (matching).
+ * Patrón de interacción:
+ *   1. Usuario selecciona un elemento de la columna izquierda.
+ *   2. Selecciona su par en la columna derecha (que aparece barajada).
+ *   3. Cuando todos los pares están unidos, puede confirmar.
+ * Devuelve un Record<leftIndex, rightIndex> al motor para validar.
+ */
 import { useMemo, useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
@@ -27,21 +35,26 @@ export function MatchingRenderer({
     setMatches({});
   }, [question.id]);
 
+  // Set de índices del lado derecho ya utilizados (para deshabilitarlos visualmente)
   const usedRight = new Set(Object.values(matches));
+  // ¿Todos los pares ya tienen asignación? Habilita el botón "Confirmar".
   const allDone = Object.keys(matches).length === pairs.length;
 
+  // Selección de un elemento de la columna izquierda.
   const handleLeft = (i: number) => {
     if (disabled) return;
     setSelectedLeft(i);
   };
 
+  // Selección de un elemento de la columna derecha (asocia con el izquierdo activo).
   const handleRight = (rightIdx: number) => {
     if (disabled || selectedLeft === null) return;
-    if (usedRight.has(rightIdx)) return;
+    if (usedRight.has(rightIdx)) return; // Ya emparejado: ignorar
     setMatches((m) => ({ ...m, [selectedLeft]: rightIdx }));
     setSelectedLeft(null);
   };
 
+  // Reinicia los emparejamientos actuales (no envía nada al motor).
   const clear = () => {
     if (disabled) return;
     setMatches({});

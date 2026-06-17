@@ -1,3 +1,7 @@
+/**
+ * Catálogo de módulos de aprendizaje (básico, medio, avanzado).
+ * Gestiona desbloqueo progresivo y navegación a los niveles concretos.
+ */
 import { useState } from 'react';
 import { useNavigate }  from 'react-router-dom';
 import { useTranslation } from 'react-i18next';

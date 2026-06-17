@@ -1,3 +1,6 @@
+/**
+ * Página estática con los términos y condiciones de uso.
+ */
 import { Zap, ArrowLeft } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";

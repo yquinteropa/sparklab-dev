@@ -1,3 +1,6 @@
+/**
+ * Pantalla de ajustes de cuenta: incluye seguridad, idioma y accesibilidad.
+ */
 import { DashboardNav } from '@/components/DashboardNav';
 import { ProfileSecurity } from '@/components/ProfileSecurity';
 import { Settings as SettingsIcon } from 'lucide-react';
