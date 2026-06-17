@@ -219,6 +219,8 @@ export default function Level1Medio(){
   return (
     <div style={{padding:'1.5rem 0',maxWidth:580,margin:'0 auto',fontFamily:'sans-serif'}}>
       {showComplete && <LevelCompleteModal levelKey="basico:level1-medio" xp={100} onClose={()=>setShowComplete(false)} />}
+      <ExitAttemptModal open={showExit} onCancel={()=>setShowExit(false)} />
+
       <div style={{display:'flex',alignItems:'center',justifyContent:'space-between',marginBottom:'1.2rem',flexWrap:'wrap',gap:8}}>
         <div style={{display:'flex',alignItems:'center',gap:8}}>
           <span style={{fontSize:16}}>▬</span>
