@@ -6,6 +6,7 @@ import React, { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { useAuth } from "@/contexts/AuthContext";
 import { awardLevelXP } from "@/lib/progress";
+import { LevelCompleteModal } from "@/components/LevelCompleteModal";
 
 const EXERCISES = [
   {
@@ -135,11 +136,15 @@ export default function Level1Avanzado() {
   const [history, setHistory] = useState([]);
   const [msg, setMsg] = useState({ type: "info", text: "" });
   const [completed, setCompleted] = useState([false, false, false]);
+  // Modal de "Nivel completado" — se abre al terminar los 3 ejercicios.
+  const [showComplete, setShowComplete] = useState(false);
 
-  // Otorga 100 XP la primera vez que se completan los 3 ejercicios.
+  // Otorga 100 XP la primera vez que se completan los 3 ejercicios
+  // y muestra el modal con la opción de avanzar al siguiente nivel.
   useEffect(() => {
     if (completed.every(Boolean)) {
       awardLevelXP(user?.id, "basico:level1-avanzado", 100);
+      setShowComplete(true);
     }
   }, [completed, user]);
 

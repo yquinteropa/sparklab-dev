@@ -6,6 +6,7 @@ import React, { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { useAuth } from "@/contexts/AuthContext";
 import { awardLevelXP } from "@/lib/progress";
+import { LevelCompleteModal } from "@/components/LevelCompleteModal";
 
 const BANDS = [
   {name:'Negro',   hex:'#1a1a1a', digit:0, mult:1,       tol:null},
@@ -92,11 +93,15 @@ export default function Level1Medio(){
   const [ohmsInput, setOhmsInput] = useState('');
   const [msg,    setMsg]    = useState({type:'info',text:t('level1Medio.msgInfo1')});
   const [completed, setCompleted] = useState([0,0]);
+  // Modal de "Nivel completado" — se abre al terminar ambas partes.
+  const [showComplete, setShowComplete] = useState(false);
 
-  // Otorga 100 XP la primera vez que se completan ambas partes (3+3 retos).
+  // Otorga 100 XP la primera vez que se completan ambas partes (3+3 retos)
+  // y muestra el modal con la opción de avanzar al siguiente nivel.
   useEffect(() => {
     if (completed[0] >= 3 && completed[1] >= 3) {
       awardLevelXP(user?.id, "basico:level1-medio", 100);
+      setShowComplete(true);
     }
   }, [completed, user]);
 
