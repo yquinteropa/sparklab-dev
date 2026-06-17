@@ -457,7 +457,7 @@
     "pathTitle2": "Aprendizaje",
     "pathDesc": "Domina la electrónica módulo a módulo. Completa cada etapa para desbloquear la siguiente.",
     "howAdvance": "¿Cómo avanzar?",
-    "howAdvanceDesc": "Completa todas las lecciones de un módulo para desbloquear el siguiente. Cada lección desbloquea la siguiente dentro del módulo.",
+    "howAdvanceDesc": "Completa el primer nivel de un módulo para desbloquear el siguiente. Cada lección desbloquea la siguiente dentro del módulo.",
     "statusCompleted": "Completado",
     "statusInProgress": "En progreso",
     "statusLocked": "Bloqueado",
