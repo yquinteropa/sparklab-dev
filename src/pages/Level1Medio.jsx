@@ -4,6 +4,8 @@
  */
 import React, { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
+import { toast } from "sonner";
 import { useAuth } from "@/contexts/AuthContext";
 import { awardLevelXP } from "@/lib/progress";
 import { LevelCompleteModal } from "@/components/LevelCompleteModal";
@@ -85,6 +87,24 @@ function ColorTable({ t, bandName }){
 export default function Level1Medio(){
   const { t } = useTranslation();
   const { user } = useAuth();
+  const navigate = useNavigate();
+
+  // Maneja la salida anticipada del intento: muestra un toast con confirmación
+  // explícita advirtiendo que el progreso no se guardará antes de redirigir.
+  const handleExitAttempt = () => {
+    toast(t('level1Medio.exitConfirmTitle', 'Salir del intento?'), {
+      description: t('level1Medio.exitConfirmDesc', 'Si sales ahora perderás el progreso de este intento. ¿Deseas continuar?'),
+      duration: 10000,
+      action: {
+        label: t('level1Medio.exitConfirm', 'Salir'),
+        onClick: () => navigate('/dashboard/modules'),
+      },
+      cancel: {
+        label: t('level1Medio.exitCancel', 'Cancelar'),
+        onClick: () => {},
+      },
+    });
+  };
   const bandName = (n) => t(`level1Medio.bandNames.${n}`, { defaultValue: n });
   const [screen, setScreen] = useState('intro'); // intro | book | game
   const [part,   setPart]   = useState(0);
@@ -296,6 +316,7 @@ export default function Level1Medio(){
       </div>
 
       <div style={{display:'flex',gap:8,justifyContent:'center',flexWrap:'wrap'}}>
+        <button onClick={handleExitAttempt} style={{padding:'7px 18px',borderRadius:8,border:'0.5px solid hsl(0, 70%, 50%)',background:'hsl(0, 60%, 18%)',fontSize:12,cursor:'pointer',color:'hsl(0, 90%, 80%)',fontWeight:500}}>{t('level1Medio.exit', 'Salir')}</button>
         <button onClick={skip} style={{padding:'7px 18px',borderRadius:8,border:'0.5px solid #e2e8f0',background:'hsl(217, 33%, 17%)',fontSize:12,cursor:'pointer',color:'hsl(215, 20%, 70%)'}}>{t('level1Medio.skip')}</button>
         <button onClick={giveHint} style={{padding:'7px 18px',borderRadius:8,border:'0.5px solid #e2e8f0',background:'hsl(217, 33%, 17%)',fontSize:12,cursor:'pointer',color:'hsl(215, 20%, 70%)'}}>{t('level1Medio.hint')}</button>
         <button onClick={checkAnswer} style={{padding:'7px 20px',borderRadius:8,border:'0.5px solid #93c5fd',background:'hsl(217, 91%, 20%)',fontSize:12,cursor:'pointer',color:'hsl(199, 89%, 70%)',fontWeight:500}}>{t('level1Medio.verify')}</button>
