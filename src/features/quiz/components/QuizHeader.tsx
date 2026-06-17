@@ -1,3 +1,7 @@
+/**
+ * Encabezado del quiz cronometrado: muestra progreso, puntuación y tiempo restante.
+ * Resalta visualmente (color destructivo + pulso) cuando quedan menos de 30 segundos.
+ */
 import { Timer, Trophy, Zap } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
@@ -19,8 +23,11 @@ export function QuizHeader({
   totalSeconds,
 }: QuizHeaderProps) {
   const { t } = useTranslation();
+  // Porcentaje de progreso de preguntas respondidas (0..100)
   const progress = totalQuestions > 0 ? ((currentIndex) / totalQuestions) * 100 : 0;
+  // Porcentaje de tiempo restante (sirve para animar la barra del cronómetro)
   const timePct = totalSeconds > 0 ? (timeLeft / totalSeconds) * 100 : 0;
+  // Bandera de "poco tiempo" para cambiar el estilo visual a urgencia
   const lowTime = timeLeft < 30;
 
   return (

@@ -1,3 +1,8 @@
+/**
+ * Modal de feedback inmediato tras responder una pregunta.
+ * Muestra acierto/error con animación, puntos ganados, explicación opcional
+ * y cierra al hacer clic en cualquier parte (continuar a la siguiente pregunta).
+ */
 import { AnimatePresence, motion } from 'framer-motion';
 import { Check, X } from 'lucide-react';
 import { useTranslation } from 'react-i18next';

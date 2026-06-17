@@ -1,3 +1,7 @@
+/**
+ * Pantalla final del quiz cronometrado.
+ * Resume puntuación, aciertos, precisión y permite reintentar la sesión.
+ */
 import { motion } from 'framer-motion';
 import { RotateCcw, Trophy } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
@@ -19,6 +23,7 @@ export function QuizResults({
   onRestart,
 }: QuizResultsProps) {
   const { t } = useTranslation();
+  // Precisión = % de respuestas correctas sobre el total de preguntas planteadas
   const accuracy = totalQuestions > 0 ? Math.round((correctCount / totalQuestions) * 100) : 0;
   return (
     <motion.div
