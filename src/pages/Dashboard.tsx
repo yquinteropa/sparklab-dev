@@ -342,9 +342,15 @@ export default function Dashboard() {
               </div>
               <div style={{ display: 'flex', gap: 16, flexWrap: 'wrap' }}>
                 {[
-                  { v: '0', l: t('dashboard.xpLabel'), i: '⭐' },
-                  { v: '0', l: t('dashboard.challenges'), i: '🎯' },
-                  { v: t('dashboard.bronze'), l: t('dashboard.rankLabel'), i: '🏅' },
+                  { v: String(xp), l: t('dashboard.xpLabel'), i: '⭐' },
+                  { v: String(missions), l: t('dashboard.challenges'), i: '🎯' },
+                  {
+                    v: level >= 20 ? t('dashboard.diamond', { defaultValue: 'Diamante' })
+                      : level >= 10 ? t('dashboard.gold', { defaultValue: 'Oro' })
+                      : level >= 5 ? t('dashboard.silver', { defaultValue: 'Plata' })
+                      : t('dashboard.bronze'),
+                    l: t('dashboard.rankLabel'), i: '🏅',
+                  },
                 ].map((s) => (
                   <div key={s.l} style={{ textAlign: 'center' }}>
                     <div style={{ fontSize: 10, marginBottom: 3 }}>{s.i}</div>
