@@ -2,8 +2,10 @@
  * Nivel 1 del módulo MEDIO: identificación de resistencias por bandas de color.
  * El usuario combina bandas y la lógica compara el valor calculado con el esperado.
  */
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
+import { useAuth } from "@/contexts/AuthContext";
+import { awardLevelXP } from "@/lib/progress";
 
 const BANDS = [
   {name:'Negro',   hex:'#1a1a1a', digit:0, mult:1,       tol:null},
