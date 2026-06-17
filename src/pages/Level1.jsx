@@ -7,6 +7,7 @@ import React, { useState, useMemo, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { useAuth } from "@/contexts/AuthContext";
 import { awardLevelXP } from "@/lib/progress";
+import { LevelCompleteModal } from "@/components/LevelCompleteModal";
 
 const buildPuzzles = (t) => [
   {
@@ -246,11 +247,15 @@ export default function Level1() {
   const [msg, setMsg]   = useState({ type:"info", text:t('level1.msgRotate') });
   const [completed, setCompleted] = useState([false,false,false]);
   const [flash, setFlash] = useState(false);
+  // Modal de "Nivel completado" — se abre al terminar los 3 puzzles.
+  const [showComplete, setShowComplete] = useState(false);
 
-  // Otorga 100 XP la primera vez que se completan los 3 puzzles del nivel.
+  // Otorga 100 XP la primera vez que se completan los 3 puzzles del nivel
+  // y muestra el modal con la opción de avanzar al siguiente nivel.
   useEffect(() => {
     if (completed.every(Boolean)) {
       awardLevelXP(user?.id, "basico:level1", 100);
+      setShowComplete(true);
     }
   }, [completed, user]);
 
