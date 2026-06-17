@@ -579,10 +579,12 @@ export default function Profile() {
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-5"
                   style={{ borderTop: '1px solid rgba(255,255,255,0.05)' }}>
                   {[
-                    { value: '24', label: t('profile.stats.levels'), color: '#22d3ee' },
-                    { value: '89%', label: t('profile.stats.accuracy'), color: '#34d399' },
-                    { value: '45', label: t('profile.stats.circuits'), color: '#fbbf24' },
-                    { value: '12h', label: t('profile.stats.time'), color: '#a78bfa' },
+                    // Lecciones completadas reales (basadas en awardLevelXP).
+                    { value: String(totalLessonsDone), label: t('profile.stats.levels'), color: '#22d3ee' },
+                    // Métricas aún no rastreadas: se muestran neutrales para no inventar datos.
+                    { value: '—', label: t('profile.stats.accuracy'), color: '#34d399' },
+                    { value: String(missionsCompleted), label: t('profile.stats.circuits'), color: '#fbbf24' },
+                    { value: '—', label: t('profile.stats.time'), color: '#a78bfa' },
                   ].map(({ value, label, color }) => (
                     <div key={label} className="rounded-xl p-3 text-center"
                       style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.05)' }}>
