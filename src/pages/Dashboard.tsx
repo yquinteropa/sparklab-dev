@@ -179,6 +179,23 @@ export default function Dashboard() {
     })();
   }, [user, t, navigate]);
 
+  // Carga las métricas de XP/misiones desde user_progress para reflejarlas en el dashboard.
+  useEffect(() => {
+    if (!user) return;
+    (async () => {
+      const { data } = await supabase
+        .from('user_progress')
+        .select('xp, missions_completed, level')
+        .eq('user_id', user.id)
+        .maybeSingle();
+      if (data) {
+        setXp(data.xp ?? 0);
+        setMissions(data.missions_completed ?? 0);
+        setLevel(data.level ?? 1);
+      }
+    })();
+  }, [user]);
+
   useEffect(() => {
     const msg = messages[msgIndex];
     if (charIndex < msg.length) {
