@@ -3,8 +3,10 @@
  * Contiene varios puzzles de rotación de piezas; al activar el circuito se valida
  * que el camino de corriente coincida con la solución esperada.
  */
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import { useTranslation } from "react-i18next";
+import { useAuth } from "@/contexts/AuthContext";
+import { awardLevelXP } from "@/lib/progress";
 
 const buildPuzzles = (t) => [
   {
